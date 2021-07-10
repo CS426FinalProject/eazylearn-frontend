@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Answer {
-  bool chosen;
+  bool chosen = false;
   String answerText;
 
-  Answer({this.chosen, @required this.answerText});
+  Answer({@required this.answerText});
 }

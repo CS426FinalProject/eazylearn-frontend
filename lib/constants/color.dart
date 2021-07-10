@@ -14,3 +14,5 @@ const Color phy2 = Color(0xFFFF7777);
 
 const Color db1 = Color(0xFFF5C620);
 const Color db2 = Color(0xFFEE5221);
+
+const Color green_light = Color(0x00EF99);
