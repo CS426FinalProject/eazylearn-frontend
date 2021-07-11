@@ -11,6 +11,7 @@ class TestScreen extends StatefulWidget {
 }
 
 class _TestScreenState extends State<TestScreen> {
+  List<bool> chosens = List.generate(4, (index) => false);
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -101,17 +102,34 @@ class _TestScreenState extends State<TestScreen> {
                   SizedBox(
                     height: 21.0,
                   ),
-                  AnswerCard(
-                    answer: Answer(answerText: 'A. min(f) = 12, max(f) = 14'),
+                  GestureDetector(
+                    onTap: () => _handleTap(0),
+                    child: AnswerCard(
+                      chosen: chosens[0],
+                      answer: Answer(answerText: 'A. min(f) = 12, max(f) = 14'),
+                    ),
                   ),
-                  AnswerCard(
-                    answer: Answer(answerText: 'B. min(f) = -8, max(f) = 24'),
+                  GestureDetector(
+                    onTap: () => _handleTap(1),
+                    child: AnswerCard(
+                      chosen: chosens[1],
+                      answer: Answer(answerText: 'B. min(f) = -8, max(f) = 24'),
+                    ),
                   ),
-                  AnswerCard(
-                    answer: Answer(answerText: 'C. min(f) = 1, max(f) = 12'),
+                  GestureDetector(
+                    onTap: () => _handleTap(2),
+                    child: AnswerCard(
+                      chosen: chosens[2],
+                      answer: Answer(answerText: 'C. min(f) = 1, max(f) = 12'),
+                    ),
                   ),
-                  AnswerCard(
-                    answer: Answer(answerText: 'D. min(f) = -12, max(f) = 14'),
+                  GestureDetector(
+                    onTap: () => _handleTap(3),
+                    child: AnswerCard(
+                      chosen: chosens[3],
+                      answer:
+                          Answer(answerText: 'D. min(f) = -12, max(f) = 14'),
+                    ),
                   )
                 ],
               ),
@@ -120,5 +138,16 @@ class _TestScreenState extends State<TestScreen> {
         ),
       ],
     );
+  }
+
+  void _handleTap(int index) {
+    setState(() {
+      for (int i = 0; i < 4; i++) {
+        if (i == index)
+          chosens[i] = true;
+        else
+          chosens[i] = false;
+      }
+    });
   }
 }
