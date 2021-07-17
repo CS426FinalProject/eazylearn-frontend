@@ -17,6 +17,5 @@ const Color db2 = Color(0xFFEE5221);
 
 const Color green_light = Color(0x00EF99);
 
-const Color test_color = Color(0xFF6764FF);
-const Color question_picker_color = Color(0xFFFFF964);
-const Color current_question_color = Color(0xFFFFF964);
+const Color primaryColor = Color(0xFF6764FF);
+const Color secondaryColor = Color(0xFFFFF964);

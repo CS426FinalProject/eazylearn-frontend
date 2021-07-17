@@ -48,7 +48,7 @@ class _QuestionPickerState extends State<QuestionPicker> {
                   : BorderRadius.only(
                       bottomLeft: Radius.circular(10),
                       bottomRight: Radius.circular(10)),
-              color: question_picker_color,
+              color: secondaryColor,
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey,
@@ -135,10 +135,10 @@ class _QuestionPickerState extends State<QuestionPicker> {
                             ? Border()
                             : Border.all(color: Colors.black, width: 2.0),
                         color: index == widget.currentQuestion
-                            ? current_question_color
+                            ? secondaryColor
                             : (widget.userChoices[index] == -1
                                 ? Colors.white
-                                : test_color),
+                                : primaryColor),
                         borderRadius: BorderRadius.circular(100)),
                   );
                 })),

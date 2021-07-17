@@ -1,4 +1,5 @@
 import 'package:final_cs426/screens/home_screen.dart';
+import 'package:final_cs426/screens/test_info_screen.dart';
 import 'package:final_cs426/screens/test_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Raleway'),
-      home: TestScreen(),
+      home: HomeScreen(),
     );
   }
 }

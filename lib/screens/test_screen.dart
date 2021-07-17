@@ -55,7 +55,7 @@ class _TestScreenState extends State<TestScreen> {
     return Stack(
       children: <Widget>[
         DecoratedBox(
-          decoration: BoxDecoration(color: test_color),
+          decoration: BoxDecoration(color: primaryColor),
           child: Scaffold(
               appBar: AppBar(
                 title: Row(

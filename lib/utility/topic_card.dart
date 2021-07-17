@@ -1,4 +1,5 @@
 import 'package:final_cs426/models/topic.dart';
+import 'package:final_cs426/screens/test_info_screen.dart';
 import 'package:flutter/material.dart';
 
 class TopicCard extends StatelessWidget {
@@ -25,7 +26,12 @@ class TopicCard extends StatelessWidget {
                 color: Colors.transparent,
                 child: InkWell(
                     borderRadius: BorderRadius.circular(30),
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TestInfoScreen()));
+                    },
                     child: Padding(
                         padding: EdgeInsets.fromLTRB(10, 15, 0, 15),
                         child: Row(children: [
