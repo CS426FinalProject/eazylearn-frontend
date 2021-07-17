@@ -1,7 +1,9 @@
 import 'package:final_cs426/constants/color.dart';
+import 'package:final_cs426/controller/question_picker_controller.dart';
 import 'package:flutter/material.dart';
 
 class QuestionPicker extends StatefulWidget {
+  final QuestionPickerController controller;
   final ValueChanged<int> onQuestionChanged;
   final List<int> userChoices;
   final int currentQuestion;
@@ -9,6 +11,7 @@ class QuestionPicker extends StatefulWidget {
     @required this.onQuestionChanged,
     @required this.userChoices,
     @required this.currentQuestion,
+    @required this.controller,
   });
   @override
   _QuestionPickerState createState() => _QuestionPickerState();
@@ -16,6 +19,22 @@ class QuestionPicker extends StatefulWidget {
 
 class _QuestionPickerState extends State<QuestionPicker> {
   bool isDropdown = false;
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(() {
+      setState(() {
+        isDropdown = false;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    widget.controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:final_cs426/controller/question_picker_controller.dart';
 import 'package:final_cs426/models/question.dart';
 import 'package:final_cs426/models/test.dart';
 import 'package:final_cs426/utility/answer_chooser.dart';
@@ -15,6 +16,7 @@ class TestScreen extends StatefulWidget {
 }
 
 class _TestScreenState extends State<TestScreen> {
+  QuestionPickerController pickerController = QuestionPickerController();
   PageController controller = PageController();
   int currentQuestion;
   Test test;
@@ -50,7 +52,6 @@ class _TestScreenState extends State<TestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("tappp");
     return Stack(
       children: <Widget>[
         DecoratedBox(
@@ -95,11 +96,7 @@ class _TestScreenState extends State<TestScreen> {
               backgroundColor: Colors.transparent),
         ),
         GestureDetector(
-          onTap: () {
-            setState(() {
-              print("tap");
-            });
-          },
+          onTap: () => setState(() => pickerController.hidePicker()),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 90.0, 20.0, 0),
             child: Card(
@@ -163,6 +160,7 @@ class _TestScreenState extends State<TestScreen> {
                           ),
                         )),
                     QuestionPicker(
+                      controller: pickerController,
                       currentQuestion: currentQuestion,
                       userChoices: userChoices,
                       onQuestionChanged: (index) {
