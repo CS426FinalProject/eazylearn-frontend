@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:final_cs426/constants/color.dart';
+import 'package:final_cs426/utility/correctness.dart';
 import 'package:final_cs426/utility/result_circle.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +11,7 @@ class TestInfoScreen extends StatefulWidget {
 }
 
 class _TestInfoScreenState extends State<TestInfoScreen> {
+  List<bool> corrects = List.generate(40, (index) => Random().nextBool());
   bool init = true;
   Future sleep() async {
     await Future.delayed(const Duration(seconds: 1), () {});
@@ -97,11 +101,9 @@ class _TestInfoScreenState extends State<TestInfoScreen> {
             Expanded(
               flex: 3,
               child: Center(
-                child: ResultCircle(
-                  questionNumber: 40,
-                  corrects: 17,
-                ),
-              ),
+                  child: Correctness(
+                corrects: corrects,
+              )),
             ),
             Expanded(
                 flex: 1,

@@ -19,3 +19,6 @@ const Color green_light = Color(0x00EF99);
 
 const Color primaryColor = Color(0xFF6764FF);
 const Color secondaryColor = Color(0xFFFFF964);
+
+const Color correct = Color(0xFF62E09C);
+const Color incorrect = Color(0xFFE06262);
