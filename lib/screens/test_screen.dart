@@ -1,5 +1,9 @@
 import 'dart:ui';
 
+import 'package:final_cs426/models/question.dart';
+import 'package:final_cs426/models/test.dart';
+import 'package:final_cs426/utility/answer_chooser.dart';
+import 'package:final_cs426/utility/question_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:final_cs426/models/answer.dart';
 import 'package:final_cs426/utility/answer_card.dart';
@@ -11,14 +15,46 @@ class TestScreen extends StatefulWidget {
 }
 
 class _TestScreenState extends State<TestScreen> {
-  List<bool> chosens = List.generate(4, (index) => false);
+  PageController controller = PageController();
+  int currentQuestion;
+  Test test;
+  List<int> userChoices;
+  @override
+  void initState() {
+    super.initState();
+    currentQuestion = 0;
+    List<Answer> options = [
+      Answer(answerText: "min(f) = 12, max(f) = 14"),
+      Answer(answerText: "min(f) = -8, max(f) = 24"),
+      Answer(answerText: "min(f) = 1, max(f) = 12"),
+      Answer(answerText: "min(f) = -12, max(f) = 14")
+    ];
+    List<Question> questions = List.generate(
+        40,
+        (index) => Question(
+            question:
+                '${index + 1}: What are the extreme values of the function f on the given region?',
+            equation:
+                '${index + 1}: f(x,y) = 2x^3 + y^4\nD = {(x,y) | x^2 + y^2 <= 1}',
+            options: options,
+            answer: 1));
+    test = Test(idTest: "1", topic: "Calculus", questions: questions);
+    userChoices = List.generate(test.questions.length, (index) => -1);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    print("tappp");
     return Stack(
       children: <Widget>[
         DecoratedBox(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(colors: <Color>[cal1, cal2])),
+          decoration: BoxDecoration(color: test_color),
           child: Scaffold(
               appBar: AppBar(
                 title: Row(
@@ -41,12 +77,12 @@ class _TestScreenState extends State<TestScreen> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0)),
                       child: Padding(
-                        padding: const EdgeInsets.all(3.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: Text('10:00',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 24,
+                                fontSize: 22,
                                 letterSpacing: 0.5,
                                 fontWeight: FontWeight.bold)),
                       ),
@@ -58,96 +94,86 @@ class _TestScreenState extends State<TestScreen> {
               ),
               backgroundColor: Colors.transparent),
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20.0, 76.0, 20.0, 0),
-          child: Card(
-            elevation: 10.0,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30.0),
-              topRight: Radius.circular(30.0),
-            )),
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
-                    child: Column(
-                      children: [
-                        Text(
-                          'What are the extreme values of the function f on the given region?',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              print("tap");
+            });
+          },
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20.0, 90.0, 20.0, 0),
+            child: Card(
+                elevation: 10.0,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(22.0),
+                  topRight: Radius.circular(22.0),
+                )),
+                child: Stack(
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 70, 20, 20),
+                        child: PageView.builder(
+                          controller: controller,
+                          onPageChanged: (index) =>
+                              setState(() => currentQuestion = index),
+                          itemBuilder: (context, index) => Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      test.questions[index].question,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10.0,
+                                    ),
+                                    Text(
+                                      test.questions[index].equation,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 21.0,
+                              ),
+                              AnswerChooser(
+                                initial: userChoices[index],
+                                options: test.questions[index].options,
+                                onOptionChange: (option) {
+                                  setState(() {
+                                    userChoices[index] = option;
+                                  });
+                                },
+                              )
+                            ],
                           ),
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        Text(
-                          'f(x,y) = 2x^3 + y^4\nD = {(x,y) | x^2 + y^2 <= 1}',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                        )),
+                    QuestionPicker(
+                      currentQuestion: currentQuestion,
+                      userChoices: userChoices,
+                      onQuestionChanged: (index) {
+                        controller.jumpToPage(index);
+                      },
                     ),
-                  ),
-                  SizedBox(
-                    height: 21.0,
-                  ),
-                  GestureDetector(
-                    onTap: () => _handleTap(0),
-                    child: AnswerCard(
-                      chosen: chosens[0],
-                      answer: Answer(answerText: 'A. min(f) = 12, max(f) = 14'),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => _handleTap(1),
-                    child: AnswerCard(
-                      chosen: chosens[1],
-                      answer: Answer(answerText: 'B. min(f) = -8, max(f) = 24'),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => _handleTap(2),
-                    child: AnswerCard(
-                      chosen: chosens[2],
-                      answer: Answer(answerText: 'C. min(f) = 1, max(f) = 12'),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => _handleTap(3),
-                    child: AnswerCard(
-                      chosen: chosens[3],
-                      answer:
-                          Answer(answerText: 'D. min(f) = -12, max(f) = 14'),
-                    ),
-                  )
-                ],
-              ),
-            ),
+                  ],
+                )),
           ),
-        ),
+        )
       ],
     );
-  }
-
-  void _handleTap(int index) {
-    setState(() {
-      for (int i = 0; i < 4; i++) {
-        if (i == index)
-          chosens[i] = true;
-        else
-          chosens[i] = false;
-      }
-    });
   }
 }

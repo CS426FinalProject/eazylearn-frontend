@@ -20,8 +20,7 @@ class AnswerCard extends StatelessWidget {
                   ? Border.all(color: Colors.black, width: 1.0)
                   : Border(),
               borderRadius: BorderRadius.circular(20.0),
-              color: chosen ? Colors.white : Colors.transparent,
-              gradient: LinearGradient(colors: <Color>[cal1, cal2]),
+              color: chosen ? test_color : Colors.transparent,
             ),
             child: Padding(
               padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
