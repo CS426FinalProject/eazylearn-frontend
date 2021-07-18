@@ -41,7 +41,9 @@ class _QuestionPickerState extends State<QuestionPicker> {
       Container(
         padding: EdgeInsets.only(right: 20),
         alignment: Alignment.centerRight,
-        child: DecoratedBox(
+        child: AnimatedContainer(
+            duration: Duration(milliseconds: 700),
+            curve: Curves.ease,
             decoration: BoxDecoration(
               borderRadius: isDropdown
                   ? null

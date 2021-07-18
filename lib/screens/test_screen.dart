@@ -17,7 +17,7 @@ class TestScreen extends StatefulWidget {
 
 class _TestScreenState extends State<TestScreen> {
   QuestionPickerController pickerController = QuestionPickerController();
-  PageController controller = PageController();
+  PageController pageController = PageController();
   int currentQuestion;
   Test test;
   List<int> userChoices;
@@ -47,131 +47,185 @@ class _TestScreenState extends State<TestScreen> {
   @override
   void dispose() {
     super.dispose();
-    controller.dispose();
+    pageController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        DecoratedBox(
-          decoration: BoxDecoration(color: primaryColor),
-          child: Scaffold(
-              appBar: AppBar(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                        child: Text(
-                          'CALCULUS III',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 32,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    ),
-                    Card(
-                      color: top_icon_2,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text('10:00',
-                            textAlign: TextAlign.center,
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Stack(
+        children: <Widget>[
+          DecoratedBox(
+            decoration: BoxDecoration(color: primaryColor),
+            child: Scaffold(
+                appBar: AppBar(
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: Text(
+                            'CALCULUS III',
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 22,
-                                letterSpacing: 0.5,
-                                fontWeight: FontWeight.bold)),
+                                fontSize: 32,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ),
-                    ),
+                      Card(
+                        color: top_icon_2,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Text('10:00',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                  letterSpacing: 0.5,
+                                  fontWeight: FontWeight.bold)),
+                        ),
+                      ),
+                    ],
+                  ),
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                ),
+                backgroundColor: Colors.transparent),
+          ),
+          GestureDetector(
+            onTap: () => setState(() => pickerController.hidePicker()),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20.0, 90.0, 20.0, 0),
+              child: Card(
+                  elevation: 10.0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(22.0),
+                    topRight: Radius.circular(22.0),
+                  )),
+                  child: Stack(
+                    children: [
+                      Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 70, 20, 20),
+                          child: PageView.builder(
+                            controller: pageController,
+                            onPageChanged: (index) =>
+                                setState(() => currentQuestion = index),
+                            itemBuilder: (context, index) => Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        test.questions[index].question,
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
+                                      Text(
+                                        test.questions[index].equation,
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontStyle: FontStyle.italic,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 21.0,
+                                ),
+                                AnswerChooser(
+                                  initial: userChoices[index],
+                                  options: test.questions[index].options,
+                                  onOptionChange: (option) {
+                                    setState(() {
+                                      userChoices[index] = option;
+                                    });
+                                  },
+                                )
+                              ],
+                            ),
+                          )),
+                      QuestionPicker(
+                        controller: pickerController,
+                        currentQuestion: currentQuestion,
+                        userChoices: userChoices,
+                        onQuestionChanged: (index) {
+                          pageController.jumpToPage(index);
+                        },
+                      ),
+                    ],
+                  )),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 250),
+            padding: EdgeInsets.only(left: 10, right: 10),
+            child: Wrap(
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (currentQuestion > 0)
+                      Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: secondaryColor),
+                          child: Center(
+                            child: IconButton(
+                              icon: Icon(Icons.arrow_back_ios),
+                              onPressed: () {
+                                pageController.animateToPage(
+                                    currentQuestion - 1,
+                                    duration: Duration(milliseconds: 500),
+                                    curve: Curves.ease);
+                              },
+                            ),
+                          )),
+                    if (currentQuestion < test.questions.length - 1)
+                      Expanded(
+                          child: Align(
+                        alignment: Alignment.topRight,
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: secondaryColor),
+                          child: IconButton(
+                            icon: Icon(Icons.arrow_forward_ios),
+                            onPressed: () {
+                              pageController.animateToPage(currentQuestion + 1,
+                                  duration: Duration(milliseconds: 500),
+                                  curve: Curves.ease);
+                            },
+                          ),
+                        ),
+                      ))
                   ],
                 ),
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-              ),
-              backgroundColor: Colors.transparent),
-        ),
-        GestureDetector(
-          onTap: () => setState(() => pickerController.hidePicker()),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 90.0, 20.0, 0),
-            child: Card(
-                elevation: 10.0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(22.0),
-                  topRight: Radius.circular(22.0),
-                )),
-                child: Stack(
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 70, 20, 20),
-                        child: PageView.builder(
-                          controller: controller,
-                          onPageChanged: (index) =>
-                              setState(() => currentQuestion = index),
-                          itemBuilder: (context, index) => Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      test.questions[index].question,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10.0,
-                                    ),
-                                    Text(
-                                      test.questions[index].equation,
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontStyle: FontStyle.italic,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 21.0,
-                              ),
-                              AnswerChooser(
-                                initial: userChoices[index],
-                                options: test.questions[index].options,
-                                onOptionChange: (option) {
-                                  setState(() {
-                                    userChoices[index] = option;
-                                  });
-                                },
-                              )
-                            ],
-                          ),
-                        )),
-                    QuestionPicker(
-                      controller: pickerController,
-                      currentQuestion: currentQuestion,
-                      userChoices: userChoices,
-                      onQuestionChanged: (index) {
-                        controller.jumpToPage(index);
-                      },
-                    ),
-                  ],
-                )),
+              ],
+            ),
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
 }

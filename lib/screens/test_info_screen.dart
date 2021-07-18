@@ -143,7 +143,7 @@ class _TestInfoScreenState extends State<TestInfoScreen> {
                 "Calculus III",
               ),
               style: TextStyle(
-                  fontSize: init ? 55 : 35,
+                  fontSize: init ? 60 : 35,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'Raleway'),
             )),
