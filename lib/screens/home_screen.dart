@@ -61,54 +61,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         time: 15,
         difficulty: 3,
         colors: [db1, db2]));
-    topics.add(Topic(
-        name: "Calculus III",
-        description: "This test revises...",
-        time: 45,
-        difficulty: 3,
-        colors: [cal1, cal2]));
-    topics.add(Topic(
-        name: "Statistics I",
-        description: "This test revises...",
-        time: 60,
-        difficulty: 2,
-        colors: [stat1, stat2]));
-    topics.add(Topic(
-        name: "General Physics II",
-        description: "This test revises...",
-        time: 45,
-        difficulty: 2,
-        colors: [phy1, phy2]));
-    topics.add(Topic(
-        name: "Database",
-        description: "This test revises...",
-        time: 15,
-        difficulty: 3,
-        colors: [db1, db2]));
-    topics.add(Topic(
-        name: "Calculus III",
-        description: "This test revises...",
-        time: 45,
-        difficulty: 3,
-        colors: [cal1, cal2]));
-    topics.add(Topic(
-        name: "Statistics I",
-        description: "This test revises...",
-        time: 60,
-        difficulty: 2,
-        colors: [stat1, stat2]));
-    topics.add(Topic(
-        name: "General Physics II",
-        description: "This test revises...",
-        time: 45,
-        difficulty: 2,
-        colors: [phy1, phy2]));
-    topics.add(Topic(
-        name: "Database",
-        description: "This test revises...",
-        time: 15,
-        difficulty: 3,
-        colors: [db1, db2]));
 
     return Scaffold(
       body: NestedScrollView(

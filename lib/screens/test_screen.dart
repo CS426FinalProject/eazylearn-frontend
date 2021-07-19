@@ -173,57 +173,6 @@ class _TestScreenState extends State<TestScreen> {
                   )),
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(top: 250),
-            padding: EdgeInsets.only(left: 10, right: 10),
-            child: Wrap(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (currentQuestion > 0)
-                      Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: secondaryColor),
-                          child: Center(
-                            child: IconButton(
-                              icon: Icon(Icons.arrow_back_ios),
-                              onPressed: () {
-                                pageController.animateToPage(
-                                    currentQuestion - 1,
-                                    duration: Duration(milliseconds: 500),
-                                    curve: Curves.ease);
-                              },
-                            ),
-                          )),
-                    if (currentQuestion < test.questions.length - 1)
-                      Expanded(
-                          child: Align(
-                        alignment: Alignment.topRight,
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: secondaryColor),
-                          child: IconButton(
-                            icon: Icon(Icons.arrow_forward_ios),
-                            onPressed: () {
-                              pageController.animateToPage(currentQuestion + 1,
-                                  duration: Duration(milliseconds: 500),
-                                  curve: Curves.ease);
-                            },
-                          ),
-                        ),
-                      ))
-                  ],
-                ),
-              ],
-            ),
-          ),
         ],
       ),
     );
