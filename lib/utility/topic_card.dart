@@ -12,70 +12,81 @@ class TopicCard extends StatelessWidget {
     for (int i = 0; i < topic.difficulty; i++) {
       list.add(Image.asset(
         "lib/images/flash.png",
-        scale: 30,
+        scale: 25,
       ));
     }
     return Hero(
       tag: "main_to_info_${topic.name}",
       child: Card(
-          elevation: 5,
+          elevation: 3,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           child: DecoratedBox(
               decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: topic.colors),
-                  borderRadius: BorderRadius.circular(30)),
+                  color: topic.color, borderRadius: BorderRadius.circular(20)),
               child: Material(
                   color: Colors.transparent,
                   child: InkWell(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(20),
                       onTap: () {
                         Navigator.push(
                             context,
                             PageRouteBuilder(
                                 transitionDuration: Duration(seconds: 1),
-                                pageBuilder: (_, __, ___) => TestInfoScreen()));
+                                pageBuilder: (_, __, ___) => TestInfoScreen(
+                                      topic: topic,
+                                    )));
                       },
-                      child: Padding(
-                          padding: EdgeInsets.fromLTRB(10, 15, 0, 15),
-                          child: Row(children: [
-                            CircleAvatar(
-                              radius: 40,
-                              backgroundColor: Colors.white,
-                              child: Image.asset(
-                                topic.image,
-                                scale: 10,
+                      child: Container(
+                          width: 270,
+                          padding: EdgeInsets.fromLTRB(30, 25, 30, 25),
+                          child: Column(children: [
+                            SizedBox(
+                              height: 120,
+                              width: 120,
+                              child: CircleAvatar(
+                                backgroundColor: Colors.white,
+                                child: SizedBox(
+                                  height: 80,
+                                  width: 80,
+                                  child: Image.asset(
+                                    topic.image,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
                               ),
                             ),
                             SizedBox(
-                              width: 30,
+                              height: 20,
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(topic.name,
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
+                            Text(topic.name,
+                                style: TextStyle(
+                                    fontSize: 22.65,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white)),
+                            Expanded(
+                              child: Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Row(
                                   children: [
-                                    Text(
-                                      topic.time.toString() + " min",
-                                      style: TextStyle(color: Colors.white),
+                                    Wrap(children: [
+                                      Icon(Icons.timer, color: Colors.white),
+                                      Text(
+                                        " " + topic.time.toString() + " min",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 18),
+                                      ),
+                                    ]),
+                                    Expanded(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: list,
+                                      ),
                                     ),
-                                    SizedBox(
-                                      width: 40,
-                                    ),
-                                    Row(
-                                      children: list,
-                                    )
                                   ],
-                                )
-                              ],
+                                ),
+                              ),
                             ),
                           ])))))),
     );

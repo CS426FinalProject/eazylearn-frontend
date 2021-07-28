@@ -42,98 +42,117 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         description: "This test revises...",
         time: 45,
         difficulty: 3,
-        colors: [cal1, cal2]));
+        color: cal));
     topics.add(Topic(
         name: "Statistics I",
         description: "This test revises...",
         time: 60,
         difficulty: 2,
-        colors: [stat1, stat2]));
+        color: stat));
     topics.add(Topic(
         name: "General Physics II",
         description: "This test revises...",
         time: 45,
         difficulty: 2,
-        colors: [phy1, phy2]));
+        color: phy));
     topics.add(Topic(
         name: "Database",
         description: "This test revises...",
         time: 15,
         difficulty: 3,
-        colors: [db1, db2]));
+        color: db));
 
     return Scaffold(
-      body: NestedScrollView(
-        floatHeaderSlivers: true,
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          SliverToBoxAdapter(
-              child: Padding(
-            padding: EdgeInsets.fromLTRB(25, 50, 25, 10),
-            child: Row(
-              children: [
-                IconButton(
-                    iconSize: 50,
-                    onPressed: () {},
-                    icon: GradientIcon(
-                      colors: [top_icon_1, top_icon_2],
-                      icon: Icons.account_circle,
-                    )),
-                Expanded(
-                    child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Transform(
-                    alignment: Alignment.center,
-                    transform: Matrix4.rotationY(math.pi),
-                    child: IconButton(
+      body: Padding(
+        padding: EdgeInsets.only(left: 25, right: 25),
+        child: NestedScrollView(
+          floatHeaderSlivers: true,
+          headerSliverBuilder: (context, innerBoxIsScrolled) => [
+            SliverToBoxAdapter(
+                child: Padding(
+              padding: EdgeInsets.fromLTRB(0, 50, 0, 10),
+              child: Row(
+                children: [
+                  IconButton(
                       iconSize: 50,
                       onPressed: () {},
                       icon: GradientIcon(
                         colors: [top_icon_1, top_icon_2],
-                        icon: Icons.sort,
+                        icon: Icons.account_circle,
+                      )),
+                  Expanded(
+                      child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Transform(
+                      alignment: Alignment.center,
+                      transform: Matrix4.rotationY(math.pi),
+                      child: IconButton(
+                        iconSize: 50,
+                        onPressed: () {},
+                        icon: GradientIcon(
+                          colors: [top_icon_1, top_icon_2],
+                          icon: Icons.sort,
+                        ),
                       ),
                     ),
+                  ))
+                ],
+              ),
+            )),
+            SliverAppBar(
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              toolbarHeight: 70,
+              collapsedHeight: 70,
+              expandedHeight: 70,
+              floating: true,
+              snap: true,
+              title: Column(
+                children: [
+                  TextFormField(
+                    focusNode: inputFocusNode,
+                    style: TextStyle(fontSize: 18),
+                    decoration: new InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 2)),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide:
+                                BorderSide(color: Colors.grey, width: 2)),
+                        contentPadding: EdgeInsets.only(
+                            left: 18, bottom: 20, top: 20, right: 15),
+                        hintText: "Search for tests, topics,..."),
                   ),
-                ))
-              ],
-            ),
-          )),
-          SliverAppBar(
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            toolbarHeight: 70,
-            collapsedHeight: 70,
-            expandedHeight: 70,
-            floating: true,
-            snap: true,
-            title: Column(
-              children: [
-                TextFormField(
-                  focusNode: inputFocusNode,
-                  style: TextStyle(fontSize: 18),
-                  decoration: new InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          borderSide: BorderSide(color: Colors.grey, width: 2)),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          borderSide: BorderSide(color: Colors.grey, width: 2)),
-                      contentPadding: EdgeInsets.only(
-                          left: 18, bottom: 20, top: 20, right: 15),
-                      hintText: "Search for tests, topics,..."),
-                ),
-              ],
-            ),
-          )
-        ],
-        physics: NeverScrollableScrollPhysics(),
-        body: Padding(
-            padding: EdgeInsets.fromLTRB(25, 10, 25, 10),
-            child: ListView.separated(
-                itemBuilder: (context, index) =>
-                    TopicCard(topic: topics[index]),
-                separatorBuilder: (context, index) => SizedBox(
-                      height: 20,
-                    ),
-                itemCount: topics.length)),
+                ],
+              ),
+            )
+          ],
+          physics: NeverScrollableScrollPhysics(),
+          body: SingleChildScrollView(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              SizedBox(
+                height: 25,
+              ),
+              Text(
+                "Popular now",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              ),
+              Container(
+                  height: 350,
+                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) =>
+                          TopicCard(topic: topics[index]),
+                      separatorBuilder: (context, index) => SizedBox(
+                            width: 20,
+                          ),
+                      itemCount: topics.length)),
+            ]),
+          ),
+        ),
       ),
     );
   }

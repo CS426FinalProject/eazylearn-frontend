@@ -38,7 +38,9 @@ class _CircularProgress extends CustomPainter {
       ..strokeWidth = 10
       ..color = Colors.redAccent
       ..shader = ui.Gradient.linear(
-          Offset(0, 0), Offset(size.width, size.height), <Color>[cal1, cal2])
+          Offset(0, 0),
+          Offset(size.width, size.height),
+          <Color>[resultCircle1, resultCircle2])
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
 

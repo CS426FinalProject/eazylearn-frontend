@@ -25,8 +25,7 @@ class _AnswerChooserState extends State<AnswerChooser> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 500,
+    return Expanded(
       child: ListView.separated(
           itemBuilder: (context, index) => GestureDetector(
                 onTap: () => _handleTap(index),
