@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:final_cs426/models/question.dart';
 import 'package:final_cs426/models/test.dart';
 import 'package:final_cs426/utility/answer_chooser.dart';
+import 'package:final_cs426/utility/current_question_tracker.dart';
 import 'package:final_cs426/utility/question_wheel.dart';
 import 'package:flutter/material.dart';
 import 'package:final_cs426/models/answer.dart';
@@ -104,6 +105,15 @@ class _TestScreenState extends State<TestScreen> {
         padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
         child: Column(
           children: <Widget>[
+            SizedBox(
+              height: 15,
+            ),
+            CurrentQuestionTracker(
+                questionNumber: test.questions.length,
+                selected: currentQuestion),
+            SizedBox(
+              height: 10,
+            ),
             QuestionWheel(
               onControllerCreated: (controller) => wheelController = controller,
               questionNumber: test.questions.length,
