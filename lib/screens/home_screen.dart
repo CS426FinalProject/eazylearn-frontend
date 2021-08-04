@@ -63,52 +63,52 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         color: db));
 
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.only(left: 25, right: 25),
-        child: NestedScrollView(
-          floatHeaderSlivers: true,
-          headerSliverBuilder: (context, innerBoxIsScrolled) => [
-            SliverToBoxAdapter(
-                child: Padding(
-              padding: EdgeInsets.fromLTRB(0, 50, 0, 10),
-              child: Row(
-                children: [
-                  IconButton(
+      body: NestedScrollView(
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverToBoxAdapter(
+              child: Padding(
+            padding: EdgeInsets.fromLTRB(25, 50, 25, 10),
+            child: Row(
+              children: [
+                IconButton(
+                    iconSize: 50,
+                    onPressed: () {},
+                    icon: GradientIcon(
+                      colors: [top_icon_1, top_icon_2],
+                      icon: Icons.account_circle,
+                    )),
+                Expanded(
+                    child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Transform(
+                    alignment: Alignment.center,
+                    transform: Matrix4.rotationY(math.pi),
+                    child: IconButton(
                       iconSize: 50,
                       onPressed: () {},
                       icon: GradientIcon(
                         colors: [top_icon_1, top_icon_2],
-                        icon: Icons.account_circle,
-                      )),
-                  Expanded(
-                      child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Transform(
-                      alignment: Alignment.center,
-                      transform: Matrix4.rotationY(math.pi),
-                      child: IconButton(
-                        iconSize: 50,
-                        onPressed: () {},
-                        icon: GradientIcon(
-                          colors: [top_icon_1, top_icon_2],
-                          icon: Icons.sort,
-                        ),
+                        icon: Icons.sort,
                       ),
                     ),
-                  ))
-                ],
-              ),
-            )),
-            SliverAppBar(
-              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-              toolbarHeight: 70,
-              collapsedHeight: 70,
-              expandedHeight: 70,
-              floating: true,
-              snap: true,
-              title: Column(
-                children: [
-                  TextFormField(
+                  ),
+                ))
+              ],
+            ),
+          )),
+          SliverAppBar(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            toolbarHeight: 70,
+            collapsedHeight: 70,
+            expandedHeight: 70,
+            floating: true,
+            snap: true,
+            title: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 25, right: 25),
+                  child: TextFormField(
                     focusNode: inputFocusNode,
                     style: TextStyle(fontSize: 18),
                     decoration: new InputDecoration(
@@ -124,34 +124,34 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                             left: 18, bottom: 20, top: 20, right: 15),
                         hintText: "Search for tests, topics,..."),
                   ),
-                ],
-              ),
-            )
-          ],
-          physics: NeverScrollableScrollPhysics(),
-          body: SingleChildScrollView(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              SizedBox(
-                height: 25,
-              ),
-              Text(
+                )
+              ],
+            ),
+          )
+        ],
+        physics: NeverScrollableScrollPhysics(),
+        body: SingleChildScrollView(
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            SizedBox(
+              height: 25,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 40, right: 25),
+              child: Text(
                 "Popular now",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
               ),
-              Container(
-                  height: 350,
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) =>
-                          TopicCard(topic: topics[index]),
-                      separatorBuilder: (context, index) => SizedBox(
-                            width: 20,
-                          ),
-                      itemCount: topics.length)),
-            ]),
-          ),
+            ),
+            Container(
+                height: 350,
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) =>
+                        TopicCard(topic: topics[index]),
+                    itemCount: topics.length)),
+          ]),
         ),
       ),
     );

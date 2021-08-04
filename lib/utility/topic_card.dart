@@ -17,78 +17,83 @@ class TopicCard extends StatelessWidget {
     }
     return Hero(
       tag: "main_to_info_${topic.name}",
-      child: Card(
-          elevation: 3,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          child: DecoratedBox(
-              decoration: BoxDecoration(
-                  color: topic.color, borderRadius: BorderRadius.circular(20)),
-              child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                      borderRadius: BorderRadius.circular(20),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                                transitionDuration: Duration(seconds: 1),
-                                pageBuilder: (_, __, ___) => TestInfoScreen(
-                                      topic: topic,
-                                    )));
-                      },
-                      child: Container(
-                          width: 270,
-                          padding: EdgeInsets.fromLTRB(30, 25, 30, 25),
-                          child: Column(children: [
-                            SizedBox(
-                              height: 120,
-                              width: 120,
-                              child: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: SizedBox(
-                                  height: 80,
-                                  width: 80,
-                                  child: Image.asset(
-                                    topic.image,
-                                    fit: BoxFit.fill,
+      child: Padding(
+        padding: EdgeInsets.only(left: 20),
+        child: Card(
+            elevation: 3,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: DecoratedBox(
+                decoration: BoxDecoration(
+                    color: topic.color,
+                    borderRadius: BorderRadius.circular(20)),
+                child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                        borderRadius: BorderRadius.circular(20),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              PageRouteBuilder(
+                                  transitionDuration: Duration(seconds: 1),
+                                  pageBuilder: (_, __, ___) => TestInfoScreen(
+                                        topic: topic,
+                                      )));
+                        },
+                        child: Container(
+                            width: 270,
+                            padding: EdgeInsets.fromLTRB(30, 25, 30, 25),
+                            child: Column(children: [
+                              SizedBox(
+                                height: 120,
+                                width: 120,
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  child: SizedBox(
+                                    height: 80,
+                                    width: 80,
+                                    child: Image.asset(
+                                      topic.image,
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Text(topic.name,
-                                style: TextStyle(
-                                    fontSize: 22.65,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white)),
-                            Expanded(
-                              child: Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Row(
-                                  children: [
-                                    Wrap(children: [
-                                      Icon(Icons.timer, color: Colors.white),
-                                      Text(
-                                        " " + topic.time.toString() + " min",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 18),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Text(topic.name,
+                                  style: TextStyle(
+                                      fontSize: 22.65,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white)),
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Row(
+                                    children: [
+                                      Wrap(children: [
+                                        Icon(Icons.timer, color: Colors.white),
+                                        Text(
+                                          " " + topic.time.toString() + " min",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 18),
+                                        ),
+                                      ]),
+                                      Expanded(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: list,
+                                        ),
                                       ),
-                                    ]),
-                                    Expanded(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: list,
-                                      ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ])))))),
+                            ])))))),
+      ),
     );
     // return Container(
     //   decoration: BoxDecoration(

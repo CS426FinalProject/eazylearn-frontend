@@ -22,3 +22,5 @@ const Color incorrect = Color(0xFFE06262);
 const Color resultCircle1 = Color(0xFF18FE9E);
 const Color resultCircle2 = Color(0xFF11A9FF);
 const Color timerColor = Color(0xFFF9E26A);
+
+const Color signupColor = Color(0xFFFF206E);

@@ -1,4 +1,5 @@
 import 'package:final_cs426/screens/home_screen.dart';
+import 'package:final_cs426/screens/splash_screen.dart';
 import 'package:final_cs426/screens/test_info_screen.dart';
 import 'package:final_cs426/screens/test_screen.dart';
 import 'package:flutter/material.dart';
