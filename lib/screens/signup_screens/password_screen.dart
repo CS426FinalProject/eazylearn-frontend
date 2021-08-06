@@ -88,7 +88,7 @@ class _PasswordScreenState extends State<PasswordScreen>
                                   style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all(
-                                              signupColor),
+                                              primaryColor),
                                       minimumSize: MaterialStateProperty.all(
                                           Size(300, 55)),
                                       shape: MaterialStateProperty.all(

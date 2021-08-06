@@ -12,31 +12,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   FocusNode inputFocusNode = FocusNode();
+  List<Topic> topics = [];
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    inputFocusNode.dispose();
-    super.dispose();
-  }
-
-  @override
-  void didChangeMetrics() {
-    super.didChangeMetrics();
-    final value = WidgetsBinding.instance.window.viewInsets.bottom;
-    if (value == 0) {
-      inputFocusNode.unfocus();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    List<Topic> topics = [];
     topics.add(Topic(
         name: "Calculus III",
         description: "This test revises...",
@@ -61,7 +41,26 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         time: 15,
         difficulty: 3,
         color: db));
+  }
 
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    inputFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeMetrics() {
+    super.didChangeMetrics();
+    final value = WidgetsBinding.instance.window.viewInsets.bottom;
+    if (value == 0) {
+      inputFocusNode.unfocus();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
         floatHeaderSlivers: true,
@@ -133,27 +132,36 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         body: SingleChildScrollView(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SizedBox(
-              height: 25,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 40, right: 25),
-              child: Text(
-                "Popular now",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-              ),
-            ),
-            Container(
-                height: 350,
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) =>
-                        TopicCard(topic: topics[index]),
-                    itemCount: topics.length)),
+            _buildDemo(),
           ]),
         ),
       ),
+    );
+  }
+
+  Widget _buildDemo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 25,
+        ),
+        Padding(
+          padding: EdgeInsets.only(left: 40, right: 25),
+          child: Text(
+            "Popular now",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+          ),
+        ),
+        Container(
+            height: 150,
+            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) =>
+                    TopicCard(topic: topics[index]),
+                itemCount: topics.length)),
+      ],
     );
   }
 }

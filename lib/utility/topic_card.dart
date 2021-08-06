@@ -1,5 +1,7 @@
+import 'package:final_cs426/constants/color.dart';
 import 'package:final_cs426/models/topic.dart';
 import 'package:final_cs426/screens/test_info_screen.dart';
+import 'package:final_cs426/screens/test_screen.dart';
 import 'package:flutter/material.dart';
 
 class TopicCard extends StatelessWidget {
@@ -8,156 +10,208 @@ class TopicCard extends StatelessWidget {
   const TopicCard({@required this.topic});
   @override
   Widget build(BuildContext context) {
-    List<Image> list = [];
+    List<Image> difficultyDisplayer = [];
     for (int i = 0; i < topic.difficulty; i++) {
-      list.add(Image.asset(
+      difficultyDisplayer.add(Image.asset(
         "lib/images/flash.png",
         scale: 25,
       ));
     }
-    return Hero(
-      tag: "main_to_info_${topic.name}",
-      child: Padding(
-        padding: EdgeInsets.only(left: 20),
-        child: Card(
-            elevation: 3,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            child: DecoratedBox(
-                decoration: BoxDecoration(
-                    color: topic.color,
-                    borderRadius: BorderRadius.circular(20)),
-                child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                        borderRadius: BorderRadius.circular(20),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              PageRouteBuilder(
-                                  transitionDuration: Duration(seconds: 1),
-                                  pageBuilder: (_, __, ___) => TestInfoScreen(
-                                        topic: topic,
-                                      )));
-                        },
-                        child: Container(
-                            width: 270,
-                            padding: EdgeInsets.fromLTRB(30, 25, 30, 25),
-                            child: Column(children: [
-                              SizedBox(
-                                height: 120,
-                                width: 120,
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.white,
-                                  child: SizedBox(
-                                    height: 80,
-                                    width: 80,
-                                    child: Image.asset(
-                                      topic.image,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              Text(topic.name,
-                                  style: TextStyle(
-                                      fontSize: 22.65,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white)),
-                              Expanded(
-                                child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Row(
-                                    children: [
-                                      Wrap(children: [
-                                        Icon(Icons.timer, color: Colors.white),
-                                        Text(
-                                          " " + topic.time.toString() + " min",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18),
-                                        ),
-                                      ]),
-                                      Expanded(
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: list,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ])))))),
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        margin: EdgeInsets.only(left: 15),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(20),
+            onTap: () {
+              showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(20))),
+                  builder: (context) => _buildSheet(context));
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 20.0),
+              child: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        color: topic.color,
+                        borderRadius: BorderRadius.circular(20)),
+                    padding: EdgeInsets.all(15),
+                    height: 120,
+                    width: 120,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: SizedBox(
+                        height: 60,
+                        width: 60,
+                        child: Image.asset(
+                          topic.image,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(topic.name,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          )),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            topic.time.toString() + " min",
+                          ),
+                          SizedBox(
+                            width: 40,
+                          ),
+                          Row(
+                            children: difficultyDisplayer,
+                          )
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
-    // return Container(
-    //   decoration: BoxDecoration(
-    //       boxShadow: [
-    //         BoxShadow(
-    //           color: Colors.grey,
-    //           blurRadius: 5.0,
-    //           offset: Offset(3.0, 3.0),
-    //         )
-    //       ],
-    //       gradient: LinearGradient(colors: topic.colors),
-    //       borderRadius: BorderRadius.circular(30)),
-    //   child: Material(
-    //     color: Colors.transparent,
-    //     child: InkWell(
-    //       borderRadius: BorderRadius.circular(30),
-    //       onTap: () {},
-    //       child: Padding(
-    //         padding: EdgeInsets.fromLTRB(10, 15, 0, 15),
-    //         child: Row(
-    //           children: [
-    //             CircleAvatar(
-    //               radius: 40,
-    //               backgroundColor: Colors.white,
-    //               child: Image.asset(
-    //                 topic.image,
-    //                 scale: 10,
-    //               ),
-    //             ),
-    //             SizedBox(
-    //               width: 30,
-    //             ),
-    //             Column(
-    //               crossAxisAlignment: CrossAxisAlignment.start,
-    //               children: [
-    //                 Text(topic.name,
-    //                     style: TextStyle(
-    //                         fontSize: 20,
-    //                         fontWeight: FontWeight.bold,
-    //                         color: Colors.white)),
-    //                 SizedBox(
-    //                   height: 10,
-    //                 ),
-    //                 Row(
-    //                   children: [
-    //                     Text(
-    //                       topic.time.toString() + " min",
-    //                       style: TextStyle(color: Colors.white),
-    //                     ),
-    //                     SizedBox(
-    //                       width: 40,
-    //                     ),
-    //                     Row(
-    //                       children: list,
-    //                     )
-    //                   ],
-    //                 )
-    //               ],
-    //             )
-    //           ],
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
+  }
+
+  Widget _buildSheet(BuildContext context) {
+    List<Image> difficultyDisplayer = [];
+    for (int i = 0; i < topic.difficulty; i++) {
+      difficultyDisplayer.add(Image.asset(
+        "lib/images/flash.png",
+        scale: 25,
+      ));
+    }
+    return Container(
+      padding: EdgeInsets.only(bottom: 15),
+      height: 600,
+      child: Column(
+        children: [
+          Container(
+            alignment: Alignment.center,
+            width: double.infinity,
+            padding: EdgeInsets.all(15),
+            decoration: BoxDecoration(
+                color: topic.color,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20))),
+            child: Text(
+              topic.name,
+              style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                          //decoration: BoxDecoration(color: Colors.blue),
+                          child: Text(
+                        "Time:\n${topic.time} min",
+                        style: TextStyle(fontSize: 20),
+                      )),
+                      flex: 1,
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        // decoration: BoxDecoration(color: Colors.red),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Difficulty",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            SizedBox(height: 5),
+                            Row(
+                              //mainAxisAlignment: MainAxisAlignment.end,
+                              children: difficultyDisplayer,
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 10),
+                Text(
+                  "Description\n" +
+                      "bla bla bla bla bla bla bla bla bla " +
+                      "bla bla bla bla bla bla bla bla bla " +
+                      "bla bla bla bla bla bla bla bla bla " +
+                      "bla bla bla bla bla bla bla bla bla " +
+                      "bla bla bla bla bla bla bla bla bla " +
+                      "bla bla bla bla bla bla bla bla bla " +
+                      "bla bla bla bla bla bla bla bla bla " +
+                      "bla bla bla bla bla bla bla bla bla " +
+                      "bla bla bla bla bla bla bla bla bla " +
+                      "bla bla bla bla bla bla bla bla bla " +
+                      "bla bla bla bla bla bla bla bla bla " +
+                      "bla bla bla bla bla bla bla bla bla " +
+                      "bla bla bla bla bla bla bla bla bla " +
+                      "bla bla bla bla bla bla bla bla bla " +
+                      "bla bla bla bla bla bla bla bla bla " +
+                      "bla bla bla bla bla bla bla bla bla " +
+                      "bla bla bla bla bla bla bla bla bla ",
+                  style: TextStyle(fontSize: 17),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+              child: Align(
+            alignment: Alignment.bottomCenter,
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => TestScreen()));
+              },
+              child: Text(
+                "START",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(topic.color),
+                  minimumSize: MaterialStateProperty.all(Size(270, 50)),
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18)))),
+            ),
+          ))
+        ],
+      ),
+    );
   }
 }

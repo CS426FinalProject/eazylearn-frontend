@@ -99,7 +99,7 @@ class _SignupScreenState extends State<SignupScreen>
                                   style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all(
-                                              signupColor),
+                                              primaryColor),
                                       minimumSize: MaterialStateProperty.all(
                                           Size(300, 55)),
                                       shape: MaterialStateProperty.all(

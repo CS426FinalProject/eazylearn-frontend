@@ -14,7 +14,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen>
   String phone = "";
   String address = "";
   String birthdayString = "";
-
+  bool first = true;
   DateTime birthday;
   final birthdayController = TextEditingController();
   @override
@@ -59,6 +59,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen>
                         hintText: "Phone number",
                         onTextChanged: (value) {
                           phone = value;
+                          first = false;
                         },
                         type: 0),
                     _generateTextFormField(
@@ -96,7 +97,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen>
                                   style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all(
-                                              signupColor),
+                                              primaryColor),
                                       minimumSize: MaterialStateProperty.all(
                                           Size(300, 55)),
                                       shape: MaterialStateProperty.all(
@@ -163,7 +164,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen>
           style: TextStyle(fontSize: 20),
           decoration: InputDecoration(
               labelText: hintText,
-              errorText: type == 0 && !isPhoneNumberValid()
+              errorText: !first && type == 0 && !isPhoneNumberValid()
                   ? "Invalid phone number"
                   : null,
               hintText: hintText,

@@ -62,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
             style: TextStyle(fontSize: 25),
           ),
           style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(signupColor),
+              backgroundColor: MaterialStateProperty.all(primaryColor),
               minimumSize: MaterialStateProperty.all(Size(300, 60)),
               shape: MaterialStateProperty.all(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18)))),

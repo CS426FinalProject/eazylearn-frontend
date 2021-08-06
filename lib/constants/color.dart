@@ -13,7 +13,7 @@ const Color db = Color(0xFFFF7528);
 
 const Color green_light = Color(0x00EF99);
 
-const Color primaryColor = Color(0xFFAF44AF);
+const Color primaryColor = Color(0xFF9966CC);
 const Color secondaryColor = Color(0xFFFFF964);
 
 const Color correct = Color(0xFF62E09C);
@@ -22,5 +22,3 @@ const Color incorrect = Color(0xFFE06262);
 const Color resultCircle1 = Color(0xFF18FE9E);
 const Color resultCircle2 = Color(0xFF11A9FF);
 const Color timerColor = Color(0xFFF9E26A);
-
-const Color signupColor = Color(0xFFFF206E);

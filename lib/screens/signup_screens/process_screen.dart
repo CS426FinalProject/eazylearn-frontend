@@ -32,21 +32,21 @@ class _ProcessScreenState extends State<ProcessScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CircularProgressIndicator(
-                  color: signupColor,
+                  color: primaryColor,
                 ),
                 SizedBox(
                   height: 15,
                 ),
                 Text(
                   "In process...",
-                  style: TextStyle(color: signupColor, fontSize: 20),
+                  style: TextStyle(color: primaryColor, fontSize: 20),
                 )
               ],
             )
           : Text(
               "EAZYLEARN",
               style: TextStyle(
-                  color: signupColor,
+                  color: primaryColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 35),
             ),

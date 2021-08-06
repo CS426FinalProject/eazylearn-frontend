@@ -15,7 +15,7 @@ class TestScreen extends StatefulWidget {
 }
 
 class _TestScreenState extends State<TestScreen> {
-  bool byScroll = false;
+  bool scrollByWheel = false;
   PageController pageController = PageController();
   PageController wheelController;
   ValueNotifier<double> notifier = ValueNotifier(0);
@@ -101,96 +101,105 @@ class _TestScreenState extends State<TestScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Padding(
-        padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 15,
+      body: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(left: 20, right: 20),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 15,
+                ),
+                CurrentQuestionTracker(
+                    questionNumber: test.questions.length,
+                    selected: currentQuestion),
+                SizedBox(
+                  height: 10,
+                ),
+                QuestionWheel(
+                  onControllerCreated: (controller) =>
+                      wheelController = controller,
+                  questionNumber: test.questions.length,
+                  onScroll: (value) {
+                    setState(() {
+                      if (scrollByWheel) {
+                        pageController.animateTo(value * (width),
+                            duration: Duration(milliseconds: 300),
+                            curve: Curves.ease);
+                      }
+                      scrollByWheel = true;
+                    });
+                  },
+                ),
+              ],
             ),
-            CurrentQuestionTracker(
-                questionNumber: test.questions.length,
-                selected: currentQuestion),
-            SizedBox(
-              height: 10,
-            ),
-            QuestionWheel(
-              onControllerCreated: (controller) => wheelController = controller,
-              questionNumber: test.questions.length,
-              onScroll: (value) {
-                setState(() {
-                  pageController.animateTo(value * (width - 40),
-                      duration: Duration(milliseconds: 300),
-                      curve: Curves.ease);
-                  byScroll = true;
-                });
-              },
-            ),
-            Expanded(
-              child: PageView.builder(
+          ),
+          Expanded(
+            child: PageView.builder(
+                itemCount: test.questions.length,
                 controller: pageController,
                 onPageChanged: (index) => setState(() {
-                  currentQuestion = index;
-                  if (!byScroll) wheelController.jumpToPage(index);
-                  byScroll = false;
-                }),
-                itemBuilder: (context, index) => Card(
-                    elevation: 10.0,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(22.0),
-                      topRight: Radius.circular(22.0),
-                    )),
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 70, 20, 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
-                            child: Column(
-                              children: [
-                                Text(
-                                  test.questions[index].question,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
+                      currentQuestion = index;
+                      if (!scrollByWheel) wheelController.jumpToPage(index);
+                      scrollByWheel = false;
+                    }),
+                itemBuilder: (context, index) => Container(
+                      margin: EdgeInsets.only(left: 20, right: 20),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(22),
+                              topRight: Radius.circular(22))),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 70, 20, 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding:
+                                  const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    test.questions[index].question,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 10.0,
-                                ),
-                                Text(
-                                  test.questions[index].equation,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontStyle: FontStyle.italic,
-                                    fontWeight: FontWeight.bold,
+                                  SizedBox(
+                                    height: 10.0,
                                   ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
+                                  Text(
+                                    test.questions[index].equation,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 21.0,
-                          ),
-                          AnswerChooser(
-                            initial: userChoices[index],
-                            options: test.questions[index].options,
-                            onOptionChange: (option) {
-                              setState(() {
-                                userChoices[index] = option;
-                              });
-                            },
-                          )
-                        ],
+                            SizedBox(
+                              height: 21.0,
+                            ),
+                            AnswerChooser(
+                              initial: userChoices[index],
+                              options: test.questions[index].options,
+                              onOptionChange: (option) {
+                                setState(() {
+                                  userChoices[index] = option;
+                                });
+                              },
+                            )
+                          ],
+                        ),
                       ),
                     )),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
