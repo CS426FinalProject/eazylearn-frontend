@@ -54,10 +54,8 @@ class _QuestionWheelState extends State<QuestionWheel> {
                   margin: EdgeInsets.all(5),
                   decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: index == selected
-                          ? timerColor
-                          : (Colors.white
-                              .withOpacity(1 - abs(index - selected) / 10))),
+                      color: Colors.white
+                          .withOpacity(1 - abs(index - selected) * 2 / 10)),
                   child: Center(child: Text("${index + 1}")),
                 ),
               )),

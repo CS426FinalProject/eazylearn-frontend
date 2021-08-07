@@ -15,7 +15,7 @@ class TestScreen extends StatefulWidget {
 }
 
 class _TestScreenState extends State<TestScreen> {
-  bool scrollByWheel = false;
+  bool scrollByWheel;
   PageController pageController = PageController();
   PageController wheelController;
   ValueNotifier<double> notifier = ValueNotifier(0);
@@ -57,8 +57,8 @@ class _TestScreenState extends State<TestScreen> {
     return Scaffold(
       backgroundColor: primaryColor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
               child: Padding(
@@ -72,10 +72,9 @@ class _TestScreenState extends State<TestScreen> {
                 ),
               ),
             ),
-            Card(
-              color: timerColor,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0)),
+            DecoratedBox(
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(20)),
               child: Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Row(
@@ -92,14 +91,15 @@ class _TestScreenState extends State<TestScreen> {
                           style: TextStyle(
                               fontSize: 22,
                               letterSpacing: 0.5,
-                              fontWeight: FontWeight.bold)),
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black)),
                     ],
                   )),
             ),
           ],
         ),
-        backgroundColor: Colors.transparent,
         elevation: 0,
+        backgroundColor: Colors.transparent,
       ),
       body: Column(
         children: <Widget>[
@@ -122,11 +122,10 @@ class _TestScreenState extends State<TestScreen> {
                   questionNumber: test.questions.length,
                   onScroll: (value) {
                     setState(() {
-                      if (scrollByWheel) {
+                      if (scrollByWheel)
                         pageController.animateTo(value * (width),
                             duration: Duration(milliseconds: 300),
                             curve: Curves.ease);
-                      }
                       scrollByWheel = true;
                     });
                   },
@@ -140,8 +139,8 @@ class _TestScreenState extends State<TestScreen> {
                 controller: pageController,
                 onPageChanged: (index) => setState(() {
                       currentQuestion = index;
-                      if (!scrollByWheel) wheelController.jumpToPage(index);
                       scrollByWheel = false;
+                      wheelController.jumpToPage(index);
                     }),
                 itemBuilder: (context, index) => Container(
                       margin: EdgeInsets.only(left: 20, right: 20),
