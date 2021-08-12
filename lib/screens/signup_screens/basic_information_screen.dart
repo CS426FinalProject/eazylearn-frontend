@@ -52,31 +52,33 @@ class _SignupScreenState extends State<SignupScreen>
               ),
               Expanded(
                 flex: MediaQuery.of(context).viewInsets.bottom == 0 ? 5 : 7,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _generateTextFormField(
-                        hintText: "First name",
-                        onTextChanged: (value) {
-                          firstname = value;
-                        }),
-                    _generateTextFormField(
-                        hintText: "Last name",
-                        onTextChanged: (value) {
-                          lastname = value;
-                        }),
-                    _generateTextFormField(
-                        hintText: "Account name",
-                        onTextChanged: (value) {
-                          accountName = value;
-                        }),
-                    _generateTextFormField(
-                        hintText: "Email address",
-                        onTextChanged: (value) {
-                          isFirst = false;
-                          email = value;
-                        }),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView(
+                    children: [
+                      _generateTextFormField(
+                          hintText: "First name",
+                          onTextChanged: (value) {
+                            firstname = value;
+                          }),
+                      _generateTextFormField(
+                          hintText: "Last name",
+                          onTextChanged: (value) {
+                            lastname = value;
+                          }),
+                      _generateTextFormField(
+                          hintText: "Account name",
+                          onTextChanged: (value) {
+                            accountName = value;
+                          }),
+                      _generateTextFormField(
+                          hintText: "Email address",
+                          onTextChanged: (value) {
+                            isFirst = false;
+                            email = value;
+                          }),
+                    ],
+                  ),
                 ),
               ),
               MediaQuery.of(context).viewInsets.bottom == 0

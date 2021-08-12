@@ -52,29 +52,31 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen>
               ),
               Expanded(
                 flex: 5,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _generateTextFormField(
-                        hintText: "Phone number",
-                        onTextChanged: (value) {
-                          phone = value;
-                          first = false;
-                        },
-                        type: 0),
-                    _generateTextFormField(
-                        hintText: "Birthday",
-                        onTextChanged: (value) {
-                          address = value;
-                        },
-                        type: 1),
-                    _generateTextFormField(
-                        hintText: "Home address (optional)",
-                        onTextChanged: (value) {
-                          address = value;
-                        },
-                        type: 2),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView(
+                    children: [
+                      _generateTextFormField(
+                          hintText: "Phone number",
+                          onTextChanged: (value) {
+                            phone = value;
+                            first = false;
+                          },
+                          type: 0),
+                      _generateTextFormField(
+                          hintText: "Birthday",
+                          onTextChanged: (value) {
+                            address = value;
+                          },
+                          type: 1),
+                      _generateTextFormField(
+                          hintText: "Home address (optional)",
+                          onTextChanged: (value) {
+                            address = value;
+                          },
+                          type: 2),
+                    ],
+                  ),
                 ),
               ),
               MediaQuery.of(context).viewInsets.bottom == 0
