@@ -15,10 +15,9 @@ class TestScreen extends StatefulWidget {
 }
 
 class _TestScreenState extends State<TestScreen> {
-  bool scrollByWheel;
+  bool locked = false;
   PageController pageController = PageController();
   PageController wheelController;
-  ValueNotifier<double> notifier = ValueNotifier(0);
   int currentQuestion;
   Test test;
   List<int> userChoices;
@@ -120,13 +119,23 @@ class _TestScreenState extends State<TestScreen> {
                   onControllerCreated: (controller) =>
                       wheelController = controller,
                   questionNumber: test.questions.length,
+                  userChoices: userChoices,
                   onScroll: (value) {
                     setState(() {
-                      if (scrollByWheel)
+                      if (!locked) {
+                        locked = true;
                         pageController.animateTo(value * (width),
                             duration: Duration(milliseconds: 300),
                             curve: Curves.ease);
-                      scrollByWheel = true;
+                        locked = false;
+                      }
+                    });
+                  },
+                  onQuestionChosenByPicker: (value) {
+                    setState(() {
+                      currentQuestion = value;
+                      pageController.jumpToPage(value);
+                      wheelController.jumpToPage(value);
                     });
                   },
                 ),
@@ -138,9 +147,12 @@ class _TestScreenState extends State<TestScreen> {
                 itemCount: test.questions.length,
                 controller: pageController,
                 onPageChanged: (index) => setState(() {
-                      currentQuestion = index;
-                      scrollByWheel = false;
-                      wheelController.jumpToPage(index);
+                      if (!locked) {
+                        currentQuestion = index;
+                        locked = true;
+                        wheelController.jumpToPage(index);
+                        locked = false;
+                      }
                     }),
                 itemBuilder: (context, index) => Container(
                       margin: EdgeInsets.only(left: 20, right: 20),
