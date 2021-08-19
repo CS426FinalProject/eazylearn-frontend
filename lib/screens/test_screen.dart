@@ -143,80 +143,77 @@ class _TestScreenState extends State<TestScreen> {
             ),
           ),
           Expanded(
-            child: PageView.builder(
-                itemCount: test.questions.length,
-                controller: pageController,
-                onPageChanged: (index) => setState(() {
-                      if (!locked) {
-                        currentQuestion = index;
-                        locked = true;
-                        wheelController.jumpToPage(index);
-                        locked = false;
-                      }
-                    }),
-                itemBuilder: (context, index) => Container(
-                      margin: EdgeInsets.only(left: 20, right: 20),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(22),
-                              topRight: Radius.circular(22))),
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 70, 20, 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    test.questions[index].question,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
+            child: Stack(children: [
+              PageView.builder(
+                  itemCount: test.questions.length,
+                  controller: pageController,
+                  onPageChanged: (index) => setState(() {
+                        if (!locked) {
+                          currentQuestion = index;
+                          locked = true;
+                          wheelController.jumpToPage(index);
+                          locked = false;
+                        }
+                      }),
+                  itemBuilder: (context, index) => Container(
+                        margin: EdgeInsets.only(left: 20, right: 20),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(22))),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 70, 20, 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
+                                child: Column(
+                                  children: [
+                                    Text(
+                                      test.questions[index].question,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 10.0,
-                                  ),
-                                  Text(
-                                    test.questions[index].equation,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontStyle: FontStyle.italic,
-                                      fontWeight: FontWeight.bold,
+                                    SizedBox(
+                                      height: 10.0,
                                     ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
+                                    Text(
+                                      test.questions[index].equation,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontStyle: FontStyle.italic,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 21.0,
-                            ),
-                            AnswerChooser(
-                              initial: userChoices[index],
-                              options: test.questions[index].options,
-                              onOptionChange: (option) {
-                                setState(() {
-                                  userChoices[index] = option;
-                                });
-                              },
-                            )
-                          ],
+                              SizedBox(
+                                height: 21.0,
+                              ),
+                              AnswerChooser(
+                                initial: userChoices[index],
+                                options: test.questions[index].options,
+                                onOptionChange: (option) {
+                                  setState(() {
+                                    userChoices[index] = option;
+                                  });
+                                },
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    )),
+                      )),
+            ]),
           ),
+          ElevatedButton(onPressed: () {}, child: Text("submit"))
         ],
       ),
     );
   }
 }
-
-/*
- 
-          
- */

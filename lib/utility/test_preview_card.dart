@@ -1,17 +1,15 @@
-import 'package:final_cs426/constants/color.dart';
-import 'package:final_cs426/models/topic.dart';
-import 'package:final_cs426/screens/test_info_screen.dart';
+import 'package:final_cs426/models/test_preview.dart';
 import 'package:final_cs426/screens/test_screen.dart';
 import 'package:flutter/material.dart';
 
-class TopicCard extends StatelessWidget {
-  final Topic topic;
-
-  const TopicCard({@required this.topic});
+class TestPreviewCard extends StatelessWidget {
+  final TestPreview preview;
+  final bool isFirst;
+  const TestPreviewCard({@required this.preview, @required this.isFirst});
   @override
   Widget build(BuildContext context) {
     List<Image> difficultyDisplayer = [];
-    for (int i = 0; i < topic.difficulty; i++) {
+    for (int i = 0; i < preview.difficulty; i++) {
       difficultyDisplayer.add(Image.asset(
         "lib/images/flash.png",
         scale: 25,
@@ -22,7 +20,7 @@ class TopicCard extends StatelessWidget {
       child: Card(
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        margin: EdgeInsets.only(left: 15),
+        margin: EdgeInsets.only(left: isFirst ? 35 : 15),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
@@ -42,52 +40,44 @@ class TopicCard extends StatelessWidget {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                        color: topic.color,
-                        borderRadius: BorderRadius.circular(20)),
+                        color: preview.color,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            bottomLeft: Radius.circular(20))),
                     padding: EdgeInsets.all(15),
                     height: 120,
-                    width: 120,
-                    child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: SizedBox(
-                        height: 60,
-                        width: 60,
-                        child: Image.asset(
-                          topic.image,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
+                    width: 50,
                   ),
                   SizedBox(
                     width: 30,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(topic.name,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          )),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            topic.time.toString() + " min",
-                          ),
-                          SizedBox(
-                            width: 40,
-                          ),
-                          Row(
-                            children: difficultyDisplayer,
-                          )
-                        ],
-                      )
-                    ],
+                  SizedBox(
+                    width: 220,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(preview.name,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Icon(Icons.timer),
+                            Text("${preview.time} min"),
+                            Expanded(
+                                child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: difficultyDisplayer,
+                            ))
+                          ],
+                        )
+                      ],
+                    ),
                   )
                 ],
               ),
@@ -100,7 +90,7 @@ class TopicCard extends StatelessWidget {
 
   Widget _buildSheet(BuildContext context) {
     List<Image> difficultyDisplayer = [];
-    for (int i = 0; i < topic.difficulty; i++) {
+    for (int i = 0; i < preview.difficulty; i++) {
       difficultyDisplayer.add(Image.asset(
         "lib/images/flash.png",
         scale: 25,
@@ -116,12 +106,12 @@ class TopicCard extends StatelessWidget {
             width: double.infinity,
             padding: EdgeInsets.all(15),
             decoration: BoxDecoration(
-                color: topic.color,
+                color: preview.color,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20))),
             child: Text(
-              topic.name,
+              preview.name,
               style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -139,7 +129,7 @@ class TopicCard extends StatelessWidget {
                       child: Container(
                           //decoration: BoxDecoration(color: Colors.blue),
                           child: Text(
-                        "Time:\n${topic.time} min",
+                        "Time:\n${preview.time} min",
                         style: TextStyle(fontSize: 20),
                       )),
                       flex: 1,
@@ -204,7 +194,7 @@ class TopicCard extends StatelessWidget {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(topic.color),
+                  backgroundColor: MaterialStateProperty.all(preview.color),
                   minimumSize: MaterialStateProperty.all(Size(270, 50)),
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18)))),
