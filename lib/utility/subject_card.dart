@@ -9,7 +9,7 @@ class SubjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(9),
       child: Card(
           elevation: 4,
           shape:
