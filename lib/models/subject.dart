@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
 
-class Topic {
+class Subject {
   String name;
-  int time;
-  int difficulty;
   String image;
-  String description;
   Color color;
-  Topic(
-      {@required this.name,
-      @required this.description,
-      @required this.time,
-      @required this.difficulty,
-      @required this.color}) {
+  Subject({@required this.name, @required this.color}) {
     image = name;
     image = image.replaceAll(' ', '_');
     image = image.toLowerCase();

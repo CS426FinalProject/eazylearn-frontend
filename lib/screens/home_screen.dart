@@ -1,7 +1,9 @@
 import 'package:final_cs426/constants/color.dart';
-import 'package:final_cs426/models/topic.dart';
+import 'package:final_cs426/models/subject.dart';
+import 'package:final_cs426/models/test_preview.dart';
 import 'package:final_cs426/utility/gradient_icon.dart';
-import 'package:final_cs426/utility/topic_card.dart';
+import 'package:final_cs426/utility/subject_card.dart';
+import 'package:final_cs426/utility/test_preview_card.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math; // import this
 
@@ -12,34 +14,35 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   FocusNode inputFocusNode = FocusNode();
-  List<Topic> topics = [];
+  List<Subject> subjects = [];
+  List<TestPreview> previews = [];
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    topics.add(Topic(
-        name: "Calculus III",
-        description: "This test revises...",
-        time: 45,
+    subjects.add(Subject(name: "Mathematics", color: mth));
+    subjects.add(Subject(name: "Physics", color: phy));
+    subjects.add(Subject(name: "Database", color: db));
+
+    previews.add(TestPreview(
+        name: "Mathematics",
+        time: 30,
         difficulty: 3,
-        color: cal));
-    topics.add(Topic(
-        name: "Statistics I",
-        description: "This test revises...",
-        time: 60,
-        difficulty: 2,
-        color: stat));
-    topics.add(Topic(
-        name: "General Physics II",
-        description: "This test revises...",
-        time: 45,
-        difficulty: 2,
+        description: "description",
+        color: mth));
+
+    previews.add(TestPreview(
+        name: "Physics",
+        time: 30,
+        difficulty: 3,
+        description: "description",
         color: phy));
-    topics.add(Topic(
+
+    previews.add(TestPreview(
         name: "Database",
-        description: "This test revises...",
-        time: 15,
+        time: 30,
         difficulty: 3,
+        description: "description",
         color: db));
   }
 
@@ -61,107 +64,205 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: NestedScrollView(
-        floatHeaderSlivers: true,
-        headerSliverBuilder: (context, innerBoxIsScrolled) => [
-          SliverToBoxAdapter(
-              child: Padding(
-            padding: EdgeInsets.fromLTRB(25, 50, 25, 10),
-            child: Row(
+    return GestureDetector(
+      onTap: () {
+        inputFocusNode.unfocus();
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Stack(
+          children: [
+            Column(
               children: [
-                IconButton(
-                    iconSize: 50,
-                    onPressed: () {},
-                    icon: GradientIcon(
-                      colors: [top_icon_1, top_icon_2],
-                      icon: Icons.account_circle,
-                    )),
+                Expanded(flex: 1, child: _buildAppbar()),
                 Expanded(
-                    child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Transform(
-                    alignment: Alignment.center,
-                    transform: Matrix4.rotationY(math.pi),
-                    child: IconButton(
-                      iconSize: 50,
-                      onPressed: () {},
-                      icon: GradientIcon(
-                        colors: [top_icon_1, top_icon_2],
-                        icon: Icons.sort,
-                      ),
-                    ),
-                  ),
-                ))
+                    flex: 4,
+                    child: ListView(
+                      children: [
+                        SizedBox(
+                          height: 35,
+                        ),
+                        _buildListView(
+                            category: "Popular now", isPreview: true),
+                        _buildListView(
+                            category: "All subject", isPreview: false),
+                        // _buildListView(),
+                        // _buildListView()
+                      ],
+                    ))
               ],
             ),
-          )),
-          SliverAppBar(
-            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-            toolbarHeight: 70,
-            collapsedHeight: 70,
-            expandedHeight: 70,
-            floating: true,
-            snap: true,
-            title: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 25, right: 25),
-                  child: TextFormField(
-                    focusNode: inputFocusNode,
-                    style: TextStyle(fontSize: 18),
-                    decoration: new InputDecoration(
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide:
-                                BorderSide(color: Colors.grey, width: 2)),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide:
-                                BorderSide(color: Colors.grey, width: 2)),
-                        contentPadding: EdgeInsets.only(
-                            left: 18, bottom: 20, top: 20, right: 15),
-                        hintText: "Search for tests, topics,..."),
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
-        physics: NeverScrollableScrollPhysics(),
-        body: SingleChildScrollView(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            _buildDemo(),
-          ]),
+            _buildTextFormField(),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildDemo() {
+  Widget _buildTextFormField() {
+    return Padding(
+      padding: EdgeInsets.only(left: 35, right: 35, top: 138),
+      child: Material(
+        borderRadius: BorderRadius.all(Radius.circular(18)),
+        elevation: 5,
+        child: TextFormField(
+          focusNode: inputFocusNode,
+          style: TextStyle(fontSize: 18),
+          decoration: new InputDecoration(
+              prefixIcon: Icon(Icons.search),
+              fillColor: Colors.white,
+              filled: true,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(18)),
+                borderSide: BorderSide(color: Colors.transparent),
+              ),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(18)),
+                  borderSide: BorderSide(color: Colors.transparent)),
+              contentPadding:
+                  EdgeInsets.only(left: 18, bottom: 20, top: 20, right: 15),
+              hintText: "Search for tests, topics,..."),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAppbar() {
+    return Container(
+      padding: EdgeInsets.fromLTRB(35, 0, 35, 0),
+      width: double.infinity,
+      decoration: BoxDecoration(color: primaryColor),
+      child: Row(
+        children: [
+          Text(
+            "EAZYLEARN",
+            style: TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 32),
+          ),
+          Expanded(
+              child: Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                    iconSize: 40,
+                    icon: Icon(
+                      Icons.account_circle,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      print("object");
+                    },
+                  )))
+        ],
+      ),
+    );
+  }
+
+  Widget _buildListView({@required String category, @required bool isPreview}) {
+    print(subjects.length);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 25,
-        ),
         Padding(
-          padding: EdgeInsets.only(left: 40, right: 25),
+          padding: EdgeInsets.only(left: 35),
           child: Text(
-            "Popular now",
+            category,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
           ),
         ),
         Container(
-            height: 150,
+            height: isPreview ? 150 : 300,
             padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) =>
-                    TopicCard(topic: topics[index]),
-                itemCount: topics.length)),
+                itemBuilder: (context, index) => isPreview
+                    ? TestPreviewCard(
+                        preview: previews[index],
+                        isFirst: index == 0,
+                      )
+                    : SubjectCard(
+                        subject: subjects[index], isFirst: index == 0),
+                itemCount: isPreview ? previews.length : subjects.length)),
       ],
     );
   }
+
+// @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     body: NestedScrollView(
+  //       floatHeaderSlivers: true,
+  //       headerSliverBuilder: (context, innerBoxIsScrolled) => [
+  //         SliverToBoxAdapter(
+  //             child: Padding(
+  //           padding: EdgeInsets.fromLTRB(25, 50, 25, 10),
+  //           child: Row(
+  //             children: [
+  //               IconButton(
+  //                   iconSize: 50,
+  //                   onPressed: () {},
+  //                   icon: GradientIcon(
+  //                     colors: [top_icon_1, top_icon_2],
+  //                     icon: Icons.account_circle,
+  //                   )),
+  //               Expanded(
+  //                   child: Align(
+  //                 alignment: Alignment.centerRight,
+  //                 child: Transform(
+  //                   alignment: Alignment.center,
+  //                   transform: Matrix4.rotationY(math.pi),
+  //                   child: IconButton(
+  //                     iconSize: 50,
+  //                     onPressed: () {},
+  //                     icon: GradientIcon(
+  //                       colors: [top_icon_1, top_icon_2],
+  //                       icon: Icons.sort,
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ))
+  //             ],
+  //           ),
+  //         )),
+  //         SliverAppBar(
+  //           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+  //           toolbarHeight: 70,
+  //           collapsedHeight: 70,
+  //           expandedHeight: 70,
+  //           floating: true,
+  //           snap: true,
+  //           title: Column(
+  //             children: [
+  //               Padding(
+  //                 padding: EdgeInsets.only(left: 25, right: 25),
+  //                 child: TextFormField(
+  //                   focusNode: inputFocusNode,
+  //                   style: TextStyle(fontSize: 18),
+  //                   decoration: new InputDecoration(
+  //                       focusedBorder: OutlineInputBorder(
+  //                           borderRadius: BorderRadius.all(Radius.circular(10)),
+  //                           borderSide:
+  //                               BorderSide(color: Colors.grey, width: 2)),
+  //                       enabledBorder: OutlineInputBorder(
+  //                           borderRadius: BorderRadius.all(Radius.circular(10)),
+  //                           borderSide:
+  //                               BorderSide(color: Colors.grey, width: 2)),
+  //                       contentPadding: EdgeInsets.only(
+  //                           left: 18, bottom: 20, top: 20, right: 15),
+  //                       hintText: "Search for tests, topics,..."),
+  //                 ),
+  //               )
+  //             ],
+  //           ),
+  //         )
+  //       ],
+  //       physics: NeverScrollableScrollPhysics(),
+  //       body: SingleChildScrollView(
+  //         child:
+  //             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+  //           _buildDemo(),
+  //         ]),
+  //       ),
+  //     ),
+  //   );
+  // }
 }
