@@ -21,7 +21,6 @@ class Correctness extends StatelessWidget {
     }
     flex.add(count + 1);
     for (int i in flex) {
-      print(i);
       expandeds.add(Expanded(
         flex: i,
         child: DecoratedBox(
@@ -34,11 +33,8 @@ class Correctness extends StatelessWidget {
       ));
       isCorrectFirst = !isCorrectFirst;
     }
-    return SizedBox(
-      width: double.infinity,
-      child: Row(
-        children: expandeds,
-      ),
+    return Row(
+      children: expandeds,
     );
   }
 }

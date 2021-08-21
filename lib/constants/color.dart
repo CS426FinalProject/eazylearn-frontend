@@ -12,10 +12,10 @@ const Color db = Color(0xFFD36B69);
 const Color green_light = Color(0x00EF99);
 
 const Color primaryColor = Color(0xFF3185FC);
-const Color primaryColorDark = Color(0xFF68399B);
+const Color secondaryColor = Color(0xFFF7CB15);
 
-const Color correct = Color(0xFF62E09C);
-const Color incorrect = Color(0xFFE06262);
+const Color correct = Color(0xFF25ED75);
+const Color incorrect = Color(0xFFED254E);
 
 const Color resultCircle1 = Color(0xFF18FE9E);
 const Color resultCircle2 = Color(0xFF11A9FF);

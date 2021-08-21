@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:final_cs426/models/question.dart';
 import 'package:final_cs426/models/test.dart';
+import 'package:final_cs426/screens/result_screen.dart';
 import 'package:final_cs426/utility/answer_chooser.dart';
 import 'package:final_cs426/utility/current_question_tracker.dart';
 import 'package:final_cs426/utility/question_wheel.dart';
@@ -15,6 +17,9 @@ class TestScreen extends StatefulWidget {
 }
 
 class _TestScreenState extends State<TestScreen> {
+  Timer _timer;
+  int _timeLeft;
+
   bool init = true;
   bool locked = false;
   PageController pageController = PageController();
@@ -25,6 +30,9 @@ class _TestScreenState extends State<TestScreen> {
   @override
   void initState() {
     super.initState();
+
+    _timeLeft = 40 * 60;
+
     currentQuestion = 0;
     List<Answer> options = [
       Answer(answerText: "min(f) = 12, max(f) = 14"),
@@ -48,6 +56,7 @@ class _TestScreenState extends State<TestScreen> {
       await Future.delayed(Duration(seconds: 1));
       setState(() {
         init = false;
+        _startTimer();
       });
     });
   }
@@ -55,6 +64,7 @@ class _TestScreenState extends State<TestScreen> {
   @override
   void dispose() {
     super.dispose();
+    _timer.cancel();
     pageController.dispose();
     wheelController.dispose();
   }
@@ -63,21 +73,23 @@ class _TestScreenState extends State<TestScreen> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return AnimatedSwitcher(
-      duration: Duration(seconds: 1),
+      duration: Duration(milliseconds: 1000),
       child: init
           ? Scaffold(
+              key: ValueKey("SPLASH"),
               backgroundColor: primaryColor,
               body: Center(
                 child: Text(
-                  "Mathematics",
+                  "MATHEMATICS",
                   style: TextStyle(
                       color: Colors.white,
-                      fontSize: 30,
+                      fontSize: 50,
                       fontWeight: FontWeight.bold),
                 ),
               ),
             )
           : Scaffold(
+              key: ValueKey("TEST"),
               backgroundColor: primaryColor,
               appBar: AppBar(
                 automaticallyImplyLeading: false,
@@ -87,7 +99,7 @@ class _TestScreenState extends State<TestScreen> {
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                         child: Text(
-                          'CALCULUS III',
+                          'MATHEMATICS',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 32,
@@ -110,9 +122,10 @@ class _TestScreenState extends State<TestScreen> {
                               SizedBox(
                                 width: 3,
                               ),
-                              Text('10:00',
+                              Text('${_toMinute(_timeLeft)}',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
+                                      fontFamily: "Open Sans",
                                       fontSize: 22,
                                       letterSpacing: 0.5,
                                       fontWeight: FontWeight.bold,
@@ -125,51 +138,52 @@ class _TestScreenState extends State<TestScreen> {
                 elevation: 0,
                 backgroundColor: Colors.transparent,
               ),
-              body: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(left: 20, right: 20),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 15,
-                        ),
-                        CurrentQuestionTracker(
+              body: Padding(
+                padding: EdgeInsets.only(bottom: 10),
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 15,
+                          ),
+                          CurrentQuestionTracker(
+                              questionNumber: test.questions.length,
+                              selected: currentQuestion),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          QuestionWheel(
+                            onControllerCreated: (controller) =>
+                                wheelController = controller,
                             questionNumber: test.questions.length,
-                            selected: currentQuestion),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        QuestionWheel(
-                          onControllerCreated: (controller) =>
-                              wheelController = controller,
-                          questionNumber: test.questions.length,
-                          userChoices: userChoices,
-                          onScroll: (value) {
-                            setState(() {
-                              if (!locked) {
-                                locked = true;
-                                pageController.animateTo(value * (width),
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.ease);
-                                locked = false;
-                              }
-                            });
-                          },
-                          onQuestionChosenByPicker: (value) {
-                            setState(() {
-                              currentQuestion = value;
-                              pageController.jumpToPage(value);
-                              wheelController.jumpToPage(value);
-                            });
-                          },
-                        ),
-                      ],
+                            userChoices: userChoices,
+                            onScroll: (value) {
+                              setState(() {
+                                if (!locked) {
+                                  locked = true;
+                                  pageController.animateTo(value * (width),
+                                      duration: Duration(milliseconds: 300),
+                                      curve: Curves.ease);
+                                  locked = false;
+                                }
+                              });
+                            },
+                            onQuestionChosenByPicker: (value) {
+                              setState(() {
+                                currentQuestion = value;
+                                pageController.jumpToPage(value);
+                                wheelController.jumpToPage(value);
+                              });
+                            },
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: Stack(children: [
-                      PageView.builder(
+                    Expanded(
+                      child: PageView.builder(
                           itemCount: test.questions.length,
                           controller: pageController,
                           onPageChanged: (index) => setState(() {
@@ -211,6 +225,7 @@ class _TestScreenState extends State<TestScreen> {
                                             Text(
                                               test.questions[index].equation,
                                               style: TextStyle(
+                                                fontFamily: "Open Sans",
                                                 fontSize: 18,
                                                 fontStyle: FontStyle.italic,
                                                 fontWeight: FontWeight.bold,
@@ -236,12 +251,61 @@ class _TestScreenState extends State<TestScreen> {
                                   ),
                                 ),
                               )),
-                    ]),
-                  ),
-                  ElevatedButton(onPressed: () {}, child: Text("submit"))
-                ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(
+                      onPressed: () => _onSubmitClicked(),
+                      child: Text(
+                        "Submit",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      ),
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(secondaryColor),
+                          minimumSize: MaterialStateProperty.all(Size(200, 50)),
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18)))),
+                    )
+                  ],
+                ),
               ),
             ),
     );
+  }
+
+  void _onSubmitClicked() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => ResultScreen()));
+  }
+
+  void _startTimer() {
+    _timer = new Timer.periodic(
+      Duration(seconds: 1),
+      (Timer timer) {
+        if (_timeLeft == 0) {
+          setState(() {
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            _timeLeft--;
+          });
+        }
+      },
+    );
+  }
+
+  String _toMinute(int sec) {
+    String minute = (sec ~/ 60).toString();
+    String second = (sec % 60).toString();
+    if (minute.length == 1) minute = "0" + minute;
+    if (second.length == 1) second = "0" + second;
+    return "$minute:$second";
   }
 }

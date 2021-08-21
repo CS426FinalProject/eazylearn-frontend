@@ -33,7 +33,8 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Text(
             "WELCOME TO\nEAZYLEARN",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+            style: TextStyle(
+                fontSize: 35, fontWeight: FontWeight.bold, color: primaryColor),
           ),
         ),
         Center(
@@ -59,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
           },
           child: Text(
             "I want to register",
-            style: TextStyle(fontSize: 25),
+            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
           ),
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(primaryColor),

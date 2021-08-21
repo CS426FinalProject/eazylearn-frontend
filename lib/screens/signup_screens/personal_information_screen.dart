@@ -158,6 +158,7 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen>
       child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
         child: TextFormField(
+          keyboardType: type == 0 ? TextInputType.phone : TextInputType.text,
           controller: type == 1 ? birthdayController : null,
           onChanged: (value) {
             onTextChanged(value);

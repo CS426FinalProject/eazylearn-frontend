@@ -29,6 +29,7 @@ class AnswerCard extends StatelessWidget {
                 children: [
                   Text(answer.answerText,
                       style: TextStyle(
+                          fontFamily: "Open Sans",
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: !chosen ? Colors.black : Colors.white)),

@@ -112,7 +112,7 @@ class _QuestionWheelState extends State<QuestionWheel> {
                           ? Border.all(color: Colors.black, width: 2)
                           : null,
                       color: selected == index
-                          ? primaryColorDark
+                          ? secondaryColor
                           : (widget.userChoices[index] != -1
                               ? primaryColor
                               : Colors.white)),
@@ -122,8 +122,7 @@ class _QuestionWheelState extends State<QuestionWheel> {
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: (selected == index) ||
-                                  (widget.userChoices[index] != -1)
+                          color: (widget.userChoices[index] != -1)
                               ? Colors.white
                               : Colors.black),
                     ),

@@ -4,18 +4,61 @@ import 'package:final_cs426/constants/color.dart';
 import 'package:flutter/material.dart';
 
 class ResultCircle extends StatelessWidget {
-  final int questionNumber;
+  final int questionCount;
   final int corrects;
 
-  const ResultCircle({@required this.questionNumber, @required this.corrects});
+  const ResultCircle({@required this.questionCount, @required this.corrects});
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      foregroundPainter: _CircularProgress(corrects / questionNumber * 100),
-      child: SizedBox(
-        height: 300,
-        width: 300,
-      ),
+    return SizedBox(
+      width: 300,
+      height: 300,
+      child: Stack(children: [
+        CustomPaint(
+          foregroundPainter: _CircularProgress(corrects / questionCount * 100),
+          child: SizedBox(
+            height: 300,
+            width: 300,
+          ),
+        ),
+        Column(
+          children: [
+            Expanded(
+              flex: 5,
+              child: Container(
+                alignment: Alignment.bottomCenter,
+                child: Text(
+                  "$corrects",
+                  style: TextStyle(
+                      fontFamily: "Open Sans",
+                      color: correct,
+                      fontSize: 100,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 3,
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 50,
+                    child: Divider(
+                      color: correct,
+                      thickness: 5,
+                    ),
+                  ),
+                  Text(
+                    "$questionCount",
+                    style: TextStyle(
+                        fontFamily: "Open Sans", color: correct, fontSize: 40),
+                  )
+                ],
+              ),
+            )
+          ],
+        )
+      ]),
     );
   }
 }
@@ -30,17 +73,13 @@ class _CircularProgress extends CustomPainter {
     double radius = min(size.width / 2, size.height / 2) - 10;
 
     Paint outerCircle = Paint()
-      ..strokeWidth = 10
-      ..color = Colors.black
+      ..strokeWidth = 30
+      ..color = Colors.black.withOpacity(0.15)
       ..style = PaintingStyle.stroke;
 
     Paint completeArc = Paint()
-      ..strokeWidth = 10
-      ..color = Colors.redAccent
-      ..shader = ui.Gradient.linear(
-          Offset(0, 0),
-          Offset(size.width, size.height),
-          <Color>[resultCircle1, resultCircle2])
+      ..strokeWidth = 30
+      ..color = correct
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
 
