@@ -3,6 +3,7 @@ import 'package:final_cs426/constants/textfield_outlines.dart';
 import 'package:final_cs426/screens/signup_screens/password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/services.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -122,11 +123,11 @@ class _SignupScreenState extends State<SignupScreen>
   void didChangeMetrics() {
     super.didChangeMetrics();
     final value = WidgetsBinding.instance.window.viewInsets.bottom;
-    if (value == 0) {
-      setState(() {
-        FocusScope.of(context).unfocus();
-      });
-    }
+    // if (value == 0) {
+    //   setState(() {
+    //     FocusScope.of(context).unfocus();
+    //   });
+    // }
   }
 
   @override

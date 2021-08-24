@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.final_cs426">
    <application
-        android:label="final_cs426"
+        android:label="Eazylearn"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

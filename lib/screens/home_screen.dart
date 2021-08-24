@@ -1,11 +1,10 @@
 import 'package:final_cs426/constants/color.dart';
 import 'package:final_cs426/models/subject.dart';
 import 'package:final_cs426/models/test_preview.dart';
-import 'package:final_cs426/utility/gradient_icon.dart';
+import 'package:final_cs426/screens/profile_screen.dart';
 import 'package:final_cs426/utility/subject_card.dart';
 import 'package:final_cs426/utility/test_preview_card.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math; // import this
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -86,6 +85,8 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                             category: "Popular now", isPreview: true),
                         _buildListView(
                             category: "All subject", isPreview: false),
+                        _buildListView(
+                            category: "All subject", isPreview: false),
                         // _buildListView(),
                         // _buildListView()
                       ],
@@ -149,7 +150,25 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       color: Colors.white,
                     ),
                     onPressed: () {
-                      print("object");
+                      Navigator.of(context).push(PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => ProfileScreen(),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            const begin = Offset(1.0, 0.0);
+                            const end = Offset.zero;
+                            const curve = Curves.ease;
+
+                            final tween = Tween(begin: begin, end: end);
+                            final curvedAnimation = CurvedAnimation(
+                              parent: animation,
+                              curve: curve,
+                            );
+
+                            return SlideTransition(
+                              position: tween.animate(curvedAnimation),
+                              child: child,
+                            );
+                          }));
                     },
                   )))
         ],

@@ -120,11 +120,11 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen>
   void didChangeMetrics() {
     super.didChangeMetrics();
     final value = WidgetsBinding.instance.window.viewInsets.bottom;
-    if (value == 0) {
-      setState(() {
-        FocusScope.of(context).unfocus();
-      });
-    }
+    // if (value == 0) {
+    //   setState(() {
+    //     FocusScope.of(context).unfocus();
+    //   });
+    // }
   }
 
   @override
