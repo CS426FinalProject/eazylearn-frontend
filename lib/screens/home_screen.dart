@@ -1,6 +1,7 @@
 import 'package:final_cs426/constants/color.dart';
 import 'package:final_cs426/models/subject.dart';
 import 'package:final_cs426/models/test_preview.dart';
+import 'package:final_cs426/models/topic.dart';
 import 'package:final_cs426/screens/profile_screen.dart';
 import 'package:final_cs426/utility/subject_card.dart';
 import 'package:final_cs426/utility/test_preview_card.dart';
@@ -24,22 +25,37 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     subjects.add(Subject(name: "Database", color: db));
 
     previews.add(TestPreview(
-        name: "Mathematics",
+        name: "Mid-term test",
         time: 30,
+        subject: subjects[0],
+        topics: [
+          Topic(topicID: "MTH1", name: "Derivatives"),
+          Topic(topicID: "MTH2", name: "Integrals")
+        ],
         difficulty: 3,
         description: "description",
         color: mth));
 
     previews.add(TestPreview(
-        name: "Physics",
+        name: "Final-term test",
         time: 30,
+        subject: subjects[1],
+        topics: [
+          Topic(topicID: "PHY1", name: "Electricmagnetism"),
+          Topic(topicID: "PHY2", name: "Optics")
+        ],
         difficulty: 3,
         description: "description",
         color: phy));
 
     previews.add(TestPreview(
-        name: "Database",
+        name: "15-minute test",
         time: 30,
+        subject: subjects[2],
+        topics: [
+          Topic(topicID: "DB1", name: "Recovery"),
+          Topic(topicID: "DB2", name: "Concurrency control")
+        ],
         difficulty: 3,
         description: "description",
         color: db));

@@ -48,7 +48,9 @@ class _TestScreenState extends State<TestScreen> {
             equation:
                 '${index + 1}: f(x,y) = 2x^3 + y^4\nD = {(x,y) | x^2 + y^2 <= 1}',
             options: options,
-            answer: 1));
+            answer: 1,
+            explanation:
+                'Explanation ${index + 1}: f(x,y) = 2x^3 + y^4\nasdfasdfasdfasdfasdfasd fasdfasdfasdfasdfasd fasdfasdfasdf asdfasdfasdf asdfasdfasdfa sdfasdfa sdfasdfasdfasdfasdfs'));
     test = Test(idTest: "1", topic: "Calculus", questions: questions);
     userChoices = List.generate(test.questions.length, (index) => -1);
 
@@ -280,8 +282,11 @@ class _TestScreenState extends State<TestScreen> {
   }
 
   void _onSubmitClicked() {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => ResultScreen()));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => ResultScreen(
+              questions: test.questions,
+              answers: userChoices,
+            )));
   }
 
   void _startTimer() {

@@ -1,3 +1,4 @@
+import 'package:final_cs426/models/topic.dart';
 import 'package:flutter/material.dart';
 
 class Subject {

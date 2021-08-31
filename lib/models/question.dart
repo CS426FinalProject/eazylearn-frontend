@@ -6,10 +6,11 @@ class Question {
   String equation;
   List<Answer> options;
   int answer;
-
+  String explanation;
   Question(
       {@required this.question,
       @required this.equation,
       @required this.options,
-      @required this.answer});
+      @required this.answer,
+      @required this.explanation});
 }

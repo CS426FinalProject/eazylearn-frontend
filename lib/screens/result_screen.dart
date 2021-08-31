@@ -1,15 +1,22 @@
 import 'dart:math';
 
 import 'package:final_cs426/constants/color.dart';
+import 'package:final_cs426/models/answer.dart';
+import 'package:final_cs426/models/question.dart';
+import 'package:final_cs426/screens/all_answer_screen.dart';
 import 'package:final_cs426/utility/correctness.dart';
 import 'package:final_cs426/utility/result_circle.dart';
 import 'package:flutter/material.dart';
 
 class ResultScreen extends StatelessWidget {
+  final List<Question> questions;
+  final List<int> answers;
+  ResultScreen({@required this.questions, @required this.answers});
+
   @override
   Widget build(BuildContext context) {
-    final rn = Random();
-    List<bool> corrects = List.generate(40, (index) => rn.nextBool());
+    List<bool> corrects = List.generate(
+        questions.length, (index) => questions[index].answer == answers[index]);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -63,7 +70,13 @@ class ResultScreen extends StatelessWidget {
                           Colors.black.withOpacity(0.07))),
                   child: Text("Show all answer",
                       style: TextStyle(fontSize: 15, color: Colors.black)),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => AllAnswerScreen(
+                              questions: questions,
+                              answers: answers,
+                            )));
+                  },
                 )),
             Expanded(
                 child: Row(
