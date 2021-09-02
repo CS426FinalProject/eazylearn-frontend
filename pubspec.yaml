@@ -29,6 +29,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   email_validator: ^1.0.6
   expandable: ^5.0.1
+  http: any
+  intl: ^0.17.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

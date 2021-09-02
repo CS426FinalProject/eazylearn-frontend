@@ -90,10 +90,19 @@ class _SignupScreenState extends State<SignupScreen>
                           child: _allInformationFilled()
                               ? ElevatedButton(
                                   onPressed: () {
+                                    Map user = {
+                                      "firstName": firstname,
+                                      "lastName": lastname,
+                                      "username": accountName,
+                                      "email": email
+                                    };
+                                    print(user);
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                PasswordScreen()));
+                                                PasswordScreen(
+                                                  user: user,
+                                                )));
                                   },
                                   child: Text(
                                     "Next",

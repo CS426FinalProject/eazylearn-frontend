@@ -3,6 +3,8 @@ import 'package:final_cs426/screens/signup_screens/personal_information_screen.d
 import 'package:flutter/material.dart';
 
 class PasswordScreen extends StatefulWidget {
+  final Map user;
+  PasswordScreen({@required this.user});
   @override
   _PasswordScreenState createState() => _PasswordScreenState();
 }
@@ -76,10 +78,20 @@ class _PasswordScreenState extends State<PasswordScreen>
                           child: _allInformationFilled()
                               ? ElevatedButton(
                                   onPressed: () {
+                                    Map user = {
+                                      "firstName": widget.user["firstName"],
+                                      "lastName": widget.user["lastName"],
+                                      "username": widget.user["username"],
+                                      "email": widget.user["email"],
+                                      "password": password
+                                    };
+                                    print(user);
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                PersonalInformationScreen()));
+                                                PersonalInformationScreen(
+                                                  user: user,
+                                                )));
                                   },
                                   child: Text(
                                     "Next",

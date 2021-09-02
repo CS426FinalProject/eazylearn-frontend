@@ -1,9 +1,13 @@
+import 'package:final_cs426/api/api.dart';
 import 'package:final_cs426/constants/color.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    if (Session.user == null) Session.user = Session.defaultUser;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -79,7 +83,9 @@ class ProfileScreen extends StatelessWidget {
                         children: [
                           Text("Date of birth",
                               style: TextStyle(color: grey, fontSize: 18)),
-                          Text("21/08/2001", style: TextStyle(fontSize: 18))
+                          Text(
+                              DateFormat("dd/MM/yyyy").format(Session.user.dob),
+                              style: TextStyle(fontSize: 18))
                         ],
                       ),
                     ),
@@ -90,7 +96,8 @@ class ProfileScreen extends StatelessWidget {
                         children: [
                           Text("Dial num",
                               style: TextStyle(color: grey, fontSize: 18)),
-                          Text("--", style: TextStyle(fontSize: 18))
+                          Text(Session.user.phone,
+                              style: TextStyle(fontSize: 18))
                         ],
                       ),
                     ),
@@ -99,7 +106,7 @@ class ProfileScreen extends StatelessWidget {
                 SizedBox(height: 10),
                 Text("Email address:",
                     style: TextStyle(color: grey, fontSize: 18)),
-                Text("blablabla@gmail.com", style: TextStyle(fontSize: 18))
+                Text(Session.user.email, style: TextStyle(fontSize: 18))
               ],
             ),
           )),
@@ -199,12 +206,12 @@ class ProfileScreen extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Huy Vu Duc",
+                  Text(Session.user.firstname + " " + Session.user.lastname,
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   SizedBox(height: 5),
                   Text(
-                    "Emblema",
+                    Session.user.username,
                     style: TextStyle(color: grey),
                   ),
                 ],

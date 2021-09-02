@@ -1,9 +1,12 @@
 import 'package:final_cs426/constants/color.dart';
 import 'package:final_cs426/constants/textfield_outlines.dart';
+import 'package:final_cs426/models/user.dart';
 import 'package:final_cs426/screens/signup_screens/process_screen.dart';
 import 'package:flutter/material.dart';
 
 class PersonalInformationScreen extends StatefulWidget {
+  final Map user;
+  PersonalInformationScreen({@required this.user});
   @override
   _PersonalInformationScreenState createState() =>
       _PersonalInformationScreenState();
@@ -87,10 +90,28 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen>
                           child: _allInformationFilled()
                               ? ElevatedButton(
                                   onPressed: () {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ProcessScreen()));
+                                    final bdStr = birthday.toIso8601String();
+
+                                    Map user = {
+                                      "firstName": widget.user["firstName"],
+                                      "lastName": widget.user["lastName"],
+                                      "username": widget.user["username"],
+                                      "email": widget.user["email"],
+                                      "password": widget.user["password"],
+                                      "phone": phone,
+                                      "dob":
+                                          bdStr.substring(0, bdStr.length - 4) +
+                                              "Z",
+                                    };
+
+                                    if (address != null && address.isNotEmpty)
+                                      user["address"] = address;
+                                    print(user);
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                            builder: (context) => ProcessScreen(
+                                                  user: user,
+                                                )));
                                   },
                                   child: Text(
                                     "Next",
@@ -197,6 +218,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen>
 
   bool _allInformationFilled() {
     print("password: ${phone.isNotEmpty && address.isNotEmpty}");
-    return phone.isNotEmpty && address.isNotEmpty && birthdayString.isNotEmpty;
+    return phone.isNotEmpty && birthdayString.isNotEmpty;
   }
 }

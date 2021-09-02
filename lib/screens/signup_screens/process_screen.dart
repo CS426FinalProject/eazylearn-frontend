@@ -1,8 +1,12 @@
+import 'package:final_cs426/api/api.dart';
 import 'package:final_cs426/constants/color.dart';
+import 'package:final_cs426/models/user.dart';
 import 'package:final_cs426/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class ProcessScreen extends StatefulWidget {
+  final Map user;
+  ProcessScreen({@required this.user});
   @override
   _ProcessScreenState createState() => _ProcessScreenState();
 }
@@ -13,11 +17,17 @@ class _ProcessScreenState extends State<ProcessScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((duration) async {
-      await Future.delayed(Duration(seconds: 2));
-      setState(() => init = false);
-      await Future.delayed(Duration(seconds: 1));
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+      final result = await API.signUp(widget.user);
+      if (result != null) {
+        Session.user = result;
+        setState(() => init = false);
+        await Future.delayed(Duration(seconds: 1));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("error")));
+      }
     });
   }
 
