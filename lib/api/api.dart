@@ -12,8 +12,8 @@ class Session {
       lastname: "lastname",
       username: "username",
       dob: DateTime.now(),
-      email: "email",
-      phone: "phone");
+      email: "email@email.com",
+      phone: "0987654321");
 }
 
 class API {
