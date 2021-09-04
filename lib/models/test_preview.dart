@@ -10,12 +10,14 @@ class TestPreview {
   Color color;
   Subject subject;
   List<Topic> topics;
-  TestPreview(
-      {@required this.name,
-      @required this.time,
-      @required this.subject,
-      @required this.topics,
-      @required this.difficulty,
-      @required this.description,
-      @required this.color});
+  TestPreview({
+    @required this.name,
+    @required this.time,
+    @required this.subject,
+    @required this.topics,
+    @required this.difficulty,
+    @required this.description,
+  }) {
+    color = subject.color;
+  }
 }

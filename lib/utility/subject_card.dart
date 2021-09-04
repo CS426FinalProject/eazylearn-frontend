@@ -1,4 +1,5 @@
 import 'package:final_cs426/models/subject.dart';
+import 'package:final_cs426/screens/test_choosing_screen.dart';
 import 'package:flutter/material.dart';
 
 class SubjectCard extends StatelessWidget {
@@ -22,7 +23,13 @@ class SubjectCard extends StatelessWidget {
               color: Colors.transparent,
               child: InkWell(
                 borderRadius: BorderRadius.circular(20),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              TestChoosingScreen(subject: subject)));
+                },
                 child: SizedBox(
                   width: 270,
                   height: 270,

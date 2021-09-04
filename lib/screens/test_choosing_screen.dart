@@ -9,53 +9,50 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class TestChoosingScreen extends StatefulWidget {
-  const TestChoosingScreen({key}) : super(key: key);
-
+  final Subject subject;
+  TestChoosingScreen({@required this.subject});
   @override
   _TestChoosingScreenState createState() => _TestChoosingScreenState();
 }
 
 class _TestChoosingScreenState extends State<TestChoosingScreen> {
   FocusNode inputFocusNode = FocusNode();
-  Subject subject = Subject(name: "Mathematics", color: mth);
+  Subject subject;
   List<TestPreview> previews = [];
-  List<Topic> topics = [];
-  List<bool> topicsChecked = [];
+  List<Topic> topics;
+  List<bool> topicsChecked;
 
   @override
   void initState() {
     super.initState();
-    subject = Subject(name: "Mathematics", color: mth);
-
-    topics.add(Topic(topicID: "MTH1", name: "Derivatives"));
-    topicsChecked.add(true);
-    topics.add(Topic(topicID: "MTH2", name: "Integrals"));
-    topicsChecked.add(true);
+    subject = widget.subject;
+    topics = subject.topics;
+    topicsChecked = List.generate(topics.length, (index) => false);
 
     previews.add(TestPreview(
-        name: "Mid-term test",
-        time: 30,
-        subject: subject,
-        topics: topics,
-        difficulty: 3,
-        description: "description",
-        color: mth));
+      name: "Mid-term test",
+      time: 30,
+      subject: subject,
+      topics: topics,
+      difficulty: 3,
+      description: "description",
+    ));
     previews.add(TestPreview(
-        name: "Final-term test",
-        time: 30,
-        subject: subject,
-        topics: topics,
-        difficulty: 3,
-        description: "description",
-        color: mth));
+      name: "Final-term test",
+      time: 30,
+      subject: subject,
+      topics: topics,
+      difficulty: 3,
+      description: "description",
+    ));
     previews.add(TestPreview(
-        name: "15-minute test",
-        time: 30,
-        subject: subject,
-        topics: topics,
-        difficulty: 3,
-        description: "description",
-        color: mth));
+      name: "15-minute test",
+      time: 30,
+      subject: subject,
+      topics: topics,
+      difficulty: 3,
+      description: "description",
+    ));
   }
 
   @override
@@ -123,7 +120,7 @@ class _TestChoosingScreenState extends State<TestChoosingScreen> {
           SizedBox(
             width: 10,
           ),
-          Container(
+          DecoratedBox(
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -136,8 +133,14 @@ class _TestChoosingScreenState extends State<TestChoosingScreen> {
                 ]),
             child: IconButton(
                 iconSize: 40,
-                onPressed: () {
-                  // _showFilterDialog();
+                onPressed: () async {
+                  await showDialog(
+                      context: context,
+                      builder: (context) => TopicCheckboxDialog(
+                            topicsChecked: topicsChecked,
+                            topics: topics,
+                          ));
+                  print(topicsChecked);
                 },
                 icon: Icon(
                   Icons.filter_alt_outlined,
@@ -166,48 +169,80 @@ class _TestChoosingScreenState extends State<TestChoosingScreen> {
   }
 }
 
-// class TopicCheckboxDialog extends StatefulWidget {
-//   final List<bool> topicsChecked;
+class TopicCheckboxDialog extends StatefulWidget {
+  final List<bool> topicsChecked;
+  final List<Topic> topics;
+  TopicCheckboxDialog({@required this.topicsChecked, @required this.topics});
 
-//   TopicCheckboxDialog({@required this.topicsChecked}) : super()
+  @override
+  _TopicCheckboxDialogState createState() => _TopicCheckboxDialogState();
+}
 
-//   @override
-//   _TopicCheckboxDialogState createState() => _TopicCheckboxDialogState();
-// }
+class _TopicCheckboxDialogState extends State<TopicCheckboxDialog> {
+  List<bool> topicsChecked;
 
-// class _TopicCheckboxDialogState extends State<TopicCheckboxDialog> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return AlertDialog(
-//               title: Text("Filter by topics"),
-//               content: _topicCheckboxList(),
-//               actions: <Widget>[
-//                 TextButton(
-//                     onPressed: Navigator.of(context).pop,
-//                     child: Text("Apply that bitch")),
-//                 TextButton(
-//                     onPressed: Navigator.of(context).pop,
-//                     child: Text("Cancel")),
-//               ]);
-//   }
+  @override
+  void initState() {
+    super.initState();
+    topicsChecked = widget.topicsChecked;
+  }
 
-//     _topicCheckboxList() {
-//     print(topicsChecked.length);
-//     return SizedBox(
-//       width: 200,
-//       child: ListView.builder(
-//         shrinkWrap: true,
-//         scrollDirection: Axis.vertical,
-//         itemBuilder: (context, index) => (Checkbox(
-//           value: topicsChecked[index],
-//           onChanged: (value) {
-//             setState(() {
-//               topicsChecked[index] = value;
-//             });
-//           },
-//         )),
-//         itemCount: topicsChecked.length,
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Text(
+          "Filter by topics",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        content: _topicCheckboxList(),
+        actions: <Widget>[
+          ElevatedButton(
+              onPressed: Navigator.of(context).pop,
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(secondaryColor),
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)))),
+              child: Text(
+                "Apply",
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              )),
+          TextButton(
+              onPressed: Navigator.of(context).pop,
+              style: ButtonStyle(
+                  overlayColor: MaterialStateProperty.all(
+                      Colors.black.withOpacity(0.07))),
+              child: Text(
+                "Cancel",
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              )),
+        ]);
+  }
+
+  _topicCheckboxList() {
+    return SizedBox(
+      width: 300,
+      child: ListView.builder(
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        itemBuilder: (context, index) => Row(children: [
+          (Checkbox(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+            value: topicsChecked[index],
+            onChanged: (value) {
+              setState(() {
+                topicsChecked[index] = value;
+              });
+            },
+          )),
+          SizedBox(width: 5),
+          Text(widget.topics[index].name)
+        ]),
+        itemCount: topicsChecked.length,
+      ),
+    );
+  }
+}

@@ -5,7 +5,8 @@ class Subject {
   String name;
   String image;
   Color color;
-  Subject({@required this.name, @required this.color}) {
+  List<Topic> topics;
+  Subject({@required this.name, @required this.color, @required this.topics}) {
     image = name;
     image = image.replaceAll(' ', '_');
     image = image.toLowerCase();

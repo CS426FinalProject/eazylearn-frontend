@@ -19,45 +19,60 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    subjects.add(Subject(name: "Mathematics", color: mth));
-    subjects.add(Subject(name: "Physics", color: phy));
-    subjects.add(Subject(name: "Database", color: db));
+    subjects.add(Subject(name: "Mathematics", color: mth, topics: [
+      Topic(topicID: "MTH1", name: "Derivatives"),
+      Topic(topicID: "MTH2", name: "Integrals"),
+      Topic(topicID: "MTH3", name: "Trigonometry"),
+      Topic(topicID: "MTH4", name: "Calculus")
+    ]));
+    subjects.add(Subject(name: "Physics", color: phy, topics: [
+      Topic(topicID: "PHY1", name: "Electricmagnetism"),
+      Topic(topicID: "PHY2", name: "Optics"),
+      Topic(topicID: "PHY3", name: "Force"),
+      Topic(topicID: "PHY4", name: "Alternative current")
+    ]));
+    subjects.add(Subject(name: "Database", color: db, topics: [
+      Topic(topicID: "DB1", name: "Recovery"),
+      Topic(topicID: "DB2", name: "Concurrency control"),
+      Topic(topicID: "DB3", name: "Locking"),
+      Topic(topicID: "DB4", name: "ER Diagram")
+    ]));
 
     previews.add(TestPreview(
-        name: "Mid-term test",
-        time: 30,
-        subject: subjects[0],
-        topics: [
-          Topic(topicID: "MTH1", name: "Derivatives"),
-          Topic(topicID: "MTH2", name: "Integrals")
-        ],
-        difficulty: 3,
-        description: "description",
-        color: mth));
+      name: "Mid-term test",
+      time: 30,
+      subject: subjects[0],
+      topics: [
+        Topic(topicID: "MTH1", name: "Derivatives"),
+        Topic(topicID: "MTH2", name: "Integrals")
+      ],
+      difficulty: 3,
+      description: "description",
+    ));
 
     previews.add(TestPreview(
-        name: "Final-term test",
-        time: 30,
-        subject: subjects[1],
-        topics: [
-          Topic(topicID: "PHY1", name: "Electricmagnetism"),
-          Topic(topicID: "PHY2", name: "Optics")
-        ],
-        difficulty: 3,
-        description: "description",
-        color: phy));
+      name: "Final-term test",
+      time: 30,
+      subject: subjects[1],
+      topics: [
+        Topic(topicID: "PHY1", name: "Electricmagnetism"),
+        Topic(topicID: "PHY2", name: "Optics")
+      ],
+      difficulty: 3,
+      description: "description",
+    ));
 
     previews.add(TestPreview(
-        name: "15-minute test",
-        time: 30,
-        subject: subjects[2],
-        topics: [
-          Topic(topicID: "DB1", name: "Recovery"),
-          Topic(topicID: "DB2", name: "Concurrency control")
-        ],
-        difficulty: 3,
-        description: "description",
-        color: db));
+      name: "15-minute test",
+      time: 30,
+      subject: subjects[2],
+      topics: [
+        Topic(topicID: "DB1", name: "Recovery"),
+        Topic(topicID: "DB2", name: "Concurrency control")
+      ],
+      difficulty: 3,
+      description: "description",
+    ));
   }
 
   @override
