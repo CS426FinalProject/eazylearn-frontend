@@ -7,7 +7,11 @@ import 'package:flutter/material.dart';
 class TestPreviewCard extends StatelessWidget {
   final TestPreview preview;
   final bool isFirst;
-  const TestPreviewCard({@required this.preview, @required this.isFirst});
+  final bool isInTestChoosingScreen;
+  const TestPreviewCard(
+      {@required this.preview,
+      @required this.isFirst,
+      @required this.isInTestChoosingScreen});
   @override
   Widget build(BuildContext context) {
     List<Image> difficultyDisplayer = [];
@@ -22,7 +26,11 @@ class TestPreviewCard extends StatelessWidget {
       child: Card(
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        margin: EdgeInsets.only(left: isFirst ? 35 : 15),
+        margin: EdgeInsets.fromLTRB(
+            isInTestChoosingScreen ? 0 : (isFirst ? 35 : 15),
+            isInTestChoosingScreen && isFirst ? 20 : 0,
+            0,
+            0),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
@@ -47,7 +55,7 @@ class TestPreviewCard extends StatelessWidget {
                             topLeft: Radius.circular(20),
                             bottomLeft: Radius.circular(20))),
                     padding: EdgeInsets.all(15),
-                    height: 120,
+                    height: !isInTestChoosingScreen ? 120 : 60,
                     width: 50,
                   ),
                   SizedBox(
@@ -64,13 +72,17 @@ class TestPreviewCard extends StatelessWidget {
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             )),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          preview.subject.name,
-                          style: TextStyle(fontStyle: FontStyle.italic),
-                        )
+                        !isInTestChoosingScreen
+                            ? SizedBox(
+                                height: 10,
+                              )
+                            : SizedBox.shrink(),
+                        !isInTestChoosingScreen
+                            ? Text(
+                                preview.subject.name,
+                                style: TextStyle(fontStyle: FontStyle.italic),
+                              )
+                            : SizedBox.shrink(),
                       ],
                     ),
                   )
