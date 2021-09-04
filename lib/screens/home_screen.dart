@@ -2,7 +2,7 @@ import 'package:final_cs426/constants/color.dart';
 import 'package:final_cs426/models/subject.dart';
 import 'package:final_cs426/models/test_preview.dart';
 import 'package:final_cs426/models/topic.dart';
-import 'package:final_cs426/screens/profile_screen.dart';
+import 'package:final_cs426/screens/profile_screens/profile_screen.dart';
 import 'package:final_cs426/utility/subject_card.dart';
 import 'package:final_cs426/utility/test_preview_card.dart';
 import 'package:flutter/material.dart';
@@ -12,14 +12,13 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
+class _HomeScreenState extends State<HomeScreen> {
   FocusNode inputFocusNode = FocusNode();
   List<Subject> subjects = [];
   List<TestPreview> previews = [];
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
     subjects.add(Subject(name: "Mathematics", color: mth));
     subjects.add(Subject(name: "Physics", color: phy));
     subjects.add(Subject(name: "Database", color: db));
@@ -63,29 +62,17 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
     inputFocusNode.dispose();
     super.dispose();
   }
 
   @override
-  void didChangeMetrics() {
-    super.didChangeMetrics();
-    final value = WidgetsBinding.instance.window.viewInsets.bottom;
-    if (value == 0) {
-      inputFocusNode.unfocus();
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        inputFocusNode.unfocus();
-      },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Stack(
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: GestureDetector(
+        onTap: () => inputFocusNode.unfocus(),
+        child: Stack(
           children: [
             Column(
               children: [

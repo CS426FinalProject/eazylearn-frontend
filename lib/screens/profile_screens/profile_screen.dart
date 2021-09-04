@@ -1,9 +1,15 @@
 import 'package:final_cs426/api/api.dart';
 import 'package:final_cs426/constants/color.dart';
+import 'package:final_cs426/screens/profile_screens/profile_editting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
+  @override
+  _ProfileScreenState createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     if (Session.user == null) Session.user = Session.defaultUser;
@@ -37,16 +43,16 @@ class ProfileScreen extends StatelessWidget {
                   SizedBox(height: 20),
                 ]),
               ),
-              _buildPersonalInfoCard()
+              _buildPersonalInfoCard(context)
             ]),
-            _buildNameCard()
+            _buildNameCard(context)
           ],
         ),
       ),
     );
   }
 
-  Widget _buildPersonalInfoCard() {
+  Widget _buildPersonalInfoCard(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(left: 20, right: 20),
       child: _buildRoundedBox(
@@ -67,7 +73,10 @@ class ProfileScreen extends StatelessWidget {
                         child: Align(
                       alignment: Alignment.centerRight,
                       child: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          print("asdf");
+                          _edit(context);
+                        },
                         icon: Icon(Icons.edit),
                       ),
                     ))
@@ -191,7 +200,7 @@ class ProfileScreen extends StatelessWidget {
     ]);
   }
 
-  Widget _buildNameCard() {
+  Widget _buildNameCard(BuildContext context) {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.only(top: 340, left: 20, right: 20),
@@ -220,7 +229,10 @@ class ProfileScreen extends StatelessWidget {
                   child: Align(
                 alignment: Alignment.centerRight,
                 child: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    print("asdf");
+                    _edit(context);
+                  },
                   icon: Icon(Icons.edit),
                 ),
               ))
@@ -229,5 +241,29 @@ class ProfileScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _edit(BuildContext context) {
+    Navigator.of(context)
+        .push(PageRouteBuilder(
+            pageBuilder: (_, __, ___) => ProfileEdittingScreen(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              const begin = Offset(1.0, 0.0);
+              const end = Offset.zero;
+              const curve = Curves.ease;
+
+              final tween = Tween(begin: begin, end: end);
+              final curvedAnimation = CurvedAnimation(
+                parent: animation,
+                curve: curve,
+              );
+
+              return SlideTransition(
+                position: tween.animate(curvedAnimation),
+                child: child,
+              );
+            }))
+        .then((value) => setState(() {}));
   }
 }

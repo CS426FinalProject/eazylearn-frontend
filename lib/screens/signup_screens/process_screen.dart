@@ -1,6 +1,7 @@
 import 'package:final_cs426/api/api.dart';
 import 'package:final_cs426/constants/color.dart';
 import 'package:final_cs426/models/user.dart';
+import 'package:final_cs426/routes/routes.dart';
 import 'package:final_cs426/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -22,8 +23,7 @@ class _ProcessScreenState extends State<ProcessScreen> {
         Session.user = result;
         setState(() => init = false);
         await Future.delayed(Duration(seconds: 1));
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => HomeScreen()));
+        Navigator.of(context).pushNamed(Routes.home);
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("error")));
