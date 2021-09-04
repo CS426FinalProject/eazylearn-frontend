@@ -200,6 +200,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ? TestPreviewCard(
                         preview: previews[index],
                         isFirst: index == 0,
+                        isInTestChoosingScreen: false,
                       )
                     : SubjectCard(
                         subject: subjects[index], isFirst: index == 0),
