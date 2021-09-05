@@ -111,7 +111,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     ))
               ],
             ),
-            _buildTextFormField(),
+            Column(
+              children: [
+                Expanded(
+                    flex: 4,
+                    child: Column(
+                      children: [
+                        Expanded(flex: 2, child: SizedBox.shrink()),
+                        Expanded(flex: 1, child: _buildTextFormField()),
+                      ],
+                    )),
+                Expanded(
+                  flex: 13,
+                  child: SizedBox.shrink(),
+                )
+              ],
+            ),
           ],
         ),
       ),
@@ -120,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildTextFormField() {
     return Padding(
-      padding: EdgeInsets.only(left: 35, right: 35, top: 138),
+      padding: EdgeInsets.only(left: 35, right: 35),
       child: Material(
         borderRadius: BorderRadius.all(Radius.circular(18)),
         elevation: 5,
