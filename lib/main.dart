@@ -17,9 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'EazyLearn',
-      // theme: _kEzLearnTheme,
-      theme: ThemeData(
-          primarySwatch: _kEzLearnTheme.primaryColor, fontFamily: 'Raleway'),
+      theme: _kEzLearnTheme,
       routes: Routes.routes,
       initialRoute: Routes.home,
     );
@@ -67,11 +65,13 @@ TextTheme _buildEzLearnTextTheme1(TextTheme base) {
             fontSize: 28,
             height: 1.2,
             letterSpacing: 1,
+            color: kEzLearnBlack,
           ),
           headline6: base.headline6.copyWith(
             fontWeight: FontWeight.w600,
             fontSize: 18,
             height: 1.4,
+            color: kEzLearnBlack,
           ),
           subtitle1: base.subtitle1.copyWith(
             fontWeight: FontWeight.w600,
@@ -84,16 +84,17 @@ TextTheme _buildEzLearnTextTheme1(TextTheme base) {
             fontWeight: FontWeight.w600,
             fontSize: 18,
             height: 1.4,
+            color: kEzLearnBlack,
           ),
           bodyText2: base.bodyText2.copyWith(
             fontWeight: FontWeight.w500,
             fontSize: 18,
             height: 1.3,
+            color: kEzLearnBlack,
           ))
       .apply(
         fontFamily: 'Raleway',
         displayColor: kEzLearnWhite,
-        bodyColor: kEzLearnBlack,
       );
 }
 

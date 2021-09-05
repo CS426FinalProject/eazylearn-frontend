@@ -126,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 5,
         child: TextFormField(
           focusNode: inputFocusNode,
-          style: TextStyle(fontSize: 18),
+          style: Theme.of(context).textTheme.headline6,
           decoration: new InputDecoration(
               prefixIcon: Icon(Icons.search),
               fillColor: Colors.white,
@@ -155,8 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Text(
             "EAZYLEARN",
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 32),
+            style: Theme.of(context).textTheme.headline4,
           ),
           Expanded(
               child: Align(
@@ -203,11 +202,11 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.only(left: 35),
           child: Text(
             category,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+            style: Theme.of(context).textTheme.headline5,
           ),
         ),
         Container(
-            height: isPreview ? 150 : 300,
+            height: isPreview ? 130 : 300,
             padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,

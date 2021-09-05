@@ -14,6 +14,7 @@ class TestPreviewCard extends StatelessWidget {
       @required this.isInTestChoosingScreen});
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
     List<Image> difficultyDisplayer = [];
     for (int i = 0; i < preview.difficulty; i++) {
       difficultyDisplayer.add(Image.asset(
@@ -55,23 +56,22 @@ class TestPreviewCard extends StatelessWidget {
                             topLeft: Radius.circular(20),
                             bottomLeft: Radius.circular(20))),
                     padding: EdgeInsets.all(15),
-                    height: !isInTestChoosingScreen ? 120 : 60,
+                    height: !isInTestChoosingScreen ? 200 : 60,
                     width: 50,
                   ),
                   SizedBox(
                     width: 30,
                   ),
                   SizedBox(
-                    width: 220,
+                    width: 180,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(preview.name,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            )),
+                        Text(
+                          preview.name,
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
                         !isInTestChoosingScreen
                             ? SizedBox(
                                 height: 10,
@@ -80,7 +80,7 @@ class TestPreviewCard extends StatelessWidget {
                         !isInTestChoosingScreen
                             ? Text(
                                 preview.subject.name,
-                                style: TextStyle(fontStyle: FontStyle.italic),
+                                style: Theme.of(context).textTheme.subtitle1,
                               )
                             : SizedBox.shrink(),
                       ],
