@@ -30,11 +30,23 @@ class _SplashScreenState extends State<SplashScreen> {
           height: init ? MediaQuery.of(context).size.height : 250,
           width: MediaQuery.of(context).size.width,
           alignment: init ? Alignment.center : Alignment.bottomCenter,
-          child: Text(
-            "WELCOME TO\nEAZYLEARN",
+          child: RichText(
             textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 35, fontWeight: FontWeight.bold, color: primaryColor),
+            text: TextSpan(
+              text: 'Welcome to\n',
+              style: Theme.of(context).textTheme.headline4.copyWith(
+                    fontSize: 24,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+              children: <TextSpan>[
+                TextSpan(
+                  text: 'EazyLearn'.toUpperCase(),
+                  style: Theme.of(context).textTheme.headline4.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                )
+              ],
+            ),
           ),
         ),
         Center(
@@ -60,10 +72,13 @@ class _SplashScreenState extends State<SplashScreen> {
           },
           child: Text(
             "I want to register",
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            style: Theme.of(context).textTheme.headline5.copyWith(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
           ),
           style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(primaryColor),
+              backgroundColor: MaterialStateProperty.all(
+                  Theme.of(context).colorScheme.primary),
               minimumSize: MaterialStateProperty.all(Size(300, 60)),
               shape: MaterialStateProperty.all(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18)))),
@@ -75,7 +90,7 @@ class _SplashScreenState extends State<SplashScreen> {
           onPressed: () {},
           child: Text(
             "I have an account",
-            style: TextStyle(fontSize: 25),
+            style: Theme.of(context).textTheme.headline5,
           ),
         )
       ],

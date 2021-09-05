@@ -40,6 +40,7 @@ class _SignupScreenState extends State<SignupScreen>
           ),
           width: double.infinity,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
                 flex: 2,
@@ -47,15 +48,16 @@ class _SignupScreenState extends State<SignupScreen>
                   alignment: Alignment.bottomCenter,
                   child: Text(
                     "Create new account",
-                    style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                 ),
               ),
               Expanded(
                 flex: MediaQuery.of(context).viewInsets.bottom == 0 ? 5 : 7,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: ListView(
+                    physics: BouncingScrollPhysics(),
                     children: [
                       _generateTextFormField(
                           hintText: "First name",
@@ -86,40 +88,47 @@ class _SignupScreenState extends State<SignupScreen>
                   ? Expanded(
                       flex: 1,
                       child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: _allInformationFilled()
-                              ? ElevatedButton(
-                                  onPressed: () {
-                                    Map user = {
-                                      "firstName": firstname,
-                                      "lastName": lastname,
-                                      "username": accountName,
-                                      "email": email
-                                    };
-                                    print(user);
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                PasswordScreen(
-                                                  user: user,
-                                                )));
-                                  },
-                                  child: Text(
-                                    "Next",
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              primaryColor),
-                                      minimumSize: MaterialStateProperty.all(
-                                          Size(300, 55)),
-                                      shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(18)))),
-                                )
-                              : SizedBox.shrink()))
+                        alignment: Alignment.bottomCenter,
+                        child: _allInformationFilled()
+                            ? ElevatedButton(
+                                onPressed: () {
+                                  Map user = {
+                                    "firstName": firstname,
+                                    "lastName": lastname,
+                                    "username": accountName,
+                                    "email": email
+                                  };
+                                  print(user);
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => PasswordScreen(
+                                            user: user,
+                                          )));
+                                },
+                                child: Text(
+                                  "Next",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline5
+                                      .copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary,
+                                      ),
+                                ),
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Theme.of(context).colorScheme.primary),
+                                  minimumSize: MaterialStateProperty.all(
+                                      Size(double.infinity, 60)),
+                                  shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20))),
+                                ),
+                              )
+                            : SizedBox.shrink(),
+                      ),
+                    )
                   : SizedBox.shrink(),
             ],
           ),
@@ -154,19 +163,17 @@ class _SignupScreenState extends State<SignupScreen>
         onChanged: (value) {
           onTextChanged(value);
         },
-        style: TextStyle(fontSize: 20),
+        style: Theme.of(context).textTheme.headline6,
         decoration: InputDecoration(
-          hintText: hintText,
           labelText: hintText,
           errorText: !isFirst &&
                   hintText == "Email address" &&
                   !EmailValidator.validate(email)
               ? "Your email is invalid"
               : null,
-          hintStyle: TextStyle(fontSize: 20),
           contentPadding: EdgeInsets.fromLTRB(25, 20, 10, 20),
-          focusedBorder: outline,
-          enabledBorder: outline,
+          focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
+          enabledBorder: Theme.of(context).inputDecorationTheme.border,
           errorBorder: errorOutline,
           focusedErrorBorder: errorOutline,
         ),

@@ -18,8 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'EazyLearn',
       theme: _kEzLearnTheme,
-      routes: Routes.routes,
-      initialRoute: Routes.home,
+      home: SplashScreen(),
     );
   }
 }
@@ -71,7 +70,7 @@ TextTheme _buildEzLearnTextTheme1(TextTheme base) {
             fontWeight: FontWeight.w700,
             fontSize: 28,
             height: 1.2,
-            letterSpacing: 1,
+            letterSpacing: 0.5,
             color: kEzLearnBlack,
           ),
           headline6: base.headline6.copyWith(

@@ -44,7 +44,7 @@ class _PasswordScreenState extends State<PasswordScreen>
                   alignment: Alignment.bottomCenter,
                   child: Text(
                     "Create new password",
-                    style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                 ),
               ),
@@ -145,7 +145,7 @@ class _PasswordScreenState extends State<PasswordScreen>
         onChanged: (value) {
           onTextChanged(value);
         },
-        style: TextStyle(fontSize: 20),
+        style: Theme.of(context).textTheme.headline6,
         obscureText: obscure,
         decoration: InputDecoration(
           suffixIcon: IconButton(
@@ -164,23 +164,19 @@ class _PasswordScreenState extends State<PasswordScreen>
               : (password != reentering
                   ? "Passwords should be the same"
                   : null),
-          hintText: hintText,
-          hintStyle: TextStyle(fontSize: 20),
+          errorStyle: Theme.of(context).textTheme.bodyText2.copyWith(
+                fontSize: 14,
+                color: Theme.of(context).colorScheme.error,
+              ),
           contentPadding: EdgeInsets.fromLTRB(25, 20, 20, 20),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25.0),
-            borderSide: BorderSide(color: Colors.black, width: 1.5),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25.0),
-            borderSide: BorderSide(color: Colors.black, width: 1.5),
-          ),
+          focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
+          enabledBorder: Theme.of(context).inputDecorationTheme.border,
           errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25.0),
-              borderSide: BorderSide(color: Colors.red, width: 1.5)),
+              borderRadius: BorderRadius.circular(20.0),
+              borderSide: BorderSide(color: Colors.red, width: 2)),
           focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25.0),
-              borderSide: BorderSide(color: Colors.red, width: 1.5)),
+              borderRadius: BorderRadius.circular(20.0),
+              borderSide: BorderSide(color: Colors.red, width: 2)),
         ),
       ),
     );
