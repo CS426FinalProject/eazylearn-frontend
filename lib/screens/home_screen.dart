@@ -168,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
       decoration: BoxDecoration(color: primaryColor),
       child: Column(
         children: [
-          SizedBox(height: 40),
+          SizedBox(height: 45),
           Row(
             children: [
               Text(
