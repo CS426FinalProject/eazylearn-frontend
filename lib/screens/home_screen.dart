@@ -91,9 +91,9 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Column(
               children: [
-                Expanded(flex: 1, child: _buildAppbar()),
+                Expanded(flex: 7, child: _buildAppbar()),
                 Expanded(
-                    flex: 4,
+                    flex: 29,
                     child: ListView(
                       children: [
                         SizedBox(
@@ -114,15 +114,15 @@ class _HomeScreenState extends State<HomeScreen> {
             Column(
               children: [
                 Expanded(
-                    flex: 4,
+                    flex: 5,
                     child: Column(
                       children: [
-                        Expanded(flex: 2, child: SizedBox.shrink()),
-                        Expanded(flex: 1, child: _buildTextFormField()),
+                        Expanded(flex: 5, child: SizedBox.shrink()),
+                        Expanded(flex: 2, child: _buildTextFormField()),
                       ],
                     )),
                 Expanded(
-                  flex: 13,
+                  flex: 17,
                   child: SizedBox.shrink(),
                 )
               ],
@@ -166,43 +166,48 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: EdgeInsets.fromLTRB(35, 0, 35, 0),
       width: double.infinity,
       decoration: BoxDecoration(color: primaryColor),
-      child: Row(
+      child: Column(
         children: [
-          Text(
-            "EAZYLEARN",
-            style: Theme.of(context).textTheme.headline4,
+          SizedBox(height: 45),
+          Row(
+            children: [
+              Text(
+                "EAZYLEARN",
+                style: Theme.of(context).textTheme.headline4,
+              ),
+              Expanded(
+                  child: Align(
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                        iconSize: 40,
+                        icon: Icon(
+                          Icons.account_circle,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).push(PageRouteBuilder(
+                              pageBuilder: (_, __, ___) => ProfileScreen(),
+                              transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                const begin = Offset(1.0, 0.0);
+                                const end = Offset.zero;
+                                const curve = Curves.ease;
+
+                                final tween = Tween(begin: begin, end: end);
+                                final curvedAnimation = CurvedAnimation(
+                                  parent: animation,
+                                  curve: curve,
+                                );
+
+                                return SlideTransition(
+                                  position: tween.animate(curvedAnimation),
+                                  child: child,
+                                );
+                              }));
+                        },
+                      )))
+            ],
           ),
-          Expanded(
-              child: Align(
-                  alignment: Alignment.centerRight,
-                  child: IconButton(
-                    iconSize: 40,
-                    icon: Icon(
-                      Icons.account_circle,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).push(PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => ProfileScreen(),
-                          transitionsBuilder:
-                              (context, animation, secondaryAnimation, child) {
-                            const begin = Offset(1.0, 0.0);
-                            const end = Offset.zero;
-                            const curve = Curves.ease;
-
-                            final tween = Tween(begin: begin, end: end);
-                            final curvedAnimation = CurvedAnimation(
-                              parent: animation,
-                              curve: curve,
-                            );
-
-                            return SlideTransition(
-                              position: tween.animate(curvedAnimation),
-                              child: child,
-                            );
-                          }));
-                    },
-                  )))
         ],
       ),
     );
