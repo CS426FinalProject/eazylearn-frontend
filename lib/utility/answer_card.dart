@@ -1,11 +1,10 @@
 import 'dart:ui';
 
-import 'package:final_cs426/models/answer.dart';
 import 'package:flutter/material.dart';
 import 'package:final_cs426/constants/color.dart';
 
 class AnswerCard extends StatelessWidget {
-  final Answer answer;
+  final String answer;
   final bool chosen;
   const AnswerCard({@required this.answer, @required this.chosen});
 
@@ -27,7 +26,7 @@ class AnswerCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(answer.answerText,
+                  Text(answer,
                       style: TextStyle(
                           fontFamily: "Open Sans",
                           fontSize: 18,

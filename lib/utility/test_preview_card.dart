@@ -1,11 +1,11 @@
 import 'package:final_cs426/constants/color.dart';
-import 'package:final_cs426/models/test_preview.dart';
+import 'package:final_cs426/models/test.dart';
 import 'package:final_cs426/models/topic.dart';
 import 'package:final_cs426/screens/test_screen.dart';
 import 'package:flutter/material.dart';
 
 class TestPreviewCard extends StatelessWidget {
-  final TestPreview preview;
+  final Test preview;
   final bool isFirst;
   final bool isInTestChoosingScreen;
   const TestPreviewCard(
@@ -14,13 +14,6 @@ class TestPreviewCard extends StatelessWidget {
       @required this.isInTestChoosingScreen});
   @override
   Widget build(BuildContext context) {
-    List<Image> difficultyDisplayer = [];
-    for (int i = 0; i < preview.difficulty; i++) {
-      difficultyDisplayer.add(Image.asset(
-        "lib/images/flash.png",
-        scale: 25,
-      ));
-    }
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
       child: Card(
@@ -79,7 +72,7 @@ class TestPreviewCard extends StatelessWidget {
                             : SizedBox.shrink(),
                         !isInTestChoosingScreen
                             ? Text(
-                                preview.subject.name,
+                                preview.subject,
                                 style: TextStyle(fontStyle: FontStyle.italic),
                               )
                             : SizedBox.shrink(),
@@ -96,11 +89,12 @@ class TestPreviewCard extends StatelessWidget {
   }
 
   Widget _buildSheet(BuildContext context) {
+    print("display sheet");
     String displayedTopics = "";
     for (Topic topic in preview.topics) {
       displayedTopics += topic.name + ", ";
     }
-    displayedTopics = displayedTopics.trim() + "...";
+    displayedTopics = displayedTopics.substring(0, displayedTopics.length - 2);
     return Theme(
       data: ThemeData(fontFamily: "Open Sans"),
       child: Container(
@@ -153,7 +147,7 @@ class TestPreviewCard extends StatelessWidget {
                                 SizedBox(height: 5),
                                 Row(
                                   children: [
-                                    Text(preview.subject.name,
+                                    Text(preview.subject,
                                         style: TextStyle(fontSize: 18)),
                                     SizedBox(width: 5),
                                     DecoratedBox(
@@ -213,7 +207,7 @@ class TestPreviewCard extends StatelessWidget {
                             "bla bla bla bla bla bla bla bla bla " +
                             "bla bla bla bla bla bla bla bla bla " +
                             "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla\n\nbla\nbla\nbla\nbla\nbla ",
+                            "bla bla bla bla bla bla bla bla bla",
                         style: TextStyle(fontSize: 17),
                       ),
                     ],
@@ -225,8 +219,10 @@ class TestPreviewCard extends StatelessWidget {
               padding: EdgeInsets.only(top: 15),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => TestScreen()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => TestScreen(
+                            test: preview,
+                          )));
                 },
                 child: Text(
                   "START",

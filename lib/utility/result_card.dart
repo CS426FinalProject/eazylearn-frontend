@@ -22,7 +22,8 @@ class _ResultCardState extends State<ResultCard> {
   void initState() {
     super.initState();
     isMissing = widget.answer == -1;
-    isCorrect = isMissing ? false : (widget.answer == widget.question.answer);
+    isCorrect = !isMissing &&
+        (widget.question.options[widget.answer] == widget.question.answer);
   }
 
   @override
@@ -65,7 +66,7 @@ class _ResultCardState extends State<ResultCard> {
                     child: Text(
                       widget.answer == -1
                           ? "(You missed this one)"
-                          : widget.question.options[widget.answer].answerText,
+                          : widget.question.options[widget.answer],
                       style: TextStyle(
                           fontSize: 20, color: isCorrect ? correct : incorrect),
                     ),

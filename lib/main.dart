@@ -14,10 +14,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Raleway'),
-      routes: Routes.routes,
-      initialRoute: Routes.home,
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Raleway'),
+        routes: Routes.routes,
+        initialRoute: Routes.splash);
   }
 }

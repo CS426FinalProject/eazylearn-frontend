@@ -6,11 +6,14 @@ import 'package:final_cs426/models/user.dart';
 import 'package:flutter/material.dart';
 
 class ProfileEdittingScreen extends StatefulWidget {
+  final User user;
+  ProfileEdittingScreen({@required this.user});
   @override
   _ProfileEdittingScreenState createState() => _ProfileEdittingScreenState();
 }
 
 class _ProfileEdittingScreenState extends State<ProfileEdittingScreen> {
+  User user;
   List<String> hintTexts = [
     "First name",
     "Last name",
@@ -22,13 +25,12 @@ class _ProfileEdittingScreenState extends State<ProfileEdittingScreen> {
   ];
   List<String> inputs;
   List<TextEditingController> controllers;
-  DateTime dob = Session.user.dob;
+  DateTime dob;
 
   @override
   void initState() {
-    User user = Session.user;
-    print(user.firstname);
-
+    user = widget.user;
+    dob = user.dob;
     super.initState();
     inputs = [
       user.firstname,
@@ -116,8 +118,8 @@ class _ProfileEdittingScreenState extends State<ProfileEdittingScreen> {
               ? SizedBox.shrink()
               : ElevatedButton(
                   onPressed: () {
-                    Session.user = User(
-                        userID: Session.user.userID,
+                    user = User(
+                        userID: widget.user.userID,
                         firstname: inputs[0],
                         lastname: inputs[1],
                         username: inputs[2],

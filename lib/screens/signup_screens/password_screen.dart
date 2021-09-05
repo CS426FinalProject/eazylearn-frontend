@@ -28,90 +28,106 @@ class _PasswordScreenState extends State<PasswordScreen>
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        body: Container(
-          padding: EdgeInsets.fromLTRB(
-            40,
-            0,
-            40,
-            MediaQuery.of(context).viewInsets.bottom == 0 ? 30 : 0,
-          ),
-          width: double.infinity,
-          child: Column(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Text(
-                    "Create new password",
-                    style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
+        body: Stack(
+          children: [
+            Container(
+              padding: EdgeInsets.fromLTRB(
+                40,
+                0,
+                40,
+                MediaQuery.of(context).viewInsets.bottom == 0 ? 30 : 0,
+              ),
+              width: double.infinity,
+              child: Column(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Text(
+                        "Create new password",
+                        style: TextStyle(
+                            fontSize: 27, fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ),
-                ),
+                  Expanded(
+                    flex: 5,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _generateTextFormField(
+                            hintText: "Password",
+                            onTextChanged: (value) {
+                              password = value;
+                            },
+                            obscure: passwordObscure,
+                            isPassword: true),
+                        _generateTextFormField(
+                            hintText: "Re-enter password",
+                            onTextChanged: (value) {
+                              reentering = value;
+                            },
+                            obscure: reenteringObscure,
+                            isPassword: false),
+                      ],
+                    ),
+                  ),
+                  MediaQuery.of(context).viewInsets.bottom == 0
+                      ? Expanded(
+                          flex: 1,
+                          child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: _allInformationFilled()
+                                  ? ElevatedButton(
+                                      onPressed: () {
+                                        Map user = {
+                                          "firstName": widget.user["firstName"],
+                                          "lastName": widget.user["lastName"],
+                                          "username": widget.user["username"],
+                                          "email": widget.user["email"],
+                                          "password": password
+                                        };
+                                        print(user);
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PersonalInformationScreen(
+                                                      user: user,
+                                                    )));
+                                      },
+                                      child: Text(
+                                        "Next",
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  primaryColor),
+                                          minimumSize:
+                                              MaterialStateProperty.all(
+                                                  Size(double.infinity, 55)),
+                                          shape: MaterialStateProperty.all(
+                                              RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          18)))),
+                                    )
+                                  : SizedBox.shrink()))
+                      : SizedBox.shrink(),
+                ],
               ),
-              Expanded(
-                flex: 5,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _generateTextFormField(
-                        hintText: "Password",
-                        onTextChanged: (value) {
-                          password = value;
-                        },
-                        obscure: passwordObscure,
-                        isPassword: true),
-                    _generateTextFormField(
-                        hintText: "Re-enter password",
-                        onTextChanged: (value) {
-                          reentering = value;
-                        },
-                        obscure: reenteringObscure,
-                        isPassword: false),
-                  ],
-                ),
-              ),
-              MediaQuery.of(context).viewInsets.bottom == 0
-                  ? Expanded(
-                      flex: 1,
-                      child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: _allInformationFilled()
-                              ? ElevatedButton(
-                                  onPressed: () {
-                                    Map user = {
-                                      "firstName": widget.user["firstName"],
-                                      "lastName": widget.user["lastName"],
-                                      "username": widget.user["username"],
-                                      "email": widget.user["email"],
-                                      "password": password
-                                    };
-                                    print(user);
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                PersonalInformationScreen(
-                                                  user: user,
-                                                )));
-                                  },
-                                  child: Text(
-                                    "Next",
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              primaryColor),
-                                      minimumSize: MaterialStateProperty.all(
-                                          Size(300, 55)),
-                                      shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(18)))),
-                                )
-                              : SizedBox.shrink()))
-                  : SizedBox.shrink(),
-            ],
-          ),
+            ),
+            Padding(
+                padding: EdgeInsets.only(top: 35),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.arrow_back),
+                  iconSize: 40,
+                ))
+          ],
         ),
       ),
     );

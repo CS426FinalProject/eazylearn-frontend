@@ -1,5 +1,6 @@
 import 'package:final_cs426/api/api.dart';
 import 'package:final_cs426/constants/color.dart';
+import 'package:final_cs426/models/user.dart';
 import 'package:final_cs426/screens/profile_screens/profile_editting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,10 +11,33 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  User user;
+  bool isLoaded = false;
+  Future getProfile() async {
+    user = await API.getProfile(Session.userID, context);
+    if (user != null)
+      setState(() {
+        isLoaded = true;
+        print(user.dob.toIso8601String());
+      });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getProfile();
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (Session.user == null) Session.user = Session.defaultUser;
-
+    if (!isLoaded)
+      return Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(
+            color: primaryColor,
+          ),
+        ),
+      );
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -74,7 +98,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       alignment: Alignment.centerRight,
                       child: IconButton(
                         onPressed: () {
-                          print("asdf");
                           _edit(context);
                         },
                         icon: Icon(Icons.edit),
@@ -92,8 +115,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           Text("Date of birth",
                               style: TextStyle(color: grey, fontSize: 18)),
-                          Text(
-                              DateFormat("dd/MM/yyyy").format(Session.user.dob),
+                          Text(DateFormat("dd/MM/yyyy").format(user.dob),
                               style: TextStyle(fontSize: 18))
                         ],
                       ),
@@ -105,8 +127,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           Text("Dial num",
                               style: TextStyle(color: grey, fontSize: 18)),
-                          Text(Session.user.phone,
-                              style: TextStyle(fontSize: 18))
+                          Text(user.phone, style: TextStyle(fontSize: 18))
                         ],
                       ),
                     ),
@@ -115,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 SizedBox(height: 10),
                 Text("Email address:",
                     style: TextStyle(color: grey, fontSize: 18)),
-                Text(Session.user.email, style: TextStyle(fontSize: 18))
+                Text(user.email, style: TextStyle(fontSize: 18))
               ],
             ),
           )),
@@ -215,14 +236,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(Session.user.firstname + " " + Session.user.lastname,
+                  Text(user.firstname + " " + user.lastname,
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   SizedBox(height: 5),
-                  Text(
-                    Session.user.username,
-                    style: TextStyle(color: grey),
-                  ),
+                  // Text(
+                  //   user.username,
+                  //   style: TextStyle(color: grey),
+                  // ),
                 ],
               ),
               Expanded(
@@ -246,7 +267,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _edit(BuildContext context) {
     Navigator.of(context)
         .push(PageRouteBuilder(
-            pageBuilder: (_, __, ___) => ProfileEdittingScreen(),
+            pageBuilder: (_, __, ___) => ProfileEdittingScreen(
+                  user: user,
+                ),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
               const begin = Offset(1.0, 0.0);

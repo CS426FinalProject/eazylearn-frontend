@@ -31,98 +31,114 @@ class _SignupScreenState extends State<SignupScreen>
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        body: Container(
-          padding: EdgeInsets.fromLTRB(
-            40,
-            0,
-            40,
-            MediaQuery.of(context).viewInsets.bottom == 0 ? 30 : 0,
-          ),
-          width: double.infinity,
-          child: Column(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Text(
-                    "Create new account",
-                    style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
-                  ),
-                ),
+        body: Stack(
+          children: [
+            Container(
+              padding: EdgeInsets.fromLTRB(
+                40,
+                0,
+                40,
+                MediaQuery.of(context).viewInsets.bottom == 0 ? 30 : 0,
               ),
-              Expanded(
-                flex: MediaQuery.of(context).viewInsets.bottom == 0 ? 5 : 7,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListView(
-                    children: [
-                      _generateTextFormField(
-                          hintText: "First name",
-                          onTextChanged: (value) {
-                            firstname = value;
-                          }),
-                      _generateTextFormField(
-                          hintText: "Last name",
-                          onTextChanged: (value) {
-                            lastname = value;
-                          }),
-                      _generateTextFormField(
-                          hintText: "Account name",
-                          onTextChanged: (value) {
-                            accountName = value;
-                          }),
-                      _generateTextFormField(
-                          hintText: "Email address",
-                          onTextChanged: (value) {
-                            isFirst = false;
-                            email = value;
-                          }),
-                    ],
+              width: double.infinity,
+              child: Column(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Text(
+                        "Create new account",
+                        style: TextStyle(
+                            fontSize: 27, fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ),
-                ),
+                  Expanded(
+                    flex: MediaQuery.of(context).viewInsets.bottom == 0 ? 5 : 7,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListView(
+                        children: [
+                          _generateTextFormField(
+                              hintText: "First name",
+                              onTextChanged: (value) {
+                                firstname = value;
+                              }),
+                          _generateTextFormField(
+                              hintText: "Last name",
+                              onTextChanged: (value) {
+                                lastname = value;
+                              }),
+                          _generateTextFormField(
+                              hintText: "Account name",
+                              onTextChanged: (value) {
+                                accountName = value;
+                              }),
+                          _generateTextFormField(
+                              hintText: "Email address",
+                              onTextChanged: (value) {
+                                isFirst = false;
+                                email = value;
+                              }),
+                        ],
+                      ),
+                    ),
+                  ),
+                  MediaQuery.of(context).viewInsets.bottom == 0
+                      ? Expanded(
+                          flex: 1,
+                          child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: _allInformationFilled()
+                                  ? ElevatedButton(
+                                      onPressed: () {
+                                        Map user = {
+                                          "firstName": firstname,
+                                          "lastName": lastname,
+                                          "username": accountName,
+                                          "email": email
+                                        };
+                                        print(user);
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PasswordScreen(
+                                                      user: user,
+                                                    )));
+                                      },
+                                      child: Text(
+                                        "Next",
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  primaryColor),
+                                          minimumSize:
+                                              MaterialStateProperty.all(
+                                                  Size(double.infinity, 55)),
+                                          shape: MaterialStateProperty.all(
+                                              RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          18)))),
+                                    )
+                                  : SizedBox.shrink()))
+                      : SizedBox.shrink(),
+                ],
               ),
-              MediaQuery.of(context).viewInsets.bottom == 0
-                  ? Expanded(
-                      flex: 1,
-                      child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: _allInformationFilled()
-                              ? ElevatedButton(
-                                  onPressed: () {
-                                    Map user = {
-                                      "firstName": firstname,
-                                      "lastName": lastname,
-                                      "username": accountName,
-                                      "email": email
-                                    };
-                                    print(user);
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                PasswordScreen(
-                                                  user: user,
-                                                )));
-                                  },
-                                  child: Text(
-                                    "Next",
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              primaryColor),
-                                      minimumSize: MaterialStateProperty.all(
-                                          Size(300, 55)),
-                                      shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(18)))),
-                                )
-                              : SizedBox.shrink()))
-                  : SizedBox.shrink(),
-            ],
-          ),
+            ),
+            Container(
+                padding: EdgeInsets.only(top: 35),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.arrow_back),
+                  iconSize: 40,
+                ))
+          ],
         ),
       ),
     );
