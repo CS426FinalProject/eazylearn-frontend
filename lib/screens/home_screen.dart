@@ -116,9 +116,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                     flex: 5,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Expanded(flex: 5, child: SizedBox.shrink()),
-                        Expanded(flex: 2, child: _buildTextFormField()),
+                        _buildTextFormField(),
                       ],
                     )),
                 Expanded(
@@ -134,28 +134,31 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildTextFormField() {
-    return Padding(
+    return Container(
+      height: 60,
       padding: EdgeInsets.only(left: 35, right: 35),
-      child: Material(
-        borderRadius: BorderRadius.all(Radius.circular(18)),
-        elevation: 5,
-        child: TextFormField(
-          focusNode: inputFocusNode,
-          style: TextStyle(fontSize: 18),
-          decoration: new InputDecoration(
-              prefixIcon: Icon(Icons.search),
-              fillColor: Colors.white,
-              filled: true,
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(18)),
-                borderSide: BorderSide(color: Colors.transparent),
-              ),
-              enabledBorder: OutlineInputBorder(
+      child: Container(
+        child: Material(
+          borderRadius: BorderRadius.all(Radius.circular(18)),
+          elevation: 5,
+          child: TextFormField(
+            focusNode: inputFocusNode,
+            style: TextStyle(fontSize: 18),
+            decoration: new InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                fillColor: Colors.white,
+                filled: true,
+                focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(18)),
-                  borderSide: BorderSide(color: Colors.transparent)),
-              contentPadding:
-                  EdgeInsets.only(left: 18, bottom: 20, top: 20, right: 15),
-              hintText: "Search for tests, topics,..."),
+                  borderSide: BorderSide(color: Colors.transparent),
+                ),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(18)),
+                    borderSide: BorderSide(color: Colors.transparent)),
+                contentPadding:
+                    EdgeInsets.only(left: 18, bottom: 20, top: 20, right: 15),
+                hintText: "Search for tests, topics,..."),
+          ),
         ),
       ),
     );
