@@ -9,6 +9,7 @@ const kEzLearnCorrectGreen = Color(0xFF12E667);
 
 const kEzLearnWrongRed = Color(0xFFE61212);
 const kEzLearnErrorRed = Color(0xFFFF0000);
+const kEzLearnEnglishRed = Color(0xFFFF4678);
 
 const kEzLearnMathPurple = Color(0xFFAF31FC);
 

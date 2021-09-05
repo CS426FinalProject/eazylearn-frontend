@@ -84,8 +84,10 @@ class _TestScreenState extends State<TestScreen> {
                 backgroundColor: Theme.of(context).colorScheme.primary,
                 body: Center(
                   child: Text(
-                    "MATHEMATICS",
-                    style: Theme.of(context).textTheme.headline5,
+                    "EazyLearn".toUpperCase(),
+                    style: Theme.of(context).textTheme.headline4.copyWith(
+                          fontSize: 48,
+                        ),
                   ),
                 ),
               )

@@ -156,6 +156,82 @@ class _QuestionWheelState extends State<QuestionWheel> {
               );
             }),
       ),
+      // child: SizedBox(
+      //   width: 325,
+      //   child: DraggableScrollableSheet(
+      //     expand: false,
+      //     builder: (context, scrollController) {
+      //       return Container(
+      //         alignment: Alignment.center,
+      //         decoration: BoxDecoration(
+      //           borderRadius: BorderRadius.circular(20),
+      //           color: Theme.of(context).colorScheme.background,
+      //         ),
+      //         height: 350,
+      //         width: 325,
+      //         child: GridView.builder(
+      //             padding: EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+      //             controller: scrollController,
+      //             physics: BouncingScrollPhysics(),
+      //             itemCount: widget.questionNumber,
+      //             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      //               crossAxisCount: 5,
+      //             ),
+      //             itemBuilder: (context, index) {
+      //               return GestureDetector(
+      //                 onTap: () {
+      //                   print("before setting state");
+      //                   Navigator.pop(context, index);
+      //                 },
+      //                 child: Center(
+      //                   child: Container(
+      //                     margin: EdgeInsets.all(5),
+      //                     height: 48,
+      //                     width: 48,
+      //                     decoration: BoxDecoration(
+      //                       shape: BoxShape.circle,
+      //                       boxShadow: [
+      //                         BoxShadow(
+      //                           color: kEzLearnShadowButton,
+      //                           offset: Offset(0, 10),
+      //                           blurRadius: 20,
+      //                         )
+      //                       ],
+      //                       color: selected == index
+      //                           ? Theme.of(context).colorScheme.secondary
+      //                           : (widget.userChoices[index] != -1
+      //                               ? Theme.of(context).colorScheme.primary
+      //                               : Theme.of(context).colorScheme.surface),
+      //                     ),
+      //                     child: Center(
+      //                       child: Text(
+      //                         "${index + 1}",
+      //                         style: Theme.of(context)
+      //                             .accentTextTheme
+      //                             .headline5
+      //                             .copyWith(
+      //                               color: selected == index
+      //                                   ? Theme.of(context)
+      //                                       .colorScheme
+      //                                       .onSecondary
+      //                                   : (widget.userChoices[index] != -1
+      //                                       ? Theme.of(context)
+      //                                           .colorScheme
+      //                                           .onPrimary
+      //                                       : Theme.of(context)
+      //                                           .colorScheme
+      //                                           .onSurface),
+      //                             ),
+      //                       ),
+      //                     ),
+      //                   ),
+      //                 ),
+      //               );
+      //             }),
+      //       );
+      //     },
+      //   ),
+      // ),
     );
   }
 }

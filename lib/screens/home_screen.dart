@@ -20,19 +20,21 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    subjects.add(Subject(name: "Mathematics", color: mth, topics: [
+    subjects
+        .add(Subject(name: "Mathematics", color: kEzLearnMathPurple, topics: [
       Topic(topicID: "MTH1", name: "Derivatives"),
       Topic(topicID: "MTH2", name: "Integrals"),
       Topic(topicID: "MTH3", name: "Trigonometry"),
       Topic(topicID: "MTH4", name: "Calculus")
     ]));
-    subjects.add(Subject(name: "Physics", color: phy, topics: [
+    subjects.add(Subject(name: "Physics", color: kEzLearnPhysicsTeal, topics: [
       Topic(topicID: "PHY1", name: "Electricmagnetism"),
       Topic(topicID: "PHY2", name: "Optics"),
       Topic(topicID: "PHY3", name: "Force"),
       Topic(topicID: "PHY4", name: "Alternative current")
     ]));
-    subjects.add(Subject(name: "Database", color: db, topics: [
+    subjects.add(
+        Subject(name: "Database", color: kEzLearnLiteratureOrange, topics: [
       Topic(topicID: "DB1", name: "Recovery"),
       Topic(topicID: "DB2", name: "Concurrency control"),
       Topic(topicID: "DB3", name: "Locking"),
@@ -189,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         iconSize: 40,
                         icon: Icon(
                           Icons.account_circle,
-                          color: Colors.white,
+                          color: kEzLearnWhite,
                         ),
                         onPressed: () {
                           Navigator.of(context).push(PageRouteBuilder(

@@ -110,11 +110,36 @@ class ResultScreen extends StatelessWidget {
                           ),
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => AllAnswerScreen(
-                                questions: questions,
-                                answers: answers,
-                              )));
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context) => AllAnswerScreen(
+                                  questions: questions,
+                                  answers: answers,
+                                )),
+                        // PageRouteBuilder(
+                        //   pageBuilder: (context, __, ___) => AllAnswerScreen(
+                        //     questions: questions,
+                        //     answers: answers,
+                        //   ),
+                        //   transitionsBuilder:
+                        //       (context, animation, secondaryAnimation, child) {
+                        //     const begin = Offset(1.0, 0.0);
+                        //     const end = Offset.zero;
+                        //     const curve = Curves.ease;
+
+                        //     final tween = Tween(begin: begin, end: end);
+                        //     final curvedAnimation = CurvedAnimation(
+                        //       parent: animation,
+                        //       curve: curve,
+                        //     );
+
+                        //     return SlideTransition(
+                        //       position: tween.animate(curvedAnimation),
+                        //       child: child,
+                        //     );
+                        //   },
+                        // ),
+                      );
                     },
                   ),
                 ),
