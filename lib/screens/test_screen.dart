@@ -81,7 +81,7 @@ class _TestScreenState extends State<TestScreen> {
         child: init
             ? Scaffold(
                 key: ValueKey("SPLASH"),
-                backgroundColor: primaryColor,
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 body: Center(
                   child: Text(
                     "MATHEMATICS",
@@ -151,7 +151,7 @@ class _TestScreenState extends State<TestScreen> {
       },
       child: Scaffold(
         key: ValueKey("TEST"),
-        backgroundColor: primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Row(
@@ -161,7 +161,7 @@ class _TestScreenState extends State<TestScreen> {
                   alignment: Alignment.center,
                   child: Text(
                     'MATHEMATICS',
-                    style: Theme.of(context).textTheme.headline4.copyWith(
+                    style: Theme.of(context).textTheme.headline5.copyWith(
                         color: Theme.of(context).colorScheme.onPrimary),
                   ),
                 ),
@@ -390,27 +390,31 @@ class SubmitScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         key: ValueKey("SUBMIT"),
-        backgroundColor: primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(
-                onPressed: () {
-                  _onSubmitClicked(context);
-                },
-                child: Text(
-                  "Submit",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold),
+              SizedBox(
+                width: 174,
+                height: 60,
+                child: ElevatedButton(
+                  onPressed: () {
+                    _onSubmitClicked(context);
+                  },
+                  child: Text(
+                    "Submit",
+                    style: Theme.of(context).textTheme.headline5.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                        ),
+                  ),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(
+                          Theme.of(context).colorScheme.secondary),
+                      minimumSize: MaterialStateProperty.all(Size(120, 50)),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)))),
                 ),
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(secondaryColor),
-                    minimumSize: MaterialStateProperty.all(Size(120, 50)),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)))),
               ),
               SizedBox(height: 10),
               TextButton(
@@ -422,10 +426,8 @@ class SubmitScreen extends StatelessWidget {
                   },
                   child: Text(
                     "Cancel",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.headline5.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimary),
                   ))
             ],
           ),

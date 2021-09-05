@@ -229,7 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         Container(
-            height: isPreview ? 180 : 300,
+            height: isPreview ? 170 : 300,
             padding: EdgeInsets.fromLTRB(0, 10, 0, 40),
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,

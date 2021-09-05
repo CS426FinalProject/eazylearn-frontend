@@ -105,7 +105,6 @@ class TestPreviewCard extends StatelessWidget {
       padding: EdgeInsets.only(bottom: 15),
       height: 600,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
             alignment: Alignment.center,
@@ -232,7 +231,7 @@ class TestPreviewCard extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 15, left: 15, right: 15),
+            padding: EdgeInsets.only(top: 0, left: 15, right: 15),
             child: ElevatedButton(
               onPressed: () {
                 Navigator.of(context).push(
@@ -245,9 +244,11 @@ class TestPreviewCard extends StatelessWidget {
                     ),
               ),
               style: ButtonStyle(
+                elevation: MaterialStateProperty.all(5),
                 backgroundColor: MaterialStateProperty.all(
                     Theme.of(context).colorScheme.secondary),
-                minimumSize: MaterialStateProperty.all(Size(200, 70)),
+                minimumSize:
+                    MaterialStateProperty.all(Size(double.infinity, 70)),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18),

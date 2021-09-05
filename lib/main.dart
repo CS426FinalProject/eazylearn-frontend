@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'EazyLearn',
       theme: _kEzLearnTheme,
-      home: SplashScreen(),
+      routes: Routes.routes,
+      initialRoute: Routes.home,
     );
   }
 }

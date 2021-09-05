@@ -42,23 +42,24 @@ class _ProcessScreenState extends State<ProcessScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CircularProgressIndicator(
-                  color: primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
                 SizedBox(
                   height: 15,
                 ),
                 Text(
                   "In process...",
-                  style: TextStyle(color: primaryColor, fontSize: 20),
+                  style: Theme.of(context).textTheme.headline6.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                 )
               ],
             )
           : Text(
               "EAZYLEARN",
-              style: TextStyle(
-                  color: primaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 35),
+              style: Theme.of(context).textTheme.headline4.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
             ),
     )));
   }

@@ -43,12 +43,15 @@ class ResultScreen extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
             physics: BouncingScrollPhysics(),
             children: [
-              Text(
-                "Outstanding".toUpperCase(),
-                style: Theme.of(context).textTheme.headline5.copyWith(
-                      color: kEzLearnCorrectGreen,
-                      fontSize: 48,
-                    ),
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "Outstanding".toUpperCase(),
+                  style: Theme.of(context).textTheme.headline5.copyWith(
+                        color: kEzLearnCorrectGreen,
+                        fontSize: 48,
+                      ),
+                ),
               ),
               ResultCircle(questionCount: 30, corrects: 24),
               SizedBox(height: 10),
@@ -114,29 +117,26 @@ class ResultScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 20),
               Expanded(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(secondaryColor),
-                            minimumSize:
-                                MaterialStateProperty.all(Size(300, 60)),
-                            shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20)))),
-                        onPressed: () {
-                          Navigator.popUntil(
-                              context, ModalRoute.withName(Routes.home));
-                        },
-                        child: Text("Done",
-                            style: TextStyle(
-                                fontFamily: "Open Sans",
-                                color: Colors.black,
-                                fontSize: 25))),
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(secondaryColor),
+                          minimumSize: MaterialStateProperty.all(Size(300, 60)),
+                          shape: MaterialStateProperty.all(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20)))),
+                      onPressed: () {
+                        Navigator.popUntil(
+                            context, ModalRoute.withName(Routes.home));
+                      },
+                      child: Text("Done",
+                          style: Theme.of(context).textTheme.headline5),
+                    ),
                     Expanded(
                         child: Align(
                       alignment: Alignment.bottomRight,
