@@ -14,18 +14,46 @@ class AllAnswerScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: Text(
           "MATHEMATICS",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+          style: Theme.of(context)
+              .textTheme
+              .headline5
+              .copyWith(color: Theme.of(context).colorScheme.onPrimary),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.only(left: 15, right: 15, top: 20),
-        child: ListView.separated(
-            itemBuilder: (context, index) => ResultCard(
-                index: index + 1,
-                question: questions[index],
-                answer: answers[index]),
-            separatorBuilder: (context, index) => SizedBox(height: 10),
-            itemCount: questions.length),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10.0,
+              vertical: 5.0,
+            ),
+            child: Row(
+              children: [
+                IconButton(
+                  onPressed: Navigator.of(context).pop,
+                  icon: Icon(Icons.arrow_back),
+                  iconSize: 34.0,
+                ),
+                SizedBox(width: 10.0),
+                Text(
+                  'All answers',
+                  style: Theme.of(context).textTheme.headline5,
+                )
+              ],
+            ),
+          ),
+          Expanded(
+            child: ListView.separated(
+                physics: BouncingScrollPhysics(),
+                padding: EdgeInsets.only(left: 15, right: 15, top: 20),
+                itemBuilder: (context, index) => ResultCard(
+                    index: index + 1,
+                    question: questions[index],
+                    answer: answers[index]),
+                separatorBuilder: (context, index) => SizedBox(height: 10),
+                itemCount: questions.length),
+          ),
+        ],
       ),
     );
   }

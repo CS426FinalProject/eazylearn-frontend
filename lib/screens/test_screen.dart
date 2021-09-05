@@ -85,10 +85,7 @@ class _TestScreenState extends State<TestScreen> {
                 body: Center(
                   child: Text(
                     "MATHEMATICS",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 50,
-                        fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.headline5,
                   ),
                 ),
               )
@@ -100,21 +97,56 @@ class _TestScreenState extends State<TestScreen> {
     return WillPopScope(
       onWillPop: () {
         showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text("sure"),
-                      ElevatedButton(
-                          onPressed: () {
-                            Navigator.popUntil(
-                                context, ModalRoute.withName(Routes.home));
-                          },
-                          child: Text("yeah"))
-                    ],
+          context: context,
+          builder: (context) => AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            title: Text("Quit so soon?"),
+            content: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.popUntil(
+                        context, ModalRoute.withName(Routes.home));
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        Theme.of(context).colorScheme.secondary),
+                    overlayColor: MaterialStateProperty.all(
+                        Colors.black.withOpacity(0.07)),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
                   ),
-                ));
+                  child: Text(
+                    "Confirm",
+                    style: Theme.of(context).accentTextTheme.headline6,
+                  ),
+                ),
+                SizedBox(width: 5),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    "Cancel",
+                    style: Theme.of(context).accentTextTheme.headline6,
+                  ),
+                  style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all(
+                        Theme.of(context).colorScheme.onSurface),
+                    overlayColor: MaterialStateProperty.all(
+                        Colors.black.withOpacity(0.07)),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20))),
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
         return Future.value(false);
       },
       child: Scaffold(
@@ -125,23 +157,22 @@ class _TestScreenState extends State<TestScreen> {
           title: Row(
             children: [
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                child: Align(
+                  alignment: Alignment.center,
                   child: Text(
                     'MATHEMATICS',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.headline4.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimary),
                   ),
                 ),
               ),
               DecoratedBox(
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.secondary,
                     borderRadius: BorderRadius.circular(20)),
                 child: Padding(
-                    padding: const EdgeInsets.all(5.0),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
                     child: Row(
                       children: [
                         Icon(
@@ -153,12 +184,13 @@ class _TestScreenState extends State<TestScreen> {
                         ),
                         Text('${_toMinute(_timeLeft)}',
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontFamily: "Open Sans",
-                                fontSize: 22,
-                                letterSpacing: 0.5,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black)),
+                            style: Theme.of(context)
+                                .accentTextTheme
+                                .headline5
+                                .copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary)),
                       ],
                     )),
               ),
@@ -268,7 +300,7 @@ class _TestScreenState extends State<TestScreen> {
             color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(22))),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 70, 20, 20),
+          padding: const EdgeInsets.fromLTRB(20, 30, 20, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -278,22 +310,20 @@ class _TestScreenState extends State<TestScreen> {
                   children: [
                     Text(
                       test.questions[index].question,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline5
+                          .copyWith(fontSize: 18, letterSpacing: 0),
                     ),
                     SizedBox(
                       height: 10.0,
                     ),
                     Text(
                       test.questions[index].equation,
-                      style: TextStyle(
-                        fontFamily: "Open Sans",
-                        fontSize: 18,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context)
+                          .accentTextTheme
+                          .bodyText1
+                          .copyWith(fontStyle: FontStyle.italic),
                       textAlign: TextAlign.center,
                     ),
                   ],

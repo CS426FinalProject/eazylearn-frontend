@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:final_cs426/constants/color.dart';
+import 'package:final_cs426/constants/colors.dart';
 import 'package:final_cs426/models/subject.dart';
 import 'package:final_cs426/models/test_preview.dart';
 import 'package:final_cs426/models/topic.dart';
@@ -63,7 +64,7 @@ class _TestChoosingScreenState extends State<TestChoosingScreen> {
         toolbarHeight: 75,
         title: Text(
           subject.name.toUpperCase(),
-          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.headline4,
         ),
         centerTitle: true,
         leading: IconButton(
@@ -98,22 +99,23 @@ class _TestChoosingScreenState extends State<TestChoosingScreen> {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                        offset: Offset(0, 10),
-                        blurRadius: 20,
-                        spreadRadius: 10,
-                        color: Color(0x6D8DAD).withOpacity(0.25))
+                      offset: Offset(0, 10),
+                      blurRadius: 20,
+                      spreadRadius: 10,
+                      color: Color(0x6D8DAD).withOpacity(0.25),
+                    )
                   ]),
               child: TextFormField(
-                style: TextStyle(fontSize: 18),
+                style: Theme.of(context).textTheme.headline6,
                 focusNode: inputFocusNode,
                 decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    labelText: "Search",
-                    focusColor: primaryColor,
-                    border: InputBorder.none,
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: primaryColor, width: 2.0),
-                        borderRadius: BorderRadius.circular(20))),
+                  prefixIcon: Icon(Icons.search),
+                  labelText: "Search",
+                  focusColor: Theme.of(context).colorScheme.primary,
+                  border: InputBorder.none,
+                  focusedBorder:
+                      Theme.of(context).inputDecorationTheme.focusedBorder,
+                ),
               ),
             ),
           ),
@@ -190,35 +192,38 @@ class _TopicCheckboxDialogState extends State<TopicCheckboxDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Text(
-          "Filter by topics",
-          style: TextStyle(fontWeight: FontWeight.bold),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      title: Text(
+        "Filter by topics",
+        style: Theme.of(context).textTheme.headline5,
+      ),
+      content: _topicCheckboxList(),
+      contentPadding: EdgeInsets.all(10.0),
+      actions: <Widget>[
+        ElevatedButton(
+          onPressed: Navigator.of(context).pop,
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(secondaryColor),
+              shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)))),
+          child: Text(
+            "Apply",
+            style: Theme.of(context).accentTextTheme.headline6,
+          ),
         ),
-        content: _topicCheckboxList(),
-        actions: <Widget>[
-          ElevatedButton(
-              onPressed: Navigator.of(context).pop,
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(secondaryColor),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15)))),
-              child: Text(
-                "Apply",
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-              )),
-          TextButton(
-              onPressed: Navigator.of(context).pop,
-              style: ButtonStyle(
-                  overlayColor: MaterialStateProperty.all(
-                      Colors.black.withOpacity(0.07))),
-              child: Text(
-                "Cancel",
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-              )),
-        ]);
+        TextButton(
+          onPressed: Navigator.of(context).pop,
+          style: ButtonStyle(
+              overlayColor:
+                  MaterialStateProperty.all(Colors.black.withOpacity(0.07))),
+          child: Text(
+            "Cancel",
+            style: Theme.of(context).accentTextTheme.headline6,
+          ),
+        ),
+      ],
+      actionsPadding: EdgeInsets.fromLTRB(15, 0, 15, 15),
+    );
   }
 
   _topicCheckboxList() {
@@ -227,20 +232,25 @@ class _TopicCheckboxDialogState extends State<TopicCheckboxDialog> {
       child: ListView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.vertical,
-        itemBuilder: (context, index) => Row(children: [
-          (Checkbox(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-            value: topicsChecked[index],
-            onChanged: (value) {
-              setState(() {
-                topicsChecked[index] = value;
-              });
-            },
-          )),
-          SizedBox(width: 5),
-          Text(widget.topics[index].name)
-        ]),
+        itemBuilder: (context, index) => Row(
+          children: [
+            Checkbox(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5)),
+              value: topicsChecked[index],
+              onChanged: (value) {
+                setState(() {
+                  topicsChecked[index] = value;
+                });
+              },
+            ),
+            SizedBox(width: 5),
+            Text(
+              widget.topics[index].name,
+              style: Theme.of(context).textTheme.headline6,
+            ),
+          ],
+        ),
         itemCount: topicsChecked.length,
       ),
     );

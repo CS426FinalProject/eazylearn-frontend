@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui' as ui;
 import 'package:final_cs426/constants/color.dart';
+import 'package:final_cs426/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class ResultCircle extends StatelessWidget {
@@ -14,11 +15,11 @@ class ResultCircle extends StatelessWidget {
       width: 300,
       height: 300,
       child: Stack(children: [
-        CustomPaint(
-          foregroundPainter: _CircularProgress(corrects / questionCount * 100),
-          child: SizedBox(
-            height: 300,
-            width: 300,
+        Align(
+          child: CustomPaint(
+            foregroundPainter:
+                _CircularProgress(corrects / questionCount * 100),
+            size: Size(250, 250),
           ),
         ),
         Column(
@@ -29,11 +30,10 @@ class ResultCircle extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: Text(
                   "$corrects",
-                  style: TextStyle(
-                      fontFamily: "Open Sans",
-                      color: correct,
-                      fontSize: 100,
-                      fontWeight: FontWeight.bold),
+                  style: Theme.of(context)
+                      .accentTextTheme
+                      .headline5
+                      .copyWith(fontSize: 96, color: kEzLearnCorrectGreen),
                 ),
               ),
             ),
@@ -43,6 +43,7 @@ class ResultCircle extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: 50,
+                    height: 5,
                     child: Divider(
                       color: correct,
                       thickness: 5,
@@ -73,12 +74,12 @@ class _CircularProgress extends CustomPainter {
     double radius = min(size.width / 2, size.height / 2) - 10;
 
     Paint outerCircle = Paint()
-      ..strokeWidth = 30
+      ..strokeWidth = 20
       ..color = Colors.black.withOpacity(0.15)
       ..style = PaintingStyle.stroke;
 
     Paint completeArc = Paint()
-      ..strokeWidth = 30
+      ..strokeWidth = 20
       ..color = correct
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;

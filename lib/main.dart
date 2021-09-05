@@ -33,6 +33,8 @@ ThemeData _buildEzLearnTheme() {
       onPrimary: kEzLearnWhite,
       secondary: kEzLearnYellow400,
       onSecondary: kEzLearnBlack,
+      background: kEzLearnWhite,
+      onBackground: kEzLearnBlack,
       surface: kEzLearnWhite,
       onSurface: kEzLearnBlack,
       error: kEzLearnErrorRed,
@@ -44,8 +46,13 @@ ThemeData _buildEzLearnTheme() {
       border: OutlineInputBorder(
         borderSide: BorderSide(
           width: 2.0,
-          color: kEzLearnBlue900,
+          color: kEzLearnGrey,
         ),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: kEzLearnBlue600, width: 2.0),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
     ),
   );
@@ -58,7 +65,7 @@ TextTheme _buildEzLearnTextTheme1(TextTheme base) {
             fontWeight: FontWeight.w800,
             fontSize: 36,
             height: 1.2,
-            letterSpacing: 3,
+            letterSpacing: 1,
           ),
           headline5: base.headline5.copyWith(
             fontWeight: FontWeight.w700,
@@ -102,12 +109,16 @@ TextTheme _buildEzLearnTextTheme2(TextTheme base) {
   return base
       .copyWith(
         headline5: base.headline5.copyWith(
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w700, // Bold
           fontSize: 24,
           height: 1.2,
-          letterSpacing: 3,
         ),
         headline6: base.headline6.copyWith(
+          fontWeight: FontWeight.w600, // SemiBold
+          fontSize: 18,
+          height: 1.2,
+        ),
+        bodyText1: base.bodyText1.copyWith(
           fontWeight: FontWeight.w600,
           fontSize: 18,
           height: 1.2,

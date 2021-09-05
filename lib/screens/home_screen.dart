@@ -229,8 +229,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         Container(
-            height: isPreview ? 130 : 300,
-            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+            height: isPreview ? 180 : 300,
+            padding: EdgeInsets.fromLTRB(0, 10, 0, 40),
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) => isPreview
@@ -246,7 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-// @override
+  // @override
   // Widget build(BuildContext context) {
   //   return Scaffold(
   //     body: NestedScrollView(
