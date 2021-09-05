@@ -31,10 +31,10 @@ class ResultScreen extends StatelessWidget {
           backgroundColor: Theme.of(context).colorScheme.primary,
           title: Text(
             "MATHEMATICS",
-            style: Theme.of(context)
-                .textTheme
-                .headline5
-                .copyWith(color: Theme.of(context).colorScheme.onPrimary),
+            style: Theme.of(context).textTheme.headline5.copyWith(
+                  fontSize: 36,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
           ),
         ),
         body: Container(
@@ -46,7 +46,9 @@ class ResultScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  "Outstanding".toUpperCase(),
+                  "Outstanding!!!".toUpperCase(),
+                  maxLines: 1,
+                  overflow: TextOverflow.clip,
                   style: Theme.of(context).textTheme.headline5.copyWith(
                         color: kEzLearnCorrectGreen,
                         fontSize: 48,

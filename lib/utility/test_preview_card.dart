@@ -126,7 +126,10 @@ class TestPreviewCard extends StatelessWidget {
               SizedBox(height: 5),
               Text(
                 preview.name,
-                style: Theme.of(context).textTheme.headline4,
+                style: Theme.of(context).textTheme.headline5.copyWith(
+                  fontSize: 36,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
               )
             ]),
           ),

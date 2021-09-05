@@ -12,12 +12,13 @@ class AllAnswerScreen extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         automaticallyImplyLeading: false,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: Text(
           "MATHEMATICS",
-          style: Theme.of(context)
-              .textTheme
-              .headline5
-              .copyWith(color: Theme.of(context).colorScheme.onPrimary),
+          style: Theme.of(context).textTheme.headline5.copyWith(
+                fontSize: 36,
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
         ),
       ),
       body: Column(

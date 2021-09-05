@@ -60,7 +60,10 @@ class _SplashScreenState extends State<SplashScreen> {
           },
           child: Text(
             "I want to register",
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            style: Theme.of(context)
+                .textTheme
+                .headline5
+                .copyWith(color: Theme.of(context).colorScheme.onPrimary),
           ),
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(primaryColor),
