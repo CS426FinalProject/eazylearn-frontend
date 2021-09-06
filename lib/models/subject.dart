@@ -1,4 +1,4 @@
-import 'package:final_cs426/constants/color.dart';
+import 'package:final_cs426/constants/colors.dart';
 import 'package:final_cs426/models/topic.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +18,8 @@ class Subject {
 
   factory Subject.fromJson(Map json, int index) {
     return Subject(
-        subjectID: json['subjectId'], name: json['name'], color: colors[index]);
+        subjectID: json['subjectId'],
+        name: json['name'],
+        color: subjectColors[index]);
   }
 }

@@ -22,3 +22,9 @@ const kEzLearnWhite = Colors.white;
 const kEzLearnGrey = Color(0xFF838181);
 
 const kEzLearnShadowButton = Color(0x406D8DAD);
+
+const subjectColors = [
+  kEzLearnMathPurple,
+  kEzLearnEnglishRed,
+  kEzLearnPhysicsTeal
+];
