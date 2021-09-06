@@ -1,4 +1,4 @@
-import 'package:final_cs426/constants/color.dart';
+import 'package:final_cs426/constants/colors.dart';
 import 'package:final_cs426/models/result.dart';
 import 'package:final_cs426/screens/result_screen.dart';
 import 'package:flutter/material.dart';
@@ -60,15 +60,23 @@ class HistoryCard extends StatelessWidget {
                         ),
                         Text(
                           result.test.subject,
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context).textTheme.subtitle1,
                         ),
+                        SizedBox(height: 10),
                         Text(
                           score,
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context)
+                              .accentTextTheme
+                              .headline6
+                              .copyWith(fontSize: 16),
                         ),
+                        SizedBox(height: 10),
                         Text(
                           dayTaken,
-                          style: Theme.of(context).textTheme.headline6,
+                          style: Theme.of(context)
+                              .accentTextTheme
+                              .headline6
+                              .copyWith(fontSize: 16),
                         ),
                       ],
                     ),
