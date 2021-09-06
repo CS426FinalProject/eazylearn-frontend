@@ -1,4 +1,5 @@
 import 'package:final_cs426/constants/color.dart';
+import 'package:final_cs426/constants/colors.dart';
 import 'package:final_cs426/screens/signup_screens/personal_information_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -46,8 +47,8 @@ class _PasswordScreenState extends State<PasswordScreen>
                       alignment: Alignment.bottomCenter,
                       child: Text(
                         "Create new password",
-                        style: TextStyle(
-                            fontSize: 27, fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.headline5,
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
@@ -98,12 +99,20 @@ class _PasswordScreenState extends State<PasswordScreen>
                                       },
                                       child: Text(
                                         "Next",
-                                        style: TextStyle(fontSize: 20),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .button
+                                            .copyWith(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimary),
                                       ),
                                       style: ButtonStyle(
                                           backgroundColor:
                                               MaterialStateProperty.all(
-                                                  primaryColor),
+                                                  Theme.of(context)
+                                                      .colorScheme
+                                                      .primary),
                                           minimumSize:
                                               MaterialStateProperty.all(
                                                   Size(double.infinity, 55)),
@@ -161,11 +170,18 @@ class _PasswordScreenState extends State<PasswordScreen>
         onChanged: (value) {
           onTextChanged(value);
         },
-        style: TextStyle(fontSize: 20),
+        style: Theme.of(context).textTheme.headline6,
         obscureText: obscure,
         decoration: InputDecoration(
           suffixIcon: IconButton(
-            icon: Icon(obscure ? Icons.visibility : Icons.visibility_off),
+            icon: Icon(
+              obscure ? Icons.visibility : Icons.visibility_off,
+              color: isPassword
+                  ? null
+                  : (password != reentering
+                      ? Theme.of(context).colorScheme.error
+                      : kEzLearnGrey),
+            ),
             onPressed: () {
               setState(() {
                 isPassword
@@ -180,23 +196,17 @@ class _PasswordScreenState extends State<PasswordScreen>
               : (password != reentering
                   ? "Passwords should be the same"
                   : null),
-          hintText: hintText,
-          hintStyle: TextStyle(fontSize: 20),
+          errorStyle: Theme.of(context).textTheme.headline6.copyWith(
+                fontSize: 10,
+                color: Theme.of(context).colorScheme.error,
+              ),
           contentPadding: EdgeInsets.fromLTRB(25, 20, 20, 20),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25.0),
-            borderSide: BorderSide(color: Colors.black, width: 1.5),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25.0),
-            borderSide: BorderSide(color: Colors.black, width: 1.5),
-          ),
-          errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25.0),
-              borderSide: BorderSide(color: Colors.red, width: 1.5)),
-          focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(25.0),
-              borderSide: BorderSide(color: Colors.red, width: 1.5)),
+          disabledBorder: Theme.of(context).inputDecorationTheme.disabledBorder,
+          focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
+          enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
+          errorBorder: Theme.of(context).inputDecorationTheme.errorBorder,
+          focusedErrorBorder:
+              Theme.of(context).inputDecorationTheme.focusedErrorBorder,
         ),
       ),
     );

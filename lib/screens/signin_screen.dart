@@ -24,13 +24,16 @@ class _SignInScreenState extends State<SignInScreen> {
               child: Column(
                 children: [
                   Expanded(
-                      flex: 2,
-                      child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Text(
-                            "Log in",
-                            style: Theme.of(context).textTheme.headline5,
-                          ))),
+                    flex: 2,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Text(
+                        "Log in",
+                        style: Theme.of(context).textTheme.headline5,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
                   Expanded(
                       flex: 5,
                       child: Column(
@@ -139,25 +142,25 @@ class _SignInScreenState extends State<SignInScreen> {
         style: Theme.of(context).textTheme.headline6,
         obscureText: isPassword && isObscure,
         decoration: InputDecoration(
-            suffixIcon: isPassword
-                ? IconButton(
-                    onPressed: () {
-                      setState(() {
-                        isObscure = !isObscure;
-                      });
-                    },
-                    icon: Icon(
-                        isObscure ? Icons.visibility : Icons.visibility_off))
-                : null,
-            labelText: hintText,
-            contentPadding: EdgeInsets.fromLTRB(25, 20, 20, 20),
-            disabledBorder:
-                Theme.of(context).inputDecorationTheme.disabledBorder,
-            focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
-            enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
-            errorBorder: Theme.of(context).inputDecorationTheme.errorBorder,
-            focusedErrorBorder:
-                Theme.of(context).inputDecorationTheme.focusedErrorBorder),
+          suffixIcon: isPassword
+              ? IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isObscure = !isObscure;
+                    });
+                  },
+                  icon:
+                      Icon(isObscure ? Icons.visibility : Icons.visibility_off))
+              : null,
+          labelText: hintText,
+          contentPadding: EdgeInsets.fromLTRB(25, 20, 20, 20),
+          disabledBorder: Theme.of(context).inputDecorationTheme.disabledBorder,
+          focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
+          enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
+          errorBorder: Theme.of(context).inputDecorationTheme.errorBorder,
+          focusedErrorBorder:
+              Theme.of(context).inputDecorationTheme.focusedErrorBorder,
+        ),
       ),
     );
   }

@@ -184,8 +184,8 @@ class ResultScreen extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(secondaryColor),
+                        backgroundColor: MaterialStateProperty.all(
+                            Theme.of(context).colorScheme.secondary),
                         minimumSize: MaterialStateProperty.all(Size(300, 60)),
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)))),

@@ -44,6 +44,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
     return Scaffold(
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Stack(
           children: [
             Column(children: [
@@ -87,7 +88,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildPersonalInfoCard(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 20, right: 20),
+      padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
       child: _buildRoundedBox(
           color: Colors.white,
           child: Padding(
@@ -192,22 +193,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
       @required String num,
       @required Color color,
       @required bool isTotal}) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    var boxSize = (screenWidth - 120) / 2;
     return GestureDetector(
-      onTap: () {
-        print(Session.userID);
-        if (isTotal)
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => HistoryScreen(
-                        userID: Session.userID,
-                      )));
-      },
-      child: _buildRoundedBox(
+        onTap: () {
+          print(Session.userID);
+          if (isTotal)
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => HistoryScreen(
+                          userID: Session.userID,
+                        )));
+        },
+        child: _buildRoundedBox(
           color: color,
           child: SizedBox(
-            width: 150,
-            height: 150,
+            width: boxSize,
+            height: boxSize,
             child: Column(
               children: [
                 Text(
@@ -216,6 +219,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         color: color == Theme.of(context).colorScheme.secondary
                             ? Theme.of(context).colorScheme.onSecondary
                             : Theme.of(context).colorScheme.onPrimary,
+                        fontSize: 22,
                       ),
                 ),
                 Expanded(
@@ -224,7 +228,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: Text(
                     num,
                     style: Theme.of(context).accentTextTheme.headline6.copyWith(
-                          fontSize: 56,
+                          fontSize: 48,
                           color:
                               color == Theme.of(context).colorScheme.secondary
                                   ? Theme.of(context).colorScheme.onSecondary
@@ -234,8 +238,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ))
               ],
             ),
-          )),
-    );
+          ),
+        ));
   }
 
   Widget _buildAppBar(BuildContext context) {
