@@ -39,6 +39,19 @@ class ResultScreen extends StatelessWidget {
         (index) => (questions[index].answer == answers[index]));
     int correctCount = 0;
     for (bool b in corrects) if (b) correctCount++;
+
+    double to10 = correctCount / corrects.length * 10;
+    String comment;
+    if (to10 == 10)
+      comment = "OUTSTANDING";
+    else if (to10 >= 8)
+      comment = "AMAZING";
+    else if (to10 >= 7)
+      comment = "WELL DONE";
+    else if (to10 >= 5)
+      comment = "Not bad";
+    else
+      comment = "Try harder";
     return WillPopScope(
       onWillPop: () {
         init = true;
@@ -55,7 +68,7 @@ class ResultScreen extends StatelessWidget {
           automaticallyImplyLeading: false,
           backgroundColor: Theme.of(context).colorScheme.primary,
           title: Text(
-            "MATHEMATICS",
+            result.test.name,
             style: Theme.of(context).textTheme.headline5.copyWith(
                   fontSize: 36,
                   color: Theme.of(context).colorScheme.onPrimary,
@@ -74,7 +87,7 @@ class ResultScreen extends StatelessWidget {
                     Align(
                       alignment: Alignment.center,
                       child: Text(
-                        "Outstanding!".toUpperCase(),
+                        comment,
                         maxLines: 1,
                         overflow: TextOverflow.clip,
                         style: Theme.of(context).textTheme.headline5.copyWith(
@@ -144,6 +157,7 @@ class ResultScreen extends StatelessWidget {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                   builder: (context) => AllAnswerScreen(
+                                        testName: result.test.name,
                                         questions: questions,
                                         answers: answers,
                                       )),
