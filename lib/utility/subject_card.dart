@@ -1,3 +1,4 @@
+import 'package:final_cs426/constants/colors.dart';
 import 'package:final_cs426/models/subject.dart';
 import 'package:final_cs426/screens/test_choosing_screen.dart';
 import 'package:flutter/material.dart';
@@ -72,10 +73,9 @@ class SubjectCard extends StatelessWidget {
                       ),
                       Text(
                         subject.name,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.headline5.copyWith(
+                              color: kEzLearnWhite,
+                            ),
                       )
                     ],
                   ),

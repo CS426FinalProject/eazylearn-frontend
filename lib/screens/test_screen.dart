@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:final_cs426/models/question.dart';
 import 'package:final_cs426/models/test.dart';
 import 'package:final_cs426/routes/routes.dart';
 import 'package:final_cs426/screens/result_screen.dart';
@@ -9,7 +8,6 @@ import 'package:final_cs426/utility/answer_chooser.dart';
 import 'package:final_cs426/utility/current_question_tracker.dart';
 import 'package:final_cs426/utility/question_wheel.dart';
 import 'package:flutter/material.dart';
-import 'package:final_cs426/constants/color.dart';
 
 class TestScreen extends StatefulWidget {
   final Test test;
@@ -65,14 +63,13 @@ class _TestScreenState extends State<TestScreen> {
         child: init
             ? Scaffold(
                 key: ValueKey("SPLASH"),
-                backgroundColor: primaryColor,
+                backgroundColor: Theme.of(context).colorScheme.primary,
                 body: Center(
                   child: Text(
-                    test.subject,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 50,
-                        fontWeight: FontWeight.bold),
+                    "EazyLearn".toUpperCase(),
+                    style: Theme.of(context).textTheme.headline4.copyWith(
+                          fontSize: 48,
+                        ),
                   ),
                 ),
               )
@@ -84,49 +81,83 @@ class _TestScreenState extends State<TestScreen> {
     return WillPopScope(
       onWillPop: () {
         showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text("sure"),
-                      ElevatedButton(
-                          onPressed: () {
-                            init = true;
-                            Navigator.popUntil(
-                                context, ModalRoute.withName(Routes.home));
-                          },
-                          child: Text("yeah"))
-                    ],
+          context: context,
+          builder: (context) => AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            title: Text("Quit so soon?"),
+            content: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    init = true;
+                    Navigator.popUntil(
+                        context, ModalRoute.withName(Routes.home));
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        Theme.of(context).colorScheme.secondary),
+                    overlayColor: MaterialStateProperty.all(
+                        Colors.black.withOpacity(0.07)),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                    ),
                   ),
-                ));
+                  child: Text(
+                    "Confirm",
+                    style: Theme.of(context).accentTextTheme.headline6,
+                  ),
+                ),
+                SizedBox(width: 5),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text(
+                    "Cancel",
+                    style: Theme.of(context).accentTextTheme.headline6,
+                  ),
+                  style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all(
+                        Theme.of(context).colorScheme.onSurface),
+                    overlayColor: MaterialStateProperty.all(
+                        Colors.black.withOpacity(0.07)),
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20))),
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
         return Future.value(false);
       },
       child: Scaffold(
         key: ValueKey("TEST"),
-        backgroundColor: primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         appBar: AppBar(
           automaticallyImplyLeading: false,
           title: Row(
             children: [
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                child: Align(
+                  alignment: Alignment.center,
                   child: Text(
                     test.subject,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 32,
-                        fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.headline5.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimary),
                   ),
                 ),
               ),
               DecoratedBox(
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.secondary,
                     borderRadius: BorderRadius.circular(20)),
                 child: Padding(
-                    padding: const EdgeInsets.all(5.0),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
                     child: Row(
                       children: [
                         Icon(
@@ -138,12 +169,13 @@ class _TestScreenState extends State<TestScreen> {
                         ),
                         Text('${_toMinute(_timeLeft)}',
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontFamily: "Open Sans",
-                                fontSize: 22,
-                                letterSpacing: 0.5,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black)),
+                            style: Theme.of(context)
+                                .accentTextTheme
+                                .headline5
+                                .copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSecondary)),
                       ],
                     )),
               ),
@@ -256,7 +288,7 @@ class _TestScreenState extends State<TestScreen> {
             color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(22))),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 70, 20, 20),
+          padding: const EdgeInsets.fromLTRB(20, 30, 20, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -267,10 +299,10 @@ class _TestScreenState extends State<TestScreen> {
                     if (test.questions[index].requirement.isNotEmpty)
                       Text(
                         test.questions[index].requirement,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline5
+                            .copyWith(fontSize: 18, letterSpacing: 0),
                       ),
                     SizedBox(
                       height: 10.0,
@@ -279,12 +311,10 @@ class _TestScreenState extends State<TestScreen> {
                         test.questions[index].content.isNotEmpty)
                       Text(
                         test.questions[index].content,
-                        style: TextStyle(
-                          fontFamily: "Open Sans",
-                          fontSize: 18,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: Theme.of(context)
+                            .accentTextTheme
+                            .bodyText1
+                            .copyWith(fontStyle: FontStyle.italic),
                         textAlign: TextAlign.center,
                       ),
                   ],
@@ -371,7 +401,7 @@ class SubmitScreen extends StatelessWidget {
       },
       child: Scaffold(
           key: ValueKey("SUBMIT"),
-          backgroundColor: primaryColor,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -382,14 +412,13 @@ class SubmitScreen extends StatelessWidget {
                   },
                   child: Text(
                     "Submit",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold),
+                    style: Theme.of(context).textTheme.headline5.copyWith(
+                          color: Theme.of(context).colorScheme.onSecondary,
+                        ),
                   ),
                   style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(secondaryColor),
+                      backgroundColor: MaterialStateProperty.all(
+                          Theme.of(context).colorScheme.secondary),
                       minimumSize: MaterialStateProperty.all(Size(120, 50)),
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)))),
@@ -397,17 +426,18 @@ class SubmitScreen extends StatelessWidget {
                 SizedBox(height: 10),
                 TextButton(
                     style: ButtonStyle(
-                        overlayColor: MaterialStateProperty.all(
-                            Colors.black.withOpacity(0.07))),
+                      overlayColor: MaterialStateProperty.all(
+                        Colors.black.withOpacity(0.07),
+                      ),
+                    ),
                     onPressed: () {
                       Navigator.pop(context);
                     },
                     child: Text(
                       "Cancel",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.headline5.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
                     ))
               ],
             ),

@@ -1,4 +1,5 @@
 import 'package:final_cs426/constants/color.dart';
+import 'package:final_cs426/constants/colors.dart';
 import 'package:final_cs426/models/question.dart';
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
@@ -31,63 +32,82 @@ class _ResultCardState extends State<ResultCard> {
     String explanation = widget.question.explanation;
 
     return Theme(
-      data: ThemeData(fontFamily: "Open Sans"),
-      child: Card(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+        data: Theme.of(context),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
             side: BorderSide(
-                color: isMissing ? missed : (isCorrect ? correct : incorrect))),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: Text(
-                  widget.index.toString(),
-                  style: TextStyle(
-                      color: isMissing
-                          ? missed
-                          : (isCorrect ? correct : incorrect),
-                      fontSize: 25),
-                ),
-              ),
+              width: 2.0,
+              color: isMissing ? missed : (isCorrect ? correct : incorrect),
             ),
-            Expanded(
-              flex: 9,
-              child: ExpandablePanel(
-                  theme: ExpandableThemeData(
-                      useInkWell: false,
-                      headerAlignment: ExpandablePanelHeaderAlignment.center),
-                  header: Padding(
-                    padding: EdgeInsets.only(top: 30, bottom: 30),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 4.0, right: 8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 15),
                     child: Text(
-                      isMissing ? "(You missed this one)" : widget.answer,
-                      style: TextStyle(
-                          fontSize: 20, color: isCorrect ? correct : incorrect),
+                      widget.index.toString(),
+                      style:
+                          Theme.of(context).accentTextTheme.headline6.copyWith(
+                                color: isMissing
+                                    ? kEzLearnYellow400
+                                    : (isCorrect
+                                        ? kEzLearnCorrectGreen
+                                        : kEzLearnWrongRed),
+                                fontSize: 24,
+                              ),
                     ),
                   ),
-                  collapsed: SizedBox.shrink(),
-                  expanded: Padding(
-                    padding: EdgeInsets.only(right: 30, bottom: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (!isCorrect)
-                          Text("Correct answer:\n" + correctAnswer,
-                              style: TextStyle(color: correct, fontSize: 20)),
-                        SizedBox(height: 10),
-                        Text("Explanation:\n" + explanation,
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 20)),
-                      ],
-                    ),
-                  )),
+                ),
+                Expanded(
+                  flex: 9,
+                  child: ExpandablePanel(
+                      theme: ExpandableThemeData(
+                          useInkWell: false,
+                          headerAlignment:
+                              ExpandablePanelHeaderAlignment.center),
+                      header: Padding(
+                        padding: EdgeInsets.only(top: 30, bottom: 30),
+                        child: Text(
+                          isMissing ? "(You missed this one)" : widget.answer,
+                          style: Theme.of(context)
+                              .accentTextTheme
+                              .headline6
+                              .copyWith(
+                                  color: isCorrect
+                                      ? kEzLearnCorrectGreen
+                                      : kEzLearnWrongRed),
+                        ),
+                      ),
+                      collapsed: SizedBox.shrink(),
+                      expanded: Padding(
+                        padding: EdgeInsets.only(right: 30, bottom: 20),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (!isCorrect)
+                                Text("Correct answer:\n" + correctAnswer,
+                                    style: Theme.of(context)
+                                        .accentTextTheme
+                                        .headline6
+                                        .copyWith(color: kEzLearnCorrectGreen)),
+                              SizedBox(height: 10),
+                              Text(
+                                "Explanation:\n" + explanation,
+                                style:
+                                    Theme.of(context).accentTextTheme.headline6,
+                              )
+                            ]),
+                      )),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }
 

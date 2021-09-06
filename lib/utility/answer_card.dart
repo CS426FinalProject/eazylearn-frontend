@@ -12,26 +12,24 @@ class AnswerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
         elevation: 5,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: DecoratedBox(
             decoration: BoxDecoration(
-              border: !chosen
-                  ? Border.all(color: Colors.black, width: 1.0)
-                  : Border(),
               borderRadius: BorderRadius.circular(20.0),
               color: chosen ? primaryColor : Colors.transparent,
             ),
             child: Padding(
-              padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(answer,
-                      style: TextStyle(
-                          fontFamily: "Open Sans",
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: !chosen ? Colors.black : Colors.white)),
+                  Text(
+                    answer,
+                    style: Theme.of(context).accentTextTheme.headline6.copyWith(
+                        color: !chosen
+                            ? Theme.of(context).colorScheme.onSurface
+                            : Theme.of(context).colorScheme.onPrimary),
+                  ),
                 ],
               ),
             )));

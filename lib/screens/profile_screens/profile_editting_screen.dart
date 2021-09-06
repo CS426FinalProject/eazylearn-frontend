@@ -74,8 +74,7 @@ class _ProfileEdittingScreenState extends State<ProfileEdittingScreen> {
                     SizedBox(width: 10),
                     Text(
                       "Edit profile",
-                      style:
-                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.headline5,
                     )
                   ],
                 ),
@@ -131,8 +130,7 @@ class _ProfileEdittingScreenState extends State<ProfileEdittingScreen> {
                   },
                   child: Text(
                     "Apply",
-                    style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.bold),
+                    style: Theme.of(context).accentTextTheme.headline6,
                   ),
                   style: ButtonStyle(
                       minimumSize: MaterialStateProperty.all(Size(100, 40)),
@@ -147,12 +145,12 @@ class _ProfileEdittingScreenState extends State<ProfileEdittingScreen> {
             },
             child: Text(
               "Cancel",
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              style: Theme.of(context).accentTextTheme.headline6,
             ),
             style: ButtonStyle(
-                overlayColor:
-                    MaterialStateProperty.all(Colors.black.withOpacity(0.07))),
+              overlayColor:
+                  MaterialStateProperty.all(Colors.black.withOpacity(0.07)),
+            ),
           )
         ],
       ),
@@ -185,22 +183,20 @@ class _ProfileEdittingScreenState extends State<ProfileEdittingScreen> {
         onChanged: (value) {
           onTextChanged(value);
         },
-        style: TextStyle(fontSize: 20),
         enabled: row != 4,
         keyboardType: row == 5 ? TextInputType.phone : TextInputType.text,
+        style: Theme.of(context).textTheme.headline6,
         decoration: InputDecoration(
-          hintText: hintText,
           labelText: hintText,
           errorText: row == 3 && !EmailValidator.validate(inputs[row])
               ? "Your email is invalid"
               : (row == 5 && !isPhoneNumberValid(inputs[row])
                   ? "Your phone is invalid"
                   : null),
-          hintStyle: TextStyle(fontSize: 20),
+          focusColor: Theme.of(context).colorScheme.primary,
           contentPadding: EdgeInsets.fromLTRB(25, 20, 10, 20),
-          focusedBorder: outlineBlue,
-          enabledBorder: outlineBlue,
-          disabledBorder: outlineBlue,
+          focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
+          border: Theme.of(context).inputDecorationTheme.border,
           errorBorder: errorOutline,
           focusedErrorBorder: errorOutline,
         ),

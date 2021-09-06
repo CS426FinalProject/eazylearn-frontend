@@ -59,8 +59,18 @@ flutter:
         - asset: lib/fonts/Raleway-Regular.ttf
         - asset: lib/fonts/Raleway-Italic.ttf
           style: italic
+        - asset: lib/fonts/Raleway-SemiBold.ttf
+          weight: 600
         - asset: lib/fonts/Raleway-Bold.ttf
           weight: 700
+        - asset: lib/fonts/Raleway-ExtraBold.ttf
+          weight: 800
+    - family: OpenSans
+      fonts:
+        - asset: lib/fonts/OpenSans-Bold.ttf
+          weight: 700
+        - asset: lib/fonts/OpenSans-SemiBold.ttf
+          weight: 600
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
