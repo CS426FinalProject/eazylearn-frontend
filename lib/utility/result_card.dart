@@ -1,4 +1,3 @@
-import 'package:final_cs426/constants/color.dart';
 import 'package:final_cs426/constants/colors.dart';
 import 'package:final_cs426/models/question.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +39,9 @@ class _ResultCardState extends State<ResultCard> {
           borderRadius: BorderRadius.circular(20),
           side: BorderSide(
             width: 2.0,
-            color: isMissing ? missed : (isCorrect ? correct : incorrect),
+            color: isMissing
+                ? kEzLearnYellow400
+                : (isCorrect ? kEzLearnCorrectGreen : kEzLearnWrongRed),
           ),
         ),
         child: Padding(

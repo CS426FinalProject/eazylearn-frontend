@@ -1,5 +1,4 @@
 import 'package:final_cs426/api/api.dart';
-import 'package:final_cs426/constants/color.dart';
 import 'package:final_cs426/constants/colors.dart';
 import 'package:final_cs426/models/user.dart';
 import 'package:final_cs426/screens/profile_screens/profile_editting_screen.dart';
@@ -35,7 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       return Scaffold(
         body: Center(
           child: CircularProgressIndicator(
-            color: primaryColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
       );
@@ -229,7 +228,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       Container(
         width: double.infinity,
         height: 400,
-        decoration: BoxDecoration(color: primaryColor),
+        decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
         child: Center(
           child: CircleAvatar(
             radius: 120,

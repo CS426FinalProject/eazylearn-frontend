@@ -348,6 +348,15 @@ class _TestScreenState extends State<TestScreen> {
           setState(() {
             timer.cancel();
           });
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ResultScreen(
+                questions: test.questions,
+                answers: userChoices,
+                time: test.time * 60 - _timeLeft,
+              ),
+            ),
+          );
         } else {
           setState(() {
             _timeLeft--;

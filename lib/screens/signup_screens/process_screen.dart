@@ -1,5 +1,4 @@
 import 'package:final_cs426/api/api.dart';
-import 'package:final_cs426/constants/color.dart';
 import 'package:final_cs426/models/user.dart';
 import 'package:final_cs426/routes/routes.dart';
 import 'package:final_cs426/screens/home_screen.dart';

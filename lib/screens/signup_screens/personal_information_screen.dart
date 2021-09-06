@@ -1,5 +1,4 @@
-import 'package:final_cs426/constants/color.dart';
-import 'package:final_cs426/constants/textfield_outlines.dart';
+
 import 'package:final_cs426/models/user.dart';
 import 'package:final_cs426/screens/signup_screens/process_screen.dart';
 import 'package:flutter/material.dart';
