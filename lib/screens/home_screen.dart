@@ -61,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                     flex: 25,
                     child: ListView(
+                      physics: BouncingScrollPhysics(),
                       children: [
                         SizedBox(
                           height: 35,
@@ -201,6 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
             height: isPreview ? 170 : 320,
             padding: EdgeInsets.fromLTRB(0, 10, 0, 40),
             child: ListView.builder(
+                physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) => isPreview
                     ? TestPreviewCard(

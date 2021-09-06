@@ -27,7 +27,10 @@ class _SignInScreenState extends State<SignInScreen> {
                       flex: 2,
                       child: Align(
                           alignment: Alignment.bottomCenter,
-                          child: Text("Log in"))),
+                          child: Text(
+                            "Log in",
+                            style: Theme.of(context).textTheme.headline5,
+                          ))),
                   Expanded(
                       flex: 5,
                       child: Column(
@@ -72,20 +75,36 @@ class _SignInScreenState extends State<SignInScreen> {
                                   showDialog(
                                       context: context,
                                       builder: (context) => AlertDialog(
-                                            content: Text("Failed to login"),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            content: Text(
+                                              "Failed to login",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline6,
+                                            ),
                                           ));
                               },
                               style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all(primaryColor),
+                                backgroundColor: MaterialStateProperty.all(
+                                    Theme.of(context).colorScheme.primary),
                                 minimumSize: MaterialStateProperty.all(
                                     Size(double.infinity, 55)),
                                 shape: MaterialStateProperty.all(
                                     RoundedRectangleBorder(
                                         borderRadius:
-                                            BorderRadius.circular(18))),
+                                            BorderRadius.circular(20))),
                               ),
-                              child: Text("Next"),
+                              child: Text("Next",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline5
+                                      .copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onPrimary)),
                             ),
                           ),
                   )
@@ -117,7 +136,7 @@ class _SignInScreenState extends State<SignInScreen> {
         onChanged: (value) {
           onTextChanged(value);
         },
-        style: TextStyle(fontSize: 20),
+        style: Theme.of(context).textTheme.headline6,
         obscureText: isPassword && isObscure,
         decoration: InputDecoration(
             suffixIcon: isPassword
@@ -131,14 +150,14 @@ class _SignInScreenState extends State<SignInScreen> {
                         isObscure ? Icons.visibility : Icons.visibility_off))
                 : null,
             labelText: hintText,
-            hintText: hintText,
-            hintStyle: TextStyle(fontSize: 20),
             contentPadding: EdgeInsets.fromLTRB(25, 20, 20, 20),
-            disabledBorder: outline,
-            focusedBorder: outline,
-            enabledBorder: outline,
-            errorBorder: errorOutline,
-            focusedErrorBorder: errorOutline),
+            disabledBorder:
+                Theme.of(context).inputDecorationTheme.disabledBorder,
+            focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
+            enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
+            errorBorder: Theme.of(context).inputDecorationTheme.errorBorder,
+            focusedErrorBorder:
+                Theme.of(context).inputDecorationTheme.focusedErrorBorder),
       ),
     );
   }

@@ -172,6 +172,7 @@ class _TestChoosingScreenState extends State<TestChoosingScreen> {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
         child: ListView.builder(
+          physics: BouncingScrollPhysics(),
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) => TestPreviewCard(
             preview: previews[index],
@@ -206,35 +207,35 @@ class _TopicCheckboxDialogState extends State<TopicCheckboxDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        title: Text(
-          "Filter by topics",
-          style: Theme.of(context).textTheme.headline5,
-        ),
-        content: _topicCheckboxList(),
-        contentPadding: EdgeInsets.all(10.0),
-        actions: <Widget>[
-          ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(true),
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(secondaryColor),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15)))),
-              child: Text(
-                "Apply",
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-              )),
-          TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              style: ButtonStyle(
-                  overlayColor: MaterialStateProperty.all(
-                      Colors.black.withOpacity(0.07))),
-              child: Text(
-                "Cancel",
-                style: Theme.of(context).accentTextTheme.headline6,
-              )),
-        ]);
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      title: Text(
+        "Filter by topics",
+        style: Theme.of(context).textTheme.headline5,
+      ),
+      content: _topicCheckboxList(),
+      contentPadding: EdgeInsets.all(10.0),
+      actions: <Widget>[
+        ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(secondaryColor),
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)))),
+            child: Text(
+              "Apply",
+              style: Theme.of(context).accentTextTheme.headline6,
+            )),
+        TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            style: ButtonStyle(
+                overlayColor:
+                    MaterialStateProperty.all(Colors.black.withOpacity(0.07))),
+            child: Text(
+              "Cancel",
+              style: Theme.of(context).accentTextTheme.headline6,
+            )),
+      ],
+    );
   }
 
   _topicCheckboxList() {

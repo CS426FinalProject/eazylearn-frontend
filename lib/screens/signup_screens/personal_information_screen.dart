@@ -124,8 +124,17 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen>
                                           showDialog(
                                               context: context,
                                               builder: (context) => AlertDialog(
-                                                    content:
-                                                        Text("Sign up failed"),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
+                                                    ),
+                                                    content: Text(
+                                                        "Sign up failed",
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .headline6),
                                                   ));
                                       },
                                       child: Text(

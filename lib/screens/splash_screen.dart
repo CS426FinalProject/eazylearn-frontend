@@ -82,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen> {
           },
           child: Text(
             "I have an account",
-            style: TextStyle(fontSize: 25),
+            style: Theme.of(context).textTheme.headline5,
           ),
         )
       ],
