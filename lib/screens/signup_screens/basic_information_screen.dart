@@ -49,8 +49,8 @@ class _SignupScreenState extends State<SignupScreen>
                       alignment: Alignment.bottomCenter,
                       child: Text(
                         "Create new account",
-                        style: TextStyle(
-                            fontSize: 27, fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.headline5,
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
@@ -59,6 +59,7 @@ class _SignupScreenState extends State<SignupScreen>
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ListView(
+                        physics: BouncingScrollPhysics(),
                         children: [
                           _generateTextFormField(
                               hintText: "First name",
@@ -109,20 +110,28 @@ class _SignupScreenState extends State<SignupScreen>
                                       },
                                       child: Text(
                                         "Next",
-                                        style: TextStyle(fontSize: 20),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .button
+                                            .copyWith(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimary),
                                       ),
                                       style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  primaryColor),
-                                          minimumSize:
-                                              MaterialStateProperty.all(
-                                                  Size(double.infinity, 55)),
-                                          shape: MaterialStateProperty.all(
-                                              RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          18)))),
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Theme.of(context)
+                                                    .colorScheme
+                                                    .primary),
+                                        minimumSize: MaterialStateProperty.all(
+                                            Size(double.infinity, 55)),
+                                        shape: MaterialStateProperty.all(
+                                          RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20)),
+                                        ),
+                                      ),
                                     )
                                   : SizedBox.shrink()))
                       : SizedBox.shrink(),
@@ -170,21 +179,25 @@ class _SignupScreenState extends State<SignupScreen>
         onChanged: (value) {
           onTextChanged(value);
         },
-        style: TextStyle(fontSize: 20),
+        style: Theme.of(context).textTheme.headline6,
         decoration: InputDecoration(
-          hintText: hintText,
           labelText: hintText,
           errorText: !isFirst &&
                   hintText == "Email address" &&
                   !EmailValidator.validate(email)
               ? "Your email is invalid"
               : null,
-          hintStyle: TextStyle(fontSize: 20),
+          errorStyle: Theme.of(context).textTheme.headline6.copyWith(
+                fontSize: 10,
+                color: Theme.of(context).colorScheme.error,
+              ),
           contentPadding: EdgeInsets.fromLTRB(25, 20, 10, 20),
-          focusedBorder: outline,
-          enabledBorder: outline,
-          errorBorder: errorOutline,
-          focusedErrorBorder: errorOutline,
+          disabledBorder: Theme.of(context).inputDecorationTheme.disabledBorder,
+          focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
+          enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
+          errorBorder: Theme.of(context).inputDecorationTheme.errorBorder,
+          focusedErrorBorder:
+              Theme.of(context).inputDecorationTheme.focusedErrorBorder,
         ),
       ),
     );

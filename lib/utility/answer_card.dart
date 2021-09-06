@@ -16,7 +16,9 @@ class AnswerCard extends StatelessWidget {
         child: DecoratedBox(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20.0),
-              color: chosen ? primaryColor : Colors.transparent,
+              color: chosen
+                  ? Theme.of(context).colorScheme.primary
+                  : Colors.transparent,
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),

@@ -51,8 +51,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen>
                       alignment: Alignment.bottomCenter,
                       child: Text(
                         "Personal information",
-                        style: TextStyle(
-                            fontSize: 27, fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.headline5,
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
@@ -139,20 +139,29 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen>
                                       },
                                       child: Text(
                                         "Next",
-                                        style: TextStyle(fontSize: 20),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .button
+                                            .copyWith(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .onPrimary),
                                       ),
                                       style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  primaryColor),
-                                          minimumSize:
-                                              MaterialStateProperty.all(
-                                                  Size(double.infinity, 55)),
-                                          shape: MaterialStateProperty.all(
-                                              RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          18)))),
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Theme.of(context)
+                                                    .colorScheme
+                                                    .primary),
+                                        minimumSize: MaterialStateProperty.all(
+                                            Size(double.infinity, 55)),
+                                        shape: MaterialStateProperty.all(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                          ),
+                                        ),
+                                      ),
                                     )
                                   : SizedBox.shrink()))
                       : SizedBox.shrink(),
@@ -222,20 +231,21 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen>
             onTextChanged(value);
           },
           enabled: type != 1,
-          style: TextStyle(fontSize: 20),
+          style: Theme.of(context).textTheme.headline6,
           decoration: InputDecoration(
-              labelText: hintText,
-              errorText: !first && type == 0 && !isPhoneNumberValid()
-                  ? "Invalid phone number"
-                  : null,
-              hintText: hintText,
-              hintStyle: TextStyle(fontSize: 20),
-              contentPadding: EdgeInsets.fromLTRB(25, 20, 20, 20),
-              disabledBorder: outline,
-              focusedBorder: outline,
-              enabledBorder: outline,
-              errorBorder: errorOutline,
-              focusedErrorBorder: errorOutline),
+            labelText: hintText,
+            errorText: !first && type == 0 && !isPhoneNumberValid()
+                ? "Invalid phone number"
+                : null,
+            contentPadding: EdgeInsets.fromLTRB(25, 20, 20, 20),
+            disabledBorder:
+                Theme.of(context).inputDecorationTheme.disabledBorder,
+            focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
+            enabledBorder: Theme.of(context).inputDecorationTheme.enabledBorder,
+            errorBorder: Theme.of(context).inputDecorationTheme.errorBorder,
+            focusedErrorBorder:
+                Theme.of(context).inputDecorationTheme.focusedErrorBorder,
+          ),
         ),
       ),
     );

@@ -52,10 +52,12 @@ class _TestChoosingScreenState extends State<TestChoosingScreen> {
   Widget build(BuildContext context) {
     if (!isLoaded)
       return Scaffold(
-          body: Center(child: CircularProgressIndicator(color: primaryColor)));
+          body: Center(
+              child: CircularProgressIndicator(
+                  color: Theme.of(context).colorScheme.primary)));
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: primaryColor,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         toolbarHeight: 75,
         title: Text(
           subject.name.toUpperCase(),
@@ -220,7 +222,7 @@ class _TopicCheckboxDialogState extends State<TopicCheckboxDialog> {
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(secondaryColor),
                 shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)))),
+                    borderRadius: BorderRadius.circular(20)))),
             child: Text(
               "Apply",
               style: Theme.of(context).accentTextTheme.headline6,

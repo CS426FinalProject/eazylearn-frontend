@@ -105,7 +105,7 @@ class TestPreviewCard extends StatelessWidget {
             width: double.infinity,
             padding: EdgeInsets.fromLTRB(15, 5, 15, 15),
             decoration: BoxDecoration(
-                color: primaryColor,
+                color: Theme.of(context).colorScheme.primary,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20))),
@@ -121,9 +121,9 @@ class TestPreviewCard extends StatelessWidget {
               Text(
                 preview.name,
                 style: Theme.of(context).textTheme.headline5.copyWith(
-                  fontSize: 36,
-                  color: Theme.of(context).colorScheme.onPrimary,
-                ),
+                      fontSize: 36,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
               )
             ]),
           ),
@@ -231,8 +231,10 @@ class TestPreviewCard extends StatelessWidget {
             padding: EdgeInsets.only(top: 0, left: 15, right: 15),
             child: ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => TestScreen(test: preview,)));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => TestScreen(
+                          test: preview,
+                        )));
               },
               child: Text(
                 "START",
@@ -248,7 +250,7 @@ class TestPreviewCard extends StatelessWidget {
                     MaterialStateProperty.all(Size(double.infinity, 70)),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18),
+                    borderRadius: BorderRadius.circular(20),
                   ),
                 ),
               ),
