@@ -18,7 +18,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     user = await API.getProfile(Session.userID, context);
     if (user != null)
       setState(() {
-        
         isLoaded = true;
         print(user.dob.toIso8601String());
       });
@@ -42,6 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
     return Scaffold(
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Stack(
           children: [
             Column(children: [
@@ -83,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildPersonalInfoCard(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(left: 20, right: 20),
+      padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
       child: _buildRoundedBox(
           color: Colors.white,
           child: Padding(
@@ -185,35 +185,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget _buildUpperBox(
       {@required String heading, @required String num, @required Color color}) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    var boxSize = (screenWidth - 120) / 2;
     return _buildRoundedBox(
         color: color,
         child: SizedBox(
-          width: 150,
-          height: 150,
-          child: Column(
-            children: [
-              Text(
-                heading,
-                style: Theme.of(context).textTheme.headline5.copyWith(
-                      color: color == Theme.of(context).colorScheme.secondary
-                          ? Theme.of(context).colorScheme.onSecondary
-                          : Theme.of(context).colorScheme.onPrimary,
-                    ),
-              ),
-              Expanded(
-                  child: Align(
-                alignment: Alignment.bottomRight,
-                child: Text(
-                  num,
-                  style: Theme.of(context).accentTextTheme.headline6.copyWith(
-                        fontSize: 56,
+          width: boxSize,
+          height: boxSize,
+          child: Expanded(
+            child: Column(
+              children: [
+                Text(
+                  heading,
+                  style: Theme.of(context).textTheme.headline5.copyWith(
                         color: color == Theme.of(context).colorScheme.secondary
                             ? Theme.of(context).colorScheme.onSecondary
                             : Theme.of(context).colorScheme.onPrimary,
+                        fontSize: 22,
                       ),
                 ),
-              ))
-            ],
+                Expanded(
+                    child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    num,
+                    style: Theme.of(context).accentTextTheme.headline6.copyWith(
+                          fontSize: 48,
+                          color:
+                              color == Theme.of(context).colorScheme.secondary
+                                  ? Theme.of(context).colorScheme.onSecondary
+                                  : Theme.of(context).colorScheme.onPrimary,
+                        ),
+                  ),
+                ))
+              ],
+            ),
           ),
         ));
   }
