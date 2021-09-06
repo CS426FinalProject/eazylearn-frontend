@@ -137,7 +137,7 @@ class _ProfileEdittingScreenState extends State<ProfileEdittingScreen> {
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20))),
                       backgroundColor:
-                          MaterialStateProperty.all(secondaryColor))),
+                          MaterialStateProperty.all(Theme.of(context).colorScheme.secondary))),
           SizedBox(width: 10),
           TextButton(
             onPressed: () {

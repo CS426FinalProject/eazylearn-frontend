@@ -162,7 +162,7 @@ class ResultScreen extends StatelessWidget {
                     ElevatedButton(
                       style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(secondaryColor),
+                              MaterialStateProperty.all(Theme.of(context).colorScheme.secondary),
                           minimumSize: MaterialStateProperty.all(Size(300, 60)),
                           shape: MaterialStateProperty.all(
                               RoundedRectangleBorder(

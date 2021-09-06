@@ -9,7 +9,6 @@ import 'package:final_cs426/utility/answer_chooser.dart';
 import 'package:final_cs426/utility/current_question_tracker.dart';
 import 'package:final_cs426/utility/question_wheel.dart';
 import 'package:flutter/material.dart';
-import 'package:final_cs426/constants/color.dart';
 
 class TestScreen extends StatefulWidget {
   final Test test;
@@ -258,7 +257,7 @@ class _TestScreenState extends State<TestScreen> {
               //         fontSize: 20),
               //   ),
               //   style: ButtonStyle(
-              //       backgroundColor: MaterialStateProperty.all(secondaryColor),
+              //       backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.secondary),
               //       minimumSize: MaterialStateProperty.all(Size(200, 50)),
               //       shape: MaterialStateProperty.all(RoundedRectangleBorder(
               //           borderRadius: BorderRadius.circular(18)))),

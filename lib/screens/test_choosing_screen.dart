@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:final_cs426/api/api.dart';
-import 'package:final_cs426/constants/color.dart';
 import 'package:final_cs426/constants/colors.dart';
 import 'package:final_cs426/models/subject.dart';
 import 'package:final_cs426/models/test.dart';
@@ -109,6 +108,7 @@ class _TestChoosingScreenState extends State<TestChoosingScreen> {
                   prefixIcon: Icon(Icons.search),
                   labelText: "Search",
                   focusColor: Theme.of(context).colorScheme.primary,
+                  enabledBorder: InputBorder.none,
                   border: InputBorder.none,
                   focusedBorder:
                       Theme.of(context).inputDecorationTheme.focusedBorder,
@@ -218,25 +218,29 @@ class _TopicCheckboxDialogState extends State<TopicCheckboxDialog> {
       contentPadding: EdgeInsets.all(10.0),
       actions: <Widget>[
         ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(secondaryColor),
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)))),
-            child: Text(
-              "Apply",
-              style: Theme.of(context).accentTextTheme.headline6,
-            )),
+          onPressed: () => Navigator.of(context).pop(true),
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(
+                  Theme.of(context).colorScheme.secondary),
+              shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)))),
+          child: Text(
+            "Apply",
+            style: Theme.of(context).accentTextTheme.headline6,
+          ),
+        ),
         TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            style: ButtonStyle(
-                overlayColor:
-                    MaterialStateProperty.all(Colors.black.withOpacity(0.07))),
-            child: Text(
-              "Cancel",
-              style: Theme.of(context).accentTextTheme.headline6,
-            )),
+          onPressed: () => Navigator.of(context).pop(false),
+          style: ButtonStyle(
+              overlayColor:
+                  MaterialStateProperty.all(Colors.black.withOpacity(0.07))),
+          child: Text(
+            "Cancel",
+            style: Theme.of(context).accentTextTheme.headline6,
+          ),
+        ),
       ],
+      actionsPadding: EdgeInsets.only(bottom: 10.0, right: 10.0),
     );
   }
 
