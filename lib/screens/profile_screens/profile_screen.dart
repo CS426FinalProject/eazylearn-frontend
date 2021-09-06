@@ -282,7 +282,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         elevation: 5,
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.only(left: 30, right: 20, top: 20, bottom: 20),
           width: double.infinity,
           child: Row(
             children: [
