@@ -44,14 +44,27 @@ ThemeData _buildEzLearnTheme() {
     accentTextTheme: _buildEzLearnTextTheme2(base.textTheme),
     inputDecorationTheme: const InputDecorationTheme(
       border: OutlineInputBorder(
-        borderSide: BorderSide(
-          width: 2.0,
-          color: kEzLearnGrey,
-        ),
+        borderSide: BorderSide(color: kEzLearnGrey, width: 2.0),
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: kEzLearnBlue600, width: 2.0),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: kEzLearnWrongRed, width: 2.0),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: kEzLearnWrongRed, width: 2.0),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: kEzLearnGrey, width: 2.0),
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+      disabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: kEzLearnGrey, width: 1.5),
         borderRadius: BorderRadius.all(Radius.circular(20)),
       ),
     ),
@@ -61,44 +74,51 @@ ThemeData _buildEzLearnTheme() {
 TextTheme _buildEzLearnTextTheme1(TextTheme base) {
   return base
       .copyWith(
-          headline4: base.headline4.copyWith(
-            fontWeight: FontWeight.w800,
-            fontSize: 36,
-            height: 1.2,
-            letterSpacing: 1,
-          ),
-          headline5: base.headline5.copyWith(
-            fontWeight: FontWeight.w700,
-            fontSize: 28,
-            height: 1.2,
-            letterSpacing: 0.5,
-            color: kEzLearnBlack,
-          ),
-          headline6: base.headline6.copyWith(
-            fontWeight: FontWeight.w600,
-            fontSize: 18,
-            height: 1.4,
-            color: kEzLearnBlack,
-          ),
-          subtitle1: base.subtitle1.copyWith(
-            fontWeight: FontWeight.w600,
-            fontStyle: FontStyle.italic,
-            fontSize: 14,
-            height: 1.4,
-            color: kEzLearnGrey,
-          ),
-          bodyText1: base.bodyText1.copyWith(
-            fontWeight: FontWeight.w600,
-            fontSize: 18,
-            height: 1.4,
-            color: kEzLearnBlack,
-          ),
-          bodyText2: base.bodyText2.copyWith(
-            fontWeight: FontWeight.w500,
-            fontSize: 18,
-            height: 1.3,
-            color: kEzLearnBlack,
-          ))
+        headline4: base.headline4.copyWith(
+          fontWeight: FontWeight.w800,
+          fontSize: 36,
+          height: 1.2,
+          letterSpacing: 1,
+        ),
+        headline5: base.headline5.copyWith(
+          fontWeight: FontWeight.w700,
+          fontSize: 28,
+          height: 1.2,
+          letterSpacing: 0.5,
+          color: kEzLearnBlack,
+        ),
+        headline6: base.headline6.copyWith(
+          fontWeight: FontWeight.w600,
+          fontSize: 18,
+          height: 1.4,
+          color: kEzLearnBlack,
+        ),
+        subtitle1: base.subtitle1.copyWith(
+          fontWeight: FontWeight.w600,
+          fontStyle: FontStyle.italic,
+          fontSize: 14,
+          height: 1.4,
+          color: kEzLearnGrey,
+        ),
+        bodyText1: base.bodyText1.copyWith(
+          fontWeight: FontWeight.w600,
+          fontSize: 18,
+          height: 1.4,
+          color: kEzLearnBlack,
+        ),
+        bodyText2: base.bodyText2.copyWith(
+          fontWeight: FontWeight.w500,
+          fontSize: 18,
+          height: 1.3,
+          color: kEzLearnBlack,
+        ),
+        button: base.button.copyWith(
+          fontWeight: FontWeight.w700,
+          fontSize: 24,
+          letterSpacing: 0.5,
+          color: kEzLearnBlack,
+        ),
+      )
       .apply(
         fontFamily: 'Raleway',
         displayColor: kEzLearnWhite,

@@ -46,7 +46,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     if (!isLoaded)
       return Scaffold(
-        body: Center(child: CircularProgressIndicator(color: primaryColor)),
+        body: Center(
+            child: CircularProgressIndicator(
+                color: Theme.of(context).colorScheme.primary)),
       );
 
     return Scaffold(
@@ -106,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: EdgeInsets.only(left: 35, right: 35),
       child: Container(
         child: Material(
-          borderRadius: BorderRadius.all(Radius.circular(18)),
+          borderRadius: BorderRadius.all(Radius.circular(20)),
           elevation: 5,
           shadowColor: kEzLearnShadowButton,
           child: TextFormField(
@@ -114,12 +116,12 @@ class _HomeScreenState extends State<HomeScreen> {
             style: Theme.of(context).textTheme.headline6,
             decoration: new InputDecoration(
               prefixIcon: Icon(Icons.search),
-              fillColor: Colors.white,
+              fillColor: Theme.of(context).colorScheme.surface,
               focusColor: Theme.of(context).colorScheme.primary,
               filled: true,
               contentPadding:
                   EdgeInsets.only(left: 18, bottom: 20, top: 20, right: 15),
-              labelText: "Search",
+              hintText: "Search",
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
                 borderSide: BorderSide(color: Colors.transparent),
@@ -138,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       padding: EdgeInsets.fromLTRB(35, 0, 35, 0),
       width: double.infinity,
-      decoration: BoxDecoration(color: primaryColor),
+      decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
       child: Column(
         children: [
           SizedBox(height: 45),

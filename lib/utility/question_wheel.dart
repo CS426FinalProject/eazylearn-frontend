@@ -37,7 +37,7 @@ class _QuestionWheelState extends State<QuestionWheel> {
     return Container(
       height: 50,
       width: 200,
-      decoration: BoxDecoration(color: primaryColor),
+      decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary),
       child: PageView.builder(
           onPageChanged: (index) {
             setState(() {

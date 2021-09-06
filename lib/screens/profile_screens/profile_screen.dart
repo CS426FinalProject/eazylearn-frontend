@@ -18,6 +18,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     user = await API.getProfile(Session.userID, context);
     if (user != null)
       setState(() {
+        
         isLoaded = true;
         print(user.dob.toIso8601String());
       });
