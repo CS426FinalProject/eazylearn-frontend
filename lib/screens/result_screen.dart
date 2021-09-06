@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 class ResultScreen extends StatelessWidget {
   final List<Question> questions;
-  final List<int> answers;
+  final List<String> answers;
   final int time;
   ResultScreen(
       {@required this.questions, @required this.answers, @required this.time});
@@ -20,11 +20,8 @@ class ResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     init = true;
     print(init);
-    List<bool> corrects = List.generate(
-        questions.length,
-        (index) => (answers[index] != -1 &&
-            questions[index].answer ==
-                questions[index].options[answers[index]]));
+    List<bool> corrects = List.generate(questions.length,
+        (index) => (questions[index].answer == answers[index]));
     int correctCount = 0;
     for (bool b in corrects) if (b) correctCount++;
     return WillPopScope(

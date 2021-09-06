@@ -105,7 +105,7 @@ class API {
       List<String> topicIDs, BuildContext context) async {
     String param = json.encode({"TopicId": topicIDs});
     final response = await http.get(Uri.http(localURL, "/test/", {"q": param}));
-
+    print(response.request.url);
     if (response.statusCode == 200) {
       Iterable mapIterable = json.decode(response.body)["data"];
       List<Test> tests = [];

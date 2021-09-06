@@ -25,7 +25,7 @@ class Question {
         tmp = "";
       }
     }
-    listOpts.add(tmp);
+    listOpts.add(tmp.trim());
     return Question(
         requirement: json["requirement"],
         content: json["content"],

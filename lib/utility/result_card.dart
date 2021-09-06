@@ -6,7 +6,7 @@ import 'package:expandable/expandable.dart';
 class ResultCard extends StatefulWidget {
   final int index;
   final Question question;
-  final int answer;
+  final String answer;
 
   ResultCard(
       {@required this.index, @required this.question, @required this.answer});
@@ -21,17 +21,15 @@ class _ResultCardState extends State<ResultCard> {
   @override
   void initState() {
     super.initState();
-    isMissing = widget.answer == -1;
-    isCorrect = !isMissing &&
-        (widget.question.options[widget.answer] == widget.question.answer);
+    isMissing = widget.answer.isEmpty;
+    isCorrect = !isMissing && (widget.answer == widget.question.answer);
   }
 
   @override
   Widget build(BuildContext context) {
-    String explanation = "";
-    for (int i = 0; i < widget.index; i++) {
-      explanation += "test\n";
-    }
+    String correctAnswer = widget.question.answer;
+    String explanation = widget.question.explanation;
+
     return Theme(
       data: ThemeData(fontFamily: "Open Sans"),
       child: Card(
@@ -64,16 +62,27 @@ class _ResultCardState extends State<ResultCard> {
                   header: Padding(
                     padding: EdgeInsets.only(top: 30, bottom: 30),
                     child: Text(
-                      widget.answer == -1
-                          ? "(You missed this one)"
-                          : widget.question.options[widget.answer],
+                      isMissing ? "(You missed this one)" : widget.answer,
                       style: TextStyle(
                           fontSize: 20, color: isCorrect ? correct : incorrect),
                     ),
                   ),
                   collapsed: SizedBox.shrink(),
-                  expanded:
-                      Text(explanation, style: TextStyle(color: Colors.black))),
+                  expanded: Padding(
+                    padding: EdgeInsets.only(right: 30, bottom: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (!isCorrect)
+                          Text("Correct answer:\n" + correctAnswer,
+                              style: TextStyle(color: correct, fontSize: 20)),
+                        SizedBox(height: 10),
+                        Text("Explanation:\n" + explanation,
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 20)),
+                      ],
+                    ),
+                  )),
             ),
           ],
         ),

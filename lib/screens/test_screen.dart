@@ -68,7 +68,7 @@ class _TestScreenState extends State<TestScreen> {
                 backgroundColor: primaryColor,
                 body: Center(
                   child: Text(
-                    "MATHEMATICS",
+                    test.subject,
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 50,
@@ -113,7 +113,7 @@ class _TestScreenState extends State<TestScreen> {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
                   child: Text(
-                    'MATHEMATICS',
+                    test.subject,
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 32,
@@ -347,12 +347,20 @@ class SubmitScreen extends StatelessWidget {
     init = true;
     print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     print(init);
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => ResultScreen(
-              questions: test.questions,
-              answers: userChoices,
-              time: test.time * 60 - _timeLeft,
-            )));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      List<String> userChoicesStrings = [];
+      for (int i = 0; i < userChoices.length; i++) {
+        if (userChoices[i] != -1)
+          userChoicesStrings.add(test.questions[i].options[userChoices[i]]);
+        else
+          userChoicesStrings.add("");
+      }
+      return ResultScreen(
+        questions: test.questions,
+        answers: userChoicesStrings,
+        time: test.time * 60 - _timeLeft,
+      );
+    }));
   }
 
   @override
