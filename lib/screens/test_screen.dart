@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:final_cs426/models/question.dart';
+import 'package:final_cs426/api/api.dart';
+import 'package:final_cs426/models/result.dart';
 import 'package:final_cs426/models/test.dart';
 import 'package:final_cs426/routes/routes.dart';
 import 'package:final_cs426/screens/result_screen.dart';
@@ -18,11 +19,12 @@ class TestScreen extends StatefulWidget {
 }
 
 bool init = true;
+bool initScreen = true;
 int _timeLeft;
+DateTime _timeStart;
+Timer _timer;
 
 class _TestScreenState extends State<TestScreen> {
-  Timer _timer;
-
   bool locked = false;
   bool submit = false;
   PageController pageController = PageController();
@@ -35,24 +37,27 @@ class _TestScreenState extends State<TestScreen> {
     super.initState();
     test = widget.test;
     userChoices = List.generate(test.questions.length, (index) => -1);
-    if (init) _timeLeft = test.time * 60;
-
-    currentQuestion = 0;
-
+    if (init) {
+      _timeStart = DateTime.now();
+      _timeLeft = test.time * 60 + 1;
+      _startTimer();
+      init = false;
+    }
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      print(init);
       await Future.delayed(Duration(seconds: 1));
       setState(() {
-        init = false;
+        initScreen = false;
         print("asdfasdfasfasdfasdfasdf");
-        _startTimer();
       });
     });
+    currentQuestion = 0;
   }
 
   @override
   void dispose() {
     super.dispose();
-    _timer.cancel();
+
     pageController.dispose();
     wheelController.dispose();
   }
@@ -61,7 +66,7 @@ class _TestScreenState extends State<TestScreen> {
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
         duration: Duration(milliseconds: 1000),
-        child: init
+        child: initScreen
             ? Scaffold(
                 key: ValueKey("SPLASH"),
                 backgroundColor: Theme.of(context).colorScheme.primary,
@@ -93,6 +98,8 @@ class _TestScreenState extends State<TestScreen> {
                 ElevatedButton(
                   onPressed: () {
                     init = true;
+                    initScreen = true;
+                    _timer.cancel();
                     Navigator.popUntil(
                         context, ModalRoute.withName(Routes.home));
                   },
@@ -146,7 +153,7 @@ class _TestScreenState extends State<TestScreen> {
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(
-                    'MATHEMATICS',
+                    test.subject,
                     style: Theme.of(context).textTheme.headline5.copyWith(
                         color: Theme.of(context).colorScheme.onPrimary),
                   ),
@@ -244,24 +251,6 @@ class _TestScreenState extends State<TestScreen> {
                         }),
                     itemBuilder: (context, index) => _buildTestCard(index)),
               ),
-              // SizedBox(
-              //   height: 10,
-              // ),
-              // ElevatedButton(
-              //   onPressed: () => _onSubmitClicked(),
-              //   child: Text(
-              //     "Submit",
-              //     style: TextStyle(
-              //         color: Colors.black,
-              //         fontWeight: FontWeight.bold,
-              //         fontSize: 20),
-              //   ),
-              //   style: ButtonStyle(
-              //       backgroundColor: MaterialStateProperty.all(Theme.of(context).colorScheme.secondary),
-              //       minimumSize: MaterialStateProperty.all(Size(200, 50)),
-              //       shape: MaterialStateProperty.all(RoundedRectangleBorder(
-              //           borderRadius: BorderRadius.circular(18)))),
-              // )
             ],
           ),
         ),
@@ -297,7 +286,8 @@ class _TestScreenState extends State<TestScreen> {
                 padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
                 child: Column(
                   children: [
-                    if (test.questions[index].requirement.isNotEmpty)
+                    if (test.questions[index].requirement != null &&
+                        test.questions[index].requirement.isNotEmpty)
                       Text(
                         test.questions[index].requirement,
                         style: Theme.of(context)
@@ -359,6 +349,7 @@ class _TestScreenState extends State<TestScreen> {
           );
         } else {
           setState(() {
+            print(_timeLeft);
             _timeLeft--;
           });
         }
@@ -382,17 +373,31 @@ class SubmitScreen extends StatelessWidget {
     @required this.test,
     @required this.userChoices,
   });
-  void _onSubmitClicked(BuildContext context) {
-    print((test.time * 60 - _timeLeft).toString());
+  Future _onSubmitClicked(BuildContext context) async {
     init = true;
-    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-    print(init);
-    Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => ResultScreen(
-              questions: test.questions,
-              answers: userChoices,
-              time: test.time * 60 - _timeLeft,
-            )));
+    initScreen = true;
+    _timer.cancel();
+
+    List<String> userChoicesStrings = [];
+    for (int i = 0; i < userChoices.length; i++) {
+      if (userChoices[i] != -1)
+        userChoicesStrings.add(test.questions[i].options[userChoices[i]]);
+      else
+        userChoicesStrings.add("");
+    }
+    Result result = Result(
+        userID: Session.userID,
+        test: test,
+        answer: userChoicesStrings,
+        timeStart: _timeStart,
+        timeEnd: DateTime.now());
+
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return ResultScreen(
+        result: result,
+        isFromTest: true,
+      );
+    }));
   }
 
   @override
@@ -409,8 +414,8 @@ class SubmitScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    _onSubmitClicked(context);
+                  onPressed: () async {
+                    await _onSubmitClicked(context);
                   },
                   child: Text(
                     "Submit",

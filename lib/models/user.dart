@@ -1,3 +1,4 @@
+import 'package:final_cs426/api/API.dart';
 import 'package:flutter/material.dart';
 
 class User {
@@ -9,7 +10,8 @@ class User {
   String email;
   String phone;
   String address;
-
+  String totalTest;
+  String avgScore;
   User(
       {@required this.userID,
       @required this.firstname,
@@ -18,12 +20,14 @@ class User {
       @required this.dob,
       @required this.email,
       @required this.phone,
-      this.address});
+      this.address,
+      @required this.totalTest,
+      @required this.avgScore});
 
   factory User.fromJson(Map json) {
     String dobStr = json["dob"];
     dobStr = dobStr.substring(0, dobStr.length - 1) + ".000";
-    print(dobStr);
+
     return User(
         userID: json["userId"].toString(),
         firstname: json["firstName"],
@@ -32,13 +36,19 @@ class User {
         dob: DateTime.parse(dobStr),
         email: json["email"],
         phone: json["phone"],
-        address: json["address"]);
+        address: json["address"],
+        totalTest: json["totalTest"].toString(),
+        avgScore: json["avgScore"].toString());
   }
 
   Map toJson() {
     String dobStr = dob.toIso8601String();
+    print("fromjson");
+    print(userID);
     dobStr = dobStr.substring(0, dobStr.length - 4) + "Z";
+    print(dobStr);
     return {
+      "userId": int.parse(userID),
       "firstName": firstname,
       "lastName": lastname,
       "dob": dobStr,

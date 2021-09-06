@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class AllAnswerScreen extends StatelessWidget {
   final List<Question> questions;
-  final List<int> answers;
+  final List<String> answers;
   AllAnswerScreen({@required this.questions, @required this.answers});
   @override
   Widget build(BuildContext context) {

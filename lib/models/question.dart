@@ -17,6 +17,8 @@ class Question {
     String opts = json["choices"];
     String tmp = "";
     List<String> listOpts = [];
+    print("---------------------------------------------------------");
+    print(opts);
     for (int i = 0; i < opts.length; i++) {
       if (opts[i] != '|')
         tmp += opts[i];
@@ -25,7 +27,7 @@ class Question {
         tmp = "";
       }
     }
-    listOpts.add(tmp);
+    listOpts.add(tmp.trim());
     return Question(
         requirement: json["requirement"],
         content: json["content"],

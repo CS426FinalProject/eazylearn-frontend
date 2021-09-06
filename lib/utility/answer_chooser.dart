@@ -24,20 +24,22 @@ class _AnswerChooserState extends State<AnswerChooser> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-        shrinkWrap: true,
-        itemBuilder: (context, index) => GestureDetector(
-              onTap: () => _handleTap(index),
-              child: AnswerCard(
-                chosen: chosens[index],
-                answer:
-                    '${String.fromCharCode(65 + index)}. ${widget.options[index]}',
+    return Expanded(
+      child: ListView.separated(
+          shrinkWrap: true,
+          itemBuilder: (context, index) => GestureDetector(
+                onTap: () => _handleTap(index),
+                child: AnswerCard(
+                  chosen: chosens[index],
+                  answer:
+                      '${String.fromCharCode(65 + index)}. ${widget.options[index]}',
+                ),
               ),
-            ),
-        separatorBuilder: (index, context) => SizedBox(
-              height: 10,
-            ),
-        itemCount: widget.options.length);
+          separatorBuilder: (index, context) => SizedBox(
+                height: 10,
+              ),
+          itemCount: widget.options.length),
+    );
   }
 
   void _handleTap(int index) {

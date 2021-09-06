@@ -115,17 +115,21 @@ class _ProfileEdittingScreenState extends State<ProfileEdittingScreen> {
           !isAllValid()
               ? SizedBox.shrink()
               : ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     user = User(
-                        userID: widget.user.userID,
+                        userID: Session.userID,
                         firstname: inputs[0],
                         lastname: inputs[1],
                         username: inputs[2],
                         email: inputs[3],
                         dob: dob,
                         phone: inputs[5],
-                        address: inputs[6]);
-                    Navigator.pop(context);
+                        address: inputs[6],
+                        totalTest: widget.user.totalTest,
+                        avgScore: widget.user.avgScore);
+
+                    bool result = await API.editUser(user);
+                    if (result) Navigator.pop(context, user);
                   },
                   child: Text(
                     "Apply",
@@ -140,7 +144,7 @@ class _ProfileEdittingScreenState extends State<ProfileEdittingScreen> {
           SizedBox(width: 10),
           TextButton(
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pop(context, false);
             },
             child: Text(
               "Cancel",

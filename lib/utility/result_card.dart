@@ -6,7 +6,7 @@ import 'package:expandable/expandable.dart';
 class ResultCard extends StatefulWidget {
   final int index;
   final Question question;
-  final int answer;
+  final String answer;
 
   ResultCard(
       {@required this.index, @required this.question, @required this.answer});
@@ -21,83 +21,94 @@ class _ResultCardState extends State<ResultCard> {
   @override
   void initState() {
     super.initState();
-    isMissing = widget.answer == -1;
-    isCorrect = !isMissing &&
-        (widget.question.options[widget.answer] == widget.question.answer);
+    isMissing = widget.answer.isEmpty;
+    isCorrect = !isMissing && (widget.answer == widget.question.answer);
   }
 
   @override
   Widget build(BuildContext context) {
-    String explanation = "";
-    for (int i = 0; i < widget.index; i++) {
-      explanation += "test\n";
-    }
+    String correctAnswer = widget.question.answer;
+    String explanation = widget.question.explanation;
+
     return Theme(
-      data: Theme.of(context),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-          side: BorderSide(
-            width: 2.0,
-            color: isMissing
-                ? kEzLearnYellow400
-                : (isCorrect ? kEzLearnCorrectGreen : kEzLearnWrongRed),
+        data: Theme.of(context),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+            side: BorderSide(
+              width: 2.0,
+              color: isMissing
+                  ? kEzLearnYellow400
+                  : (isCorrect ? kEzLearnCorrectGreen : kEzLearnWrongRed),
+            ),
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 4.0, right: 8.0),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 15),
-                  child: Text(
-                    widget.index.toString(),
-                    style: Theme.of(context).accentTextTheme.headline6.copyWith(
-                          color: isMissing
-                              ? kEzLearnYellow400
-                              : (isCorrect
-                                  ? kEzLearnCorrectGreen
-                                  : kEzLearnWrongRed),
-                          fontSize: 24,
-                        ),
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 9,
-                child: ExpandablePanel(
-                  theme: ExpandableThemeData(
-                      useInkWell: false,
-                      headerAlignment: ExpandablePanelHeaderAlignment.center),
-                  header: Padding(
-                    padding: EdgeInsets.only(top: 30, bottom: 30),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 4.0, right: 8.0),
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 15),
                     child: Text(
-                      widget.answer == -1
-                          ? "(You missed this one)"
-                          : widget.question.options[widget.answer],
-                      style: Theme.of(context)
-                          .accentTextTheme
-                          .headline6
-                          .copyWith(
-                              color: isCorrect
-                                  ? kEzLearnCorrectGreen
-                                  : kEzLearnWrongRed),
+                      widget.index.toString(),
+                      style:
+                          Theme.of(context).accentTextTheme.headline6.copyWith(
+                                color: isMissing
+                                    ? kEzLearnYellow400
+                                    : (isCorrect
+                                        ? kEzLearnCorrectGreen
+                                        : kEzLearnWrongRed),
+                                fontSize: 24,
+                              ),
                     ),
                   ),
-                  collapsed: SizedBox.shrink(),
-                  expanded: Text(
-                    'Explanation:\n' + explanation,
-                    style: Theme.of(context).accentTextTheme.headline6,
-                  ),
                 ),
-              ),
-            ],
+                Expanded(
+                  flex: 9,
+                  child: ExpandablePanel(
+                      theme: ExpandableThemeData(
+                          useInkWell: false,
+                          headerAlignment:
+                              ExpandablePanelHeaderAlignment.center),
+                      header: Padding(
+                        padding: EdgeInsets.only(top: 30, bottom: 30),
+                        child: Text(
+                          isMissing ? "(You missed this one)" : widget.answer,
+                          style: Theme.of(context)
+                              .accentTextTheme
+                              .headline6
+                              .copyWith(
+                                  color: isCorrect
+                                      ? kEzLearnCorrectGreen
+                                      : kEzLearnWrongRed),
+                        ),
+                      ),
+                      collapsed: SizedBox.shrink(),
+                      expanded: Padding(
+                        padding: EdgeInsets.only(right: 30, bottom: 20),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (!isCorrect)
+                                Text("Correct answer:\n" + correctAnswer,
+                                    style: Theme.of(context)
+                                        .accentTextTheme
+                                        .headline6
+                                        .copyWith(color: kEzLearnCorrectGreen)),
+                              SizedBox(height: 10),
+                              Text(
+                                "Explanation:\n" + explanation,
+                                style:
+                                    Theme.of(context).accentTextTheme.headline6,
+                              )
+                            ]),
+                      )),
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
 
