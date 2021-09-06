@@ -91,14 +91,14 @@ class _ResultCardState extends State<ResultCard> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               if (!isCorrect)
-                                Text("Correct answer:\n" + correctAnswer,
+                                Text("Correct answer:\n" + correctAnswer ?? "",
                                     style: Theme.of(context)
                                         .accentTextTheme
                                         .headline6
                                         .copyWith(color: kEzLearnCorrectGreen)),
                               SizedBox(height: 10),
                               Text(
-                                "Explanation:\n" + explanation,
+                                "Explanation:\n" + (explanation ?? ""),
                                 style:
                                     Theme.of(context).accentTextTheme.headline6,
                               )

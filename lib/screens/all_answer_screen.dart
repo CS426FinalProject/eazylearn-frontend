@@ -3,9 +3,13 @@ import 'package:final_cs426/utility/result_card.dart';
 import 'package:flutter/material.dart';
 
 class AllAnswerScreen extends StatelessWidget {
+  final String testName;
   final List<Question> questions;
   final List<String> answers;
-  AllAnswerScreen({@required this.questions, @required this.answers});
+  AllAnswerScreen(
+      {@required this.questions,
+      @required this.answers,
+      @required this.testName});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,7 +18,7 @@ class AllAnswerScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: Text(
-          "MATHEMATICS",
+          testName,
           style: Theme.of(context).textTheme.headline5.copyWith(
                 fontSize: 36,
                 color: Theme.of(context).colorScheme.onPrimary,
