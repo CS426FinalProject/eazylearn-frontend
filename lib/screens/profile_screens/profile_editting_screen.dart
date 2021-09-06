@@ -1,7 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:final_cs426/api/api.dart';
-import 'package:final_cs426/constants/color.dart';
-import 'package:final_cs426/constants/textfield_outlines.dart';
+import 'package:final_cs426/constants/colors.dart';
 import 'package:final_cs426/models/user.dart';
 import 'package:flutter/material.dart';
 
@@ -140,8 +139,8 @@ class _ProfileEdittingScreenState extends State<ProfileEdittingScreen> {
                       minimumSize: MaterialStateProperty.all(Size(100, 40)),
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20))),
-                      backgroundColor:
-                          MaterialStateProperty.all(Theme.of(context).colorScheme.secondary))),
+                      backgroundColor: MaterialStateProperty.all(
+                          Theme.of(context).colorScheme.secondary))),
           SizedBox(width: 10),
           TextButton(
             onPressed: () {
@@ -201,8 +200,9 @@ class _ProfileEdittingScreenState extends State<ProfileEdittingScreen> {
           contentPadding: EdgeInsets.fromLTRB(25, 20, 10, 20),
           focusedBorder: Theme.of(context).inputDecorationTheme.focusedBorder,
           border: Theme.of(context).inputDecorationTheme.border,
-          errorBorder: errorOutline,
-          focusedErrorBorder: errorOutline,
+          errorBorder: Theme.of(context).inputDecorationTheme.errorBorder,
+          focusedErrorBorder:
+              Theme.of(context).inputDecorationTheme.focusedErrorBorder,
         ),
         maxLines: row == 6 ? null : 1,
       ),

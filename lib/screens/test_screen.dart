@@ -415,6 +415,10 @@ class SubmitScreen extends StatelessWidget {
                         ),
                   ),
                   style: ButtonStyle(
+                      padding: MaterialStateProperty.all(EdgeInsets.symmetric(
+                        vertical: 10,
+                        horizontal: 25,
+                      )),
                       backgroundColor: MaterialStateProperty.all(
                           Theme.of(context).colorScheme.secondary),
                       minimumSize: MaterialStateProperty.all(Size(120, 50)),

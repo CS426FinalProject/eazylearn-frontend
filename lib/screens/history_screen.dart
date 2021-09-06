@@ -112,6 +112,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   prefixIcon: Icon(Icons.search),
                   labelText: "Search",
                   focusColor: Theme.of(context).colorScheme.primary,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    borderSide: BorderSide(color: Colors.transparent),
+                  ),
                   border: InputBorder.none,
                   focusedBorder:
                       Theme.of(context).inputDecorationTheme.focusedBorder,
@@ -197,6 +201,7 @@ class _FilterDialogState extends State<FilterDialog> {
       ),
       content: _topicCheckboxList(),
       contentPadding: EdgeInsets.all(10.0),
+      actionsPadding: EdgeInsets.only(bottom: 10, right: 10),
       actions: <Widget>[
         ElevatedButton(
             onPressed: () => Navigator.of(context).pop(true),

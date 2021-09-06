@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'dart:ui' as ui;
-import 'package:final_cs426/constants/color.dart';
 import 'package:final_cs426/constants/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -45,14 +44,16 @@ class ResultCircle extends StatelessWidget {
                     width: 50,
                     height: 5,
                     child: Divider(
-                      color: correct,
+                      color: kEzLearnCorrectGreen,
                       thickness: 5,
                     ),
                   ),
                   Text(
                     "$questionCount",
-                    style: TextStyle(
-                        fontFamily: "Open Sans", color: correct, fontSize: 40),
+                    style: Theme.of(context).accentTextTheme.headline6.copyWith(
+                          color: kEzLearnCorrectGreen,
+                          fontSize: 40,
+                        ),
                   )
                 ],
               ),
@@ -80,7 +81,7 @@ class _CircularProgress extends CustomPainter {
 
     Paint completeArc = Paint()
       ..strokeWidth = 20
-      ..color = correct
+      ..color = kEzLearnCorrectGreen
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
 

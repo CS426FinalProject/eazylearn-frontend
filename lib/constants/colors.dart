@@ -23,8 +23,14 @@ const kEzLearnGrey = Color(0xFF838181);
 
 const kEzLearnShadowButton = Color(0x406D8DAD);
 
-const subjectColors = [
+const List<Color> subjectColors = [
   kEzLearnMathPurple,
   kEzLearnEnglishRed,
   kEzLearnPhysicsTeal
 ];
+
+const Map<String, Color> mapColors = {
+  "Math": kEzLearnMathPurple,
+  "English": kEzLearnEnglishRed,
+  "Physic": kEzLearnPhysicsTeal,
+};

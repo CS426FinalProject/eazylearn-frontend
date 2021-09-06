@@ -1,4 +1,3 @@
-import 'package:final_cs426/constants/color.dart';
 import 'package:final_cs426/screens/signin_screen.dart';
 import 'package:final_cs426/screens/signup_screens/basic_information_screen.dart';
 import 'package:flutter/material.dart';

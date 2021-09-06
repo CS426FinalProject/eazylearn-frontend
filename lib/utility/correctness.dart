@@ -1,4 +1,4 @@
-import 'package:final_cs426/constants/color.dart';
+import 'package:final_cs426/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class Correctness extends StatelessWidget {
@@ -25,7 +25,7 @@ class Correctness extends StatelessWidget {
         flex: i,
         child: DecoratedBox(
           decoration:
-              BoxDecoration(color: isCorrectFirst ? correct : incorrect),
+              BoxDecoration(color: isCorrectFirst ? kEzLearnCorrectGreen : kEzLearnWrongRed),
           child: SizedBox(
             height: 50,
           ),

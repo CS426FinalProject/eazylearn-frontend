@@ -1,4 +1,3 @@
-import 'package:final_cs426/constants/color.dart';
 import 'package:final_cs426/constants/colors.dart';
 import 'package:flutter/material.dart';
 

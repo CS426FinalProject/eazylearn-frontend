@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:final_cs426/constants/color.dart';
 
 class AnswerCard extends StatelessWidget {
   final String answer;
