@@ -193,34 +193,6 @@ class TestPreviewCard extends StatelessWidget {
                       displayedTopics,
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    SizedBox(height: 20),
-                    Text(
-                      "Description",
-                      style: Theme.of(context).textTheme.headline5,
-                    ),
-                    Text(
-                      "bla bla bla bla bla bla bla bla bla " +
-                          "bla bla bla bla bla bla bla bla bla " +
-                          "bla bla bla bla bla bla bla bla bla " +
-                          "bla bla bla bla bla bla bla bla bla " +
-                          "bla bla bla bla bla bla bla bla bla " +
-                          "bla bla bla bla bla bla bla bla bla " +
-                          "bla bla bla bla bla bla bla bla bla " +
-                          "bla bla bla bla bla bla bla bla bla " +
-                          "bla bla bla bla bla bla bla bla bla " +
-                          "bla bla bla bla bla bla bla bla bla " +
-                          "bla bla bla bla bla bla bla bla bla " +
-                          "bla bla bla bla bla bla bla bla bla " +
-                          "bla bla bla bla bla bla bla bla bla " +
-                          "bla bla bla bla bla bla bla bla bla " +
-                          "bla bla bla bla bla bla bla bla bla " +
-                          "bla bla bla bla bla bla bla bla bla " +
-                          "bla bla bla bla bla bla bla bla bla " +
-                          "bla bla bla bla bla bla bla bla bla " +
-                          "bla bla bla bla bla bla bla bla bla " +
-                          "bla bla bla bla bla bla bla bla bla\n\nbla\nbla\nbla\nbla\nbla ",
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
                   ],
                 ),
               ),

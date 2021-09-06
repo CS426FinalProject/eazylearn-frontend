@@ -153,7 +153,7 @@ class _TestScreenState extends State<TestScreen> {
                 child: Align(
                   alignment: Alignment.center,
                   child: Text(
-                    test.subject,
+                    test.name,
                     style: Theme.of(context).textTheme.headline5.copyWith(
                         color: Theme.of(context).colorScheme.onPrimary),
                   ),
