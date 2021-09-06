@@ -22,8 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isLoaded = false;
 
   Future getSubjects() async {
+    previews = await API.getTests();
     subjects = await API.getAllSubject(context);
-    if (subjects != null) {
+    if (previews != null && subjects != null) {
       setState(() {
         isLoaded = true;
       });
@@ -70,10 +71,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             category: "Popular now", isPreview: true),
                         _buildListView(
                             category: "All subject", isPreview: false),
-                        _buildListView(
-                            category: "All subject", isPreview: false),
-                        // _buildListView(),
-                        // _buildListView()
                       ],
                     ))
               ],

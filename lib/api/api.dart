@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:final_cs426/constants/url.dart';
+import 'package:final_cs426/models/result.dart';
 import 'package:final_cs426/models/subject.dart';
 import 'package:final_cs426/models/test.dart';
 import 'package:final_cs426/models/topic.dart';
@@ -19,7 +20,7 @@ class API {
     'Content-Type': 'application/json; charset=UTF-8'
   };
   static Future<String> signUp(Map user) async {
-    final response = await http.post(Uri.http(localURL, "/user/create"),
+    final response = await http.post(Uri.https(URL, "/user/create"),
         headers: _headers, body: json.encode([user]));
     if (response.statusCode == 200) {
       return json.decode(response.body)["data"][0]["userId"].toString();
@@ -29,7 +30,7 @@ class API {
 
   static Future<String> signIn(Map user) async {
     final response =
-        await http.post(Uri.http(localURL, "login"), body: json.encode(user));
+        await http.post(Uri.https(URL, "login"), body: json.encode(user));
     if (response.statusCode == 200) {
       Map body = json.decode(response.body);
       if (body["data"].toString() != "false") {
@@ -43,9 +44,10 @@ class API {
   static Future<User> getProfile(String id, BuildContext context) async {
     final param = {"id": id};
     final response = await http.get(
-      Uri.http(localURL, "/user/profile", param),
+      Uri.https(URL, "/user/profile", param),
     );
     if (response.statusCode == 200) {
+      print(response.body);
       User user = User.fromJson(json.decode(response.body)["data"]);
       return user;
     }
@@ -55,14 +57,16 @@ class API {
   }
 
   static Future<bool> editUser(User user) async {
-    final response = await http.put(Uri.http(localURL, "/user/edit"),
-        body: json.encode(user.toJson()));
+    print(json.encode(user.toJson()));
+    final response = await http.put(Uri.https(URL, "/user/edit"),
+        body: json.encode([user.toJson()]));
+    print(response.body);
     return response.statusCode == 200;
   }
 
   static Future<List<Subject>> getAllSubject(BuildContext context) async {
     final response =
-        await http.get(Uri.http(localURL, "/subjects"), headers: _headers);
+        await http.get(Uri.https(URL, "/subjects"), headers: _headers);
     if (response.statusCode == 200) {
       Iterable i = json.decode(response.body)["data"];
       int count = 0;
@@ -79,7 +83,7 @@ class API {
       String subjectID, BuildContext context) async {
     final param = {"subjectId": subjectID};
     final response = await http.get(
-      Uri.http(localURL, "/topic/all", param),
+      Uri.https(URL, "/topic/all", param),
     );
     if (response.statusCode == 200) {
       Iterable i = json.decode(response.body)["data"];
@@ -93,7 +97,7 @@ class API {
 
   static Future<Topic> getTopicByID(String id) async {
     final param = {"id": id};
-    final response = await http.get(Uri.http(localURL, "/topic/find", param));
+    final response = await http.get(Uri.https(URL, "/topic/find", param));
     if (response.statusCode == 200) {
       return Topic.fromJson(json.decode(response.body)["data"]);
     }
@@ -101,28 +105,79 @@ class API {
     return null;
   }
 
-  static Future<List<Test>> getTestByTopicIDs(
-      List<String> topicIDs, BuildContext context) async {
-    String param = json.encode({"TopicId": topicIDs});
-    final response = await http.get(Uri.http(localURL, "/test/", {"q": param}));
-<<<<<<< HEAD
-    print(response.request.url);
-=======
-
-    print(param);
->>>>>>> 6b57dd1a186857305dcd9c6d8490216a3b9f29ad
+  static Future<Test> getTestByID(String id) async {
+    final param = {
+      "q": json.encode({"testId": id})
+    };
+    final response = await http.get(Uri.https(URL, "/test/", param));
     if (response.statusCode == 200) {
-      print(json.decode(response.body));
+      Test test = await Test.fromJson(json.decode(response.body)["data"][0]);
+
+      return test;
+    }
+    return null;
+  }
+
+  static Future<List<Result>> getResultsByUserID(String id) async {
+    print(id);
+    final param = {"id": id};
+    final response = await http.get(Uri.https(URL, "/user/history", param));
+    print(response.request.url);
+    if (response.statusCode == 200) {
+      Iterable it = json.decode(response.body)["data"];
+      List<Result> results = [];
+      for (int i = 0; i < it.length; i++) {
+        Result tmp = await Result.fromJson(it.elementAt(i));
+        results.add(tmp);
+      }
+      print(results.length);
+      return results;
+    }
+    return null;
+  }
+
+  static Future<bool> submitTest(Result result) async {
+    print(json.encode(result.toJson()));
+    final response = await http.post(Uri.https(URL, "/result/submit"),
+        body: json.encode(result.toJson()));
+    print(response.body);
+    print(response.statusCode);
+    return response.statusCode == 200;
+  }
+
+  static Future<List<Test>> getTestByTopicIDs(
+      String subject, List<String> topicIDs, BuildContext context) async {
+    String param = json.encode({"Subject": subject, "TopicId": topicIDs});
+    print(param);
+    final response = await http.get(Uri.https(URL, "/test/", {"q": param}));
+    if (response.statusCode == 200) {
       Iterable mapIterable = json.decode(response.body)["data"];
       List<Test> tests = [];
       for (int i = 0; i < mapIterable.length; i++) {
+        print("before from json");
         Test tmp = await Test.fromJson(mapIterable.elementAt(i));
+        print("after");
         tests.add(tmp);
       }
+      print("-------------------- return ----------------------");
       return tests;
     }
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(content: Text(response.body)));
+    return null;
+  }
+
+  static Future<List<Test>> getTests() async {
+    final response = await http.get(Uri.https(URL, "/test/"));
+    if (response.statusCode == 200) {
+      Iterable it = json.decode(response.body)["data"];
+      List<Test> tests = [];
+      for (int i = 0; i < 3; i++) {
+        Test tmp = await Test.fromJson(it.elementAt(i));
+        tests.add(tmp);
+      }
+      return tests;
+    }
     return null;
   }
 }

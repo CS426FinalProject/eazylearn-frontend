@@ -34,13 +34,14 @@ class Test {
       Topic tmp = await API.getTopicByID(id);
       topics.add(tmp);
     }
-
+    print("return");
     questions = List.of(q.map((e) => Question.fromJson(e)).toList());
+
     return Test(
         testID: json["testId"].toString(),
-        name: json["name"],
+        name: json["name"].toString(),
         time: 30,
-        subject: json["subject"],
+        subject: json["subject"].toString(),
         topics: topics,
         description: "description",
         questions: questions);

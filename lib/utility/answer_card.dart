@@ -20,17 +20,12 @@ class AnswerCard extends StatelessWidget {
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    answer,
-                    style: Theme.of(context).accentTextTheme.headline6.copyWith(
-                        color: !chosen
-                            ? Theme.of(context).colorScheme.onSurface
-                            : Theme.of(context).colorScheme.onPrimary),
-                  ),
-                ],
+              child: Text(
+                answer,
+                style: Theme.of(context).accentTextTheme.headline6.copyWith(
+                    color: !chosen
+                        ? Theme.of(context).colorScheme.onSurface
+                        : Theme.of(context).colorScheme.onPrimary),
               ),
             )));
   }

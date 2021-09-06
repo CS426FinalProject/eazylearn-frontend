@@ -32,7 +32,7 @@ class _TestChoosingScreenState extends State<TestChoosingScreen> {
       for (Topic topic in topics) {
         topicIDs.add(topic.topicID);
       }
-      previews = await API.getTestByTopicIDs(topicIDs, context);
+      previews = await API.getTestByTopicIDs(subject.name, topicIDs, context);
 
       if (previews != null)
         setState(() {
@@ -152,7 +152,8 @@ class _TestChoosingScreenState extends State<TestChoosingScreen> {
                     setState(() {
                       isLoaded = false;
                     });
-                    previews = await API.getTestByTopicIDs(topicIDs, context);
+                    previews = await API.getTestByTopicIDs(
+                        subject.name, topicIDs, context);
                     setState(() {
                       isLoaded = true;
                     });

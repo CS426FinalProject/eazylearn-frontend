@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
+import 'colors.dart';
+
 const Color top_icon_1 = Color(0xFF11A9FF);
 const Color top_icon_2 = Color(0xFF00EC89);
 
@@ -15,9 +17,9 @@ const List<Color> colors = [
   Color(0xFF31FCA7)
 ];
 const Map<String, Color> mapColors = {
-  "Math": Color(0xFFAF31FC),
-  "English": Color(0xFFD36B69),
-  "Physic": Color(0xFF31FCA7)
+  "Math": kEzLearnMathPurple,
+  "English": kEzLearnEnglishRed,
+  "Physic": kEzLearnPhysicsTeal
 };
 const Color green_light = Color(0x00EF99);
 

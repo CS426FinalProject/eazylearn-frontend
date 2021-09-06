@@ -12,14 +12,14 @@ class ResultCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 300,
-      height: 300,
+      width: 320,
+      height: 320,
       child: Stack(children: [
         Align(
           child: CustomPaint(
             foregroundPainter:
                 _CircularProgress(corrects / questionCount * 100),
-            size: Size(250, 250),
+            size: Size(290, 290),
           ),
         ),
         Column(

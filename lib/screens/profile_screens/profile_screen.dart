@@ -2,6 +2,7 @@ import 'package:final_cs426/api/api.dart';
 import 'package:final_cs426/constants/color.dart';
 import 'package:final_cs426/constants/colors.dart';
 import 'package:final_cs426/models/user.dart';
+import 'package:final_cs426/screens/history_screen.dart';
 import 'package:final_cs426/screens/profile_screens/profile_editting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -16,6 +17,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool isLoaded = false;
   Future getProfile() async {
     user = await API.getProfile(Session.userID, context);
+
     if (user != null)
       setState(() {
         isLoaded = true;
@@ -31,6 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print(Session.userID);
     if (!isLoaded)
       return Scaffold(
         body: Center(
@@ -52,16 +55,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Row(
                     children: [
                       _buildUpperBox(
+                        isTotal: true,
                         heading: "Finished test",
-                        num: "100",
+                        num: user.totalTest,
                         color: Theme.of(context).colorScheme.primary,
                       ),
                       Expanded(
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: _buildUpperBox(
+                            isTotal: false,
                             heading: "Average score",
-                            num: "7.5",
+                            num: user.avgScore,
                             color: Theme.of(context).colorScheme.secondary,
                           ),
                         ),
@@ -100,8 +105,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child: Align(
                       alignment: Alignment.centerRight,
                       child: IconButton(
-                        onPressed: () {
-                          _edit(context);
+                        onPressed: () async {
+                          await _edit(context);
                         },
                         icon: Icon(Icons.edit),
                       ),
@@ -183,38 +188,54 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildUpperBox(
-      {@required String heading, @required String num, @required Color color}) {
-    return _buildRoundedBox(
-        color: color,
-        child: SizedBox(
-          width: 150,
-          height: 150,
-          child: Column(
-            children: [
-              Text(
-                heading,
-                style: Theme.of(context).textTheme.headline5.copyWith(
-                      color: color == Theme.of(context).colorScheme.secondary
-                          ? Theme.of(context).colorScheme.onSecondary
-                          : Theme.of(context).colorScheme.onPrimary,
-                    ),
-              ),
-              Expanded(
-                  child: Align(
-                alignment: Alignment.bottomRight,
-                child: Text(
-                  num,
-                  style: Theme.of(context).accentTextTheme.headline6.copyWith(
-                        fontSize: 56,
+      {@required String heading,
+      @required String num,
+      @required Color color,
+      @required bool isTotal}) {
+    return GestureDetector(
+      onTap: () {
+        print(Session.userID);
+        if (isTotal)
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => HistoryScreen(
+                        userID: Session.userID,
+                      )));
+      },
+      child: _buildRoundedBox(
+          color: color,
+          child: SizedBox(
+            width: 150,
+            height: 150,
+            child: Column(
+              children: [
+                Text(
+                  heading,
+                  style: Theme.of(context).textTheme.headline5.copyWith(
                         color: color == Theme.of(context).colorScheme.secondary
                             ? Theme.of(context).colorScheme.onSecondary
                             : Theme.of(context).colorScheme.onPrimary,
                       ),
                 ),
-              ))
-            ],
-          ),
-        ));
+                Expanded(
+                    child: Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    num,
+                    style: Theme.of(context).accentTextTheme.headline6.copyWith(
+                          fontSize: 56,
+                          color:
+                              color == Theme.of(context).colorScheme.secondary
+                                  ? Theme.of(context).colorScheme.onSecondary
+                                  : Theme.of(context).colorScheme.onPrimary,
+                        ),
+                  ),
+                ))
+              ],
+            ),
+          )),
+    );
   }
 
   Widget _buildAppBar(BuildContext context) {
@@ -271,22 +292,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     style: Theme.of(context).textTheme.headline5,
                   ),
                   SizedBox(height: 5),
-                  // Text(
-                  //   user.username,
-                  //   style: Theme.of(context)
-                  //       .textTheme
-                  //       .headline6
-                  //       .copyWith(color: kEzLearnGrey),
-                  // ),
+                  Text(
+                    user.username,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6
+                        .copyWith(color: kEzLearnGrey),
+                  ),
                 ],
               ),
               Expanded(
                   child: Align(
                 alignment: Alignment.centerRight,
                 child: IconButton(
-                  onPressed: () {
+                  onPressed: () async {
                     print("asdf");
-                    _edit(context);
+                    await _edit(context);
                   },
                   icon: Icon(Icons.edit),
                 ),
@@ -298,29 +319,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  void _edit(BuildContext context) {
-    Navigator.of(context)
-        .push(PageRouteBuilder(
-            pageBuilder: (_, __, ___) => ProfileEdittingScreen(
-                  user: user,
-                ),
-            transitionsBuilder:
-                (context, animation, secondaryAnimation, child) {
-              const begin = Offset(1.0, 0.0);
-              const end = Offset.zero;
-              const curve = Curves.ease;
+  Future _edit(BuildContext context) async {
+    user = await Navigator.of(context).push(PageRouteBuilder(
+        pageBuilder: (_, __, ___) => ProfileEdittingScreen(
+              user: user,
+            ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(1.0, 0.0);
+          const end = Offset.zero;
+          const curve = Curves.ease;
 
-              final tween = Tween(begin: begin, end: end);
-              final curvedAnimation = CurvedAnimation(
-                parent: animation,
-                curve: curve,
-              );
+          final tween = Tween(begin: begin, end: end);
+          final curvedAnimation = CurvedAnimation(
+            parent: animation,
+            curve: curve,
+          );
 
-              return SlideTransition(
-                position: tween.animate(curvedAnimation),
-                child: child,
-              );
-            }))
-        .then((value) => setState(() {}));
+          return SlideTransition(
+            position: tween.animate(curvedAnimation),
+            child: child,
+          );
+        }));
+    setState(() {});
   }
 }

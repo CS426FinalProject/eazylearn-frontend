@@ -26,6 +26,7 @@ class _ProcessScreenState extends State<ProcessScreen> {
         result = await API.signUp(widget.user);
       if (result != null) {
         Session.userID = result;
+        print(Session.userID);
         setState(() => init = false);
         await Future.delayed(Duration(seconds: 1));
         Navigator.of(context).pushNamed(Routes.home);
