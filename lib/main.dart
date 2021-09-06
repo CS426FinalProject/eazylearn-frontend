@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'EazyLearn',
       theme: _kEzLearnTheme,
       routes: Routes.routes,
-      initialRoute: Routes.home,
+      initialRoute: Routes.splash,
     );
   }
 }

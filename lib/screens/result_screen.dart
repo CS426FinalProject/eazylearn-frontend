@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:final_cs426/constants/color.dart';
 import 'package:final_cs426/constants/colors.dart';
-import 'package:final_cs426/models/answer.dart';
 import 'package:final_cs426/models/question.dart';
 import 'package:final_cs426/routes/routes.dart';
 import 'package:final_cs426/screens/all_answer_screen.dart';
+import 'package:final_cs426/screens/test_screen.dart';
 import 'package:final_cs426/utility/correctness.dart';
 import 'package:final_cs426/utility/result_circle.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +13,21 @@ import 'package:flutter/material.dart';
 class ResultScreen extends StatelessWidget {
   final List<Question> questions;
   final List<int> answers;
-  ResultScreen({@required this.questions, @required this.answers});
+  final int time;
+  ResultScreen(
+      {@required this.questions, @required this.answers, @required this.time});
 
   @override
   Widget build(BuildContext context) {
+    init = true;
+    print(init);
     List<bool> corrects = List.generate(
-        questions.length, (index) => questions[index].answer == answers[index]);
+        questions.length,
+        (index) => (answers[index] != -1 &&
+            questions[index].answer ==
+                questions[index].options[answers[index]]));
+    int correctCount = 0;
+    for (bool b in corrects) if (b) correctCount++;
     return WillPopScope(
       onWillPop: () {
         Navigator.popUntil(context, ModalRoute.withName(Routes.home));
@@ -55,7 +64,8 @@ class ResultScreen extends StatelessWidget {
                       ),
                 ),
               ),
-              ResultCircle(questionCount: 30, corrects: 24),
+              ResultCircle(
+                  questionCount: questions.length, corrects: correctCount),
               SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -73,7 +83,7 @@ class ResultScreen extends StatelessWidget {
                         Icon(Icons.timer, size: 35),
                         SizedBox(width: 5),
                         Text(
-                          "16min 48s",
+                          _toMinute(time),
                           style: Theme.of(context)
                               .accentTextTheme
                               .headline6
@@ -192,5 +202,13 @@ class ResultScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _toMinute(int sec) {
+    String minute = (sec ~/ 60).toString();
+    String second = (sec % 60).toString();
+    if (minute.length == 1) minute = "0" + minute;
+    if (second.length == 1) second = "0" + second;
+    return "$minute:$second";
   }
 }

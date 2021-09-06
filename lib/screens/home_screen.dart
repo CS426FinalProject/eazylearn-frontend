@@ -1,9 +1,11 @@
+import 'package:final_cs426/api/api.dart';
 import 'package:final_cs426/constants/color.dart';
 import 'package:final_cs426/constants/colors.dart';
 import 'package:final_cs426/models/subject.dart';
-import 'package:final_cs426/models/test_preview.dart';
+import 'package:final_cs426/models/test.dart';
 import 'package:final_cs426/models/topic.dart';
 import 'package:final_cs426/screens/profile_screens/profile_screen.dart';
+import 'package:final_cs426/screens/test_screen.dart';
 import 'package:final_cs426/utility/subject_card.dart';
 import 'package:final_cs426/utility/test_preview_card.dart';
 import 'package:flutter/material.dart';
@@ -15,67 +17,23 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   FocusNode inputFocusNode = FocusNode();
-  List<Subject> subjects = [];
-  List<TestPreview> previews = [];
+  List<Subject> subjects;
+  List<Test> previews = [];
+  bool isLoaded = false;
+
+  Future getSubjects() async {
+    subjects = await API.getAllSubject(context);
+    if (subjects != null) {
+      setState(() {
+        isLoaded = true;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    subjects
-        .add(Subject(name: "Mathematics", color: kEzLearnMathPurple, topics: [
-      Topic(topicID: "MTH1", name: "Derivatives"),
-      Topic(topicID: "MTH2", name: "Integrals"),
-      Topic(topicID: "MTH3", name: "Trigonometry"),
-      Topic(topicID: "MTH4", name: "Calculus")
-    ]));
-    subjects.add(Subject(name: "Physics", color: kEzLearnPhysicsTeal, topics: [
-      Topic(topicID: "PHY1", name: "Electricmagnetism"),
-      Topic(topicID: "PHY2", name: "Optics"),
-      Topic(topicID: "PHY3", name: "Force"),
-      Topic(topicID: "PHY4", name: "Alternative current")
-    ]));
-    subjects.add(
-        Subject(name: "Database", color: kEzLearnLiteratureOrange, topics: [
-      Topic(topicID: "DB1", name: "Recovery"),
-      Topic(topicID: "DB2", name: "Concurrency control"),
-      Topic(topicID: "DB3", name: "Locking"),
-      Topic(topicID: "DB4", name: "ER Diagram")
-    ]));
-
-    previews.add(TestPreview(
-      name: "Mid-term test",
-      time: 30,
-      subject: subjects[0],
-      topics: [
-        Topic(topicID: "MTH1", name: "Derivatives"),
-        Topic(topicID: "MTH2", name: "Integrals")
-      ],
-      difficulty: 3,
-      description: "description",
-    ));
-
-    previews.add(TestPreview(
-      name: "Final-term test",
-      time: 30,
-      subject: subjects[1],
-      topics: [
-        Topic(topicID: "PHY1", name: "Electricmagnetism"),
-        Topic(topicID: "PHY2", name: "Optics")
-      ],
-      difficulty: 3,
-      description: "description",
-    ));
-
-    previews.add(TestPreview(
-      name: "15-minute test",
-      time: 30,
-      subject: subjects[2],
-      topics: [
-        Topic(topicID: "DB1", name: "Recovery"),
-        Topic(topicID: "DB2", name: "Concurrency control")
-      ],
-      difficulty: 3,
-      description: "description",
-    ));
+    getSubjects();
   }
 
   @override
@@ -86,6 +44,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (!isLoaded)
+      return Scaffold(
+        body: Center(child: CircularProgressIndicator(color: primaryColor)),
+      );
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: GestureDetector(

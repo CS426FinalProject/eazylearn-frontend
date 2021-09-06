@@ -13,6 +13,6 @@ class Routes {
     splash: (context) => SplashScreen(),
     // login
     home: (context) => HomeScreen(),
-    profile: (context) => ProfileScreen()
+    //profile: (context) => ProfileScreen()
   };
 }

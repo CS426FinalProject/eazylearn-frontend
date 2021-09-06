@@ -1,4 +1,5 @@
 import 'package:final_cs426/constants/color.dart';
+import 'package:final_cs426/screens/signin_screen.dart';
 import 'package:final_cs426/screens/signup_screens/basic_information_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -75,7 +76,10 @@ class _SplashScreenState extends State<SplashScreen> {
           height: 10,
         ),
         MaterialButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SignInScreen()));
+          },
           child: Text(
             "I have an account",
             style: TextStyle(fontSize: 25),

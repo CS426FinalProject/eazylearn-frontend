@@ -1,9 +1,10 @@
 import 'dart:ui';
 
+import 'package:final_cs426/api/api.dart';
 import 'package:final_cs426/constants/color.dart';
 import 'package:final_cs426/constants/colors.dart';
 import 'package:final_cs426/models/subject.dart';
-import 'package:final_cs426/models/test_preview.dart';
+import 'package:final_cs426/models/test.dart';
 import 'package:final_cs426/models/topic.dart';
 import 'package:final_cs426/utility/test_preview_card.dart';
 import 'package:flutter/material.dart';
@@ -19,45 +20,39 @@ class TestChoosingScreen extends StatefulWidget {
 class _TestChoosingScreenState extends State<TestChoosingScreen> {
   FocusNode inputFocusNode = FocusNode();
   Subject subject;
-  List<TestPreview> previews = [];
+  List<Test> previews = [];
   List<Topic> topics;
   List<bool> topicsChecked;
+  bool isLoaded = false;
+  Future getTopics() async {
+    topics = await API.getAllTopicBySubject(widget.subject.subjectID, context);
+    if (topics != null) {
+      topicsChecked = List.generate(topics.length, (index) => false);
+      List<String> topicIDs = [];
+      for (Topic topic in topics) {
+        topicIDs.add(topic.topicID);
+      }
+      previews = await API.getTestByTopicIDs(topicIDs, context);
+
+      if (previews != null)
+        setState(() {
+          isLoaded = true;
+        });
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     subject = widget.subject;
-    topics = subject.topics;
-    topicsChecked = List.generate(topics.length, (index) => false);
-
-    previews.add(TestPreview(
-      name: "Mid-term test",
-      time: 30,
-      subject: subject,
-      topics: topics,
-      difficulty: 3,
-      description: "description",
-    ));
-    previews.add(TestPreview(
-      name: "Final-term test",
-      time: 30,
-      subject: subject,
-      topics: topics,
-      difficulty: 3,
-      description: "description",
-    ));
-    previews.add(TestPreview(
-      name: "15-minute test",
-      time: 30,
-      subject: subject,
-      topics: topics,
-      difficulty: 3,
-      description: "description",
-    ));
+    getTopics();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (!isLoaded)
+      return Scaffold(
+          body: Center(child: CircularProgressIndicator(color: primaryColor)));
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
@@ -136,13 +131,32 @@ class _TestChoosingScreenState extends State<TestChoosingScreen> {
             child: IconButton(
                 iconSize: 40,
                 onPressed: () async {
-                  await showDialog(
+                  bool apply = await showDialog(
                       context: context,
                       builder: (context) => TopicCheckboxDialog(
                             topicsChecked: topicsChecked,
                             topics: topics,
                           ));
-                  print(topicsChecked);
+                  if (apply) {
+                    List<String> topicIDs = [];
+                    bool allFalse = true;
+                    for (int i = 0; i < topics.length; i++) {
+                      if (topicsChecked[i]) {
+                        allFalse = false;
+                        topicIDs.add(topics[i].topicID);
+                      }
+                    }
+                    if (allFalse)
+                      for (int i = 0; i < topics.length; i++)
+                        topicIDs.add(topics[i].topicID);
+                    setState(() {
+                      isLoaded = false;
+                    });
+                    previews = await API.getTestByTopicIDs(topicIDs, context);
+                    setState(() {
+                      isLoaded = true;
+                    });
+                  }
                 },
                 icon: Icon(
                   Icons.filter_alt_outlined,
@@ -192,38 +206,35 @@ class _TopicCheckboxDialogState extends State<TopicCheckboxDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      title: Text(
-        "Filter by topics",
-        style: Theme.of(context).textTheme.headline5,
-      ),
-      content: _topicCheckboxList(),
-      contentPadding: EdgeInsets.all(10.0),
-      actions: <Widget>[
-        ElevatedButton(
-          onPressed: Navigator.of(context).pop,
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(secondaryColor),
-              shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)))),
-          child: Text(
-            "Apply",
-            style: Theme.of(context).accentTextTheme.headline6,
-          ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Text(
+          "Filter by topics",
+          style: Theme.of(context).textTheme.headline5,
         ),
-        TextButton(
-          onPressed: Navigator.of(context).pop,
-          style: ButtonStyle(
-              overlayColor:
-                  MaterialStateProperty.all(Colors.black.withOpacity(0.07))),
-          child: Text(
-            "Cancel",
-            style: Theme.of(context).accentTextTheme.headline6,
-          ),
-        ),
-      ],
-      actionsPadding: EdgeInsets.fromLTRB(15, 0, 15, 15),
-    );
+        content: _topicCheckboxList(),
+        contentPadding: EdgeInsets.all(10.0),
+        actions: <Widget>[
+          ElevatedButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(secondaryColor),
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)))),
+              child: Text(
+                "Apply",
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              )),
+          TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              style: ButtonStyle(
+                  overlayColor: MaterialStateProperty.all(
+                      Colors.black.withOpacity(0.07))),
+              child: Text(
+                "Cancel",
+                style: Theme.of(context).accentTextTheme.headline6,
+              )),
+        ]);
   }
 
   _topicCheckboxList() {

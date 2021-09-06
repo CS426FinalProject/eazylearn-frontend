@@ -1,6 +1,7 @@
 import 'package:final_cs426/api/api.dart';
 import 'package:final_cs426/constants/color.dart';
 import 'package:final_cs426/constants/colors.dart';
+import 'package:final_cs426/models/user.dart';
 import 'package:final_cs426/screens/profile_screens/profile_editting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -11,10 +12,33 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  User user;
+  bool isLoaded = false;
+  Future getProfile() async {
+    user = await API.getProfile(Session.userID, context);
+    if (user != null)
+      setState(() {
+        isLoaded = true;
+        print(user.dob.toIso8601String());
+      });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getProfile();
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (Session.user == null) Session.user = Session.defaultUser;
-
+    if (!isLoaded)
+      return Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(
+            color: primaryColor,
+          ),
+        ),
+      );
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -77,7 +101,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       alignment: Alignment.centerRight,
                       child: IconButton(
                         onPressed: () {
-                          print("asdf");
                           _edit(context);
                         },
                         icon: Icon(Icons.edit),
@@ -101,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 .copyWith(color: kEzLearnGrey),
                           ),
                           Text(
-                            DateFormat("dd/MM/yyyy").format(Session.user.dob),
+                            DateFormat("dd/MM/yyyy").format(user.dob),
                             style: Theme.of(context).accentTextTheme.headline6,
                           )
                         ],
@@ -120,7 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 .copyWith(color: kEzLearnGrey),
                           ),
                           Text(
-                            Session.user.phone,
+                            user.phone,
                             style: Theme.of(context).accentTextTheme.headline6,
                           )
                         ],
@@ -137,7 +160,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       .copyWith(color: kEzLearnGrey),
                 ),
                 Text(
-                  Session.user.email,
+                  user.email,
                   style: Theme.of(context).accentTextTheme.headline6,
                 )
               ],
@@ -244,17 +267,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    Session.user.firstname + " " + Session.user.lastname,
+                    user.firstname + " " + user.lastname,
                     style: Theme.of(context).textTheme.headline5,
                   ),
                   SizedBox(height: 5),
-                  Text(
-                    Session.user.username,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6
-                        .copyWith(color: kEzLearnGrey),
-                  ),
+                  // Text(
+                  //   user.username,
+                  //   style: Theme.of(context)
+                  //       .textTheme
+                  //       .headline6
+                  //       .copyWith(color: kEzLearnGrey),
+                  // ),
                 ],
               ),
               Expanded(
@@ -278,7 +301,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void _edit(BuildContext context) {
     Navigator.of(context)
         .push(PageRouteBuilder(
-            pageBuilder: (_, __, ___) => ProfileEdittingScreen(),
+            pageBuilder: (_, __, ___) => ProfileEdittingScreen(
+                  user: user,
+                ),
             transitionsBuilder:
                 (context, animation, secondaryAnimation, child) {
               const begin = Offset(1.0, 0.0);

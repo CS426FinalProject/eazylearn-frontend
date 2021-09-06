@@ -7,7 +7,8 @@ import 'package:flutter/material.dart';
 
 class ProcessScreen extends StatefulWidget {
   final Map user;
-  ProcessScreen({@required this.user});
+  final bool isSignIn;
+  ProcessScreen({@required this.user, @required this.isSignIn});
   @override
   _ProcessScreenState createState() => _ProcessScreenState();
 }
@@ -18,16 +19,18 @@ class _ProcessScreenState extends State<ProcessScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((duration) async {
-      final result = await API.signUp(widget.user);
+      var result;
+      if (widget.isSignIn)
+        result = await API.signIn(widget.user);
+      else
+        result = await API.signUp(widget.user);
       if (result != null) {
-        Session.user = result;
+        Session.userID = result;
         setState(() => init = false);
         await Future.delayed(Duration(seconds: 1));
         Navigator.of(context).pushNamed(Routes.home);
-      } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("error")));
-      }
+      } else
+        Navigator.pop(context, false);
     });
   }
 

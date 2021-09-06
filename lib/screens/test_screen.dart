@@ -9,19 +9,20 @@ import 'package:final_cs426/utility/answer_chooser.dart';
 import 'package:final_cs426/utility/current_question_tracker.dart';
 import 'package:final_cs426/utility/question_wheel.dart';
 import 'package:flutter/material.dart';
-import 'package:final_cs426/models/answer.dart';
 import 'package:final_cs426/constants/color.dart';
 
 class TestScreen extends StatefulWidget {
+  final Test test;
+  TestScreen({@required this.test});
   @override
   _TestScreenState createState() => _TestScreenState();
 }
 
 bool init = true;
+int _timeLeft;
 
 class _TestScreenState extends State<TestScreen> {
   Timer _timer;
-  int _timeLeft;
 
   bool locked = false;
   bool submit = false;
@@ -33,34 +34,17 @@ class _TestScreenState extends State<TestScreen> {
   @override
   void initState() {
     super.initState();
-
-    _timeLeft = 40 * 60;
+    test = widget.test;
+    userChoices = List.generate(test.questions.length, (index) => -1);
+    if (init) _timeLeft = test.time * 60;
 
     currentQuestion = 0;
-    List<Answer> options = [
-      Answer(answerText: "min(f) = 12, max(f) = 14"),
-      Answer(answerText: "min(f) = -8, max(f) = 24"),
-      Answer(answerText: "min(f) = 1, max(f) = 12"),
-      Answer(answerText: "min(f) = -12, max(f) = 14")
-    ];
-    List<Question> questions = List.generate(
-        40,
-        (index) => Question(
-            question:
-                '${index + 1}: What are the extreme values of the function f on the given region?',
-            equation:
-                '${index + 1}: f(x,y) = 2x^3 + y^4\nD = {(x,y) | x^2 + y^2 <= 1}',
-            options: options,
-            answer: 1,
-            explanation:
-                'Explanation ${index + 1}: f(x,y) = 2x^3 + y^4\nasdfasdfasdfasdfasdfasd fasdfasdfasdfasdfasd fasdfasdfasdf asdfasdfasdf asdfasdfasdfa sdfasdfa sdfasdfasdfasdfasdfs'));
-    test = Test(idTest: "1", topic: "Calculus", questions: questions);
-    userChoices = List.generate(test.questions.length, (index) => -1);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await Future.delayed(Duration(seconds: 1));
       setState(() {
         init = false;
+        print("asdfasdfasfasdfasdfasdf");
         _startTimer();
       });
     });
@@ -109,6 +93,7 @@ class _TestScreenState extends State<TestScreen> {
               children: [
                 ElevatedButton(
                   onPressed: () {
+                    init = true;
                     Navigator.popUntil(
                         context, ModalRoute.withName(Routes.home));
                   },
@@ -288,13 +273,16 @@ class _TestScreenState extends State<TestScreen> {
   Widget _buildTestCard(int index) {
     return GestureDetector(
       onPanUpdate: (detail) {
-        if (detail.delta.dy < 0)
+        if (detail.delta.dy < 0) {
           Navigator.of(context).push(CustomRouteBuilder(
-              first: TestScreen(),
+              first: TestScreen(
+                test: test,
+              ),
               second: SubmitScreen(
                 test: test,
                 userChoices: userChoices,
               )));
+        }
       },
       child: Container(
         margin: EdgeInsets.only(left: 20, right: 20),
@@ -310,24 +298,27 @@ class _TestScreenState extends State<TestScreen> {
                 padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
                 child: Column(
                   children: [
-                    Text(
-                      test.questions[index].question,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline5
-                          .copyWith(fontSize: 18, letterSpacing: 0),
-                    ),
+                    if (test.questions[index].requirement.isNotEmpty)
+                      Text(
+                        test.questions[index].requirement,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline5
+                            .copyWith(fontSize: 18, letterSpacing: 0),
+                      ),
                     SizedBox(
                       height: 10.0,
                     ),
-                    Text(
-                      test.questions[index].equation,
-                      style: Theme.of(context)
-                          .accentTextTheme
-                          .bodyText1
-                          .copyWith(fontStyle: FontStyle.italic),
-                      textAlign: TextAlign.center,
-                    ),
+                    if (test.questions[index].content != null &&
+                        test.questions[index].content.isNotEmpty)
+                      Text(
+                        test.questions[index].content,
+                        style: Theme.of(context)
+                            .accentTextTheme
+                            .bodyText1
+                            .copyWith(fontStyle: FontStyle.italic),
+                        textAlign: TextAlign.center,
+                      ),
                   ],
                 ),
               ),
@@ -379,28 +370,37 @@ class _TestScreenState extends State<TestScreen> {
 class SubmitScreen extends StatelessWidget {
   final Test test;
   final List<int> userChoices;
-  SubmitScreen({@required this.test, @required this.userChoices});
+  SubmitScreen({
+    @required this.test,
+    @required this.userChoices,
+  });
   void _onSubmitClicked(BuildContext context) {
+    print((test.time * 60 - _timeLeft).toString());
+    init = true;
+    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    print(init);
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => ResultScreen(
               questions: test.questions,
               answers: userChoices,
+              time: test.time * 60 - _timeLeft,
             )));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        key: ValueKey("SUBMIT"),
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 174,
-                height: 60,
-                child: ElevatedButton(
+    return GestureDetector(
+      onPanUpdate: (detail) {
+        if (detail.delta.dy > 0) Navigator.pop(context);
+      },
+      child: Scaffold(
+          key: ValueKey("SUBMIT"),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          body: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
                   onPressed: () {
                     _onSubmitClicked(context);
                   },
@@ -417,23 +417,26 @@ class SubmitScreen extends StatelessWidget {
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)))),
                 ),
-              ),
-              SizedBox(height: 10),
-              TextButton(
-                  style: ButtonStyle(
+                SizedBox(height: 10),
+                TextButton(
+                    style: ButtonStyle(
                       overlayColor: MaterialStateProperty.all(
-                          Colors.black.withOpacity(0.07))),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text(
-                    "Cancel",
-                    style: Theme.of(context).textTheme.headline5.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimary),
-                  ))
-            ],
-          ),
-        ));
+                        Colors.black.withOpacity(0.07),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      "Cancel",
+                      style: Theme.of(context).textTheme.headline5.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
+                    ))
+              ],
+            ),
+          )),
+    );
   }
 }
 

@@ -1,10 +1,9 @@
-import 'package:final_cs426/models/answer.dart';
 import 'package:flutter/material.dart';
 
 import 'answer_card.dart';
 
 class AnswerChooser extends StatefulWidget {
-  final List<Answer> options;
+  final List<String> options;
   final ValueChanged<int> onOptionChange;
   final int initial;
   const AnswerChooser(
@@ -31,9 +30,8 @@ class _AnswerChooserState extends State<AnswerChooser> {
               onTap: () => _handleTap(index),
               child: AnswerCard(
                 chosen: chosens[index],
-                answer: Answer(
-                    answerText:
-                        '${String.fromCharCode(65 + index)}. ${widget.options[index].answerText}'),
+                answer:
+                    '${String.fromCharCode(65 + index)}. ${widget.options[index]}',
               ),
             ),
         separatorBuilder: (index, context) => SizedBox(

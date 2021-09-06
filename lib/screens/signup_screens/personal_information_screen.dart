@@ -33,105 +33,133 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen>
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        body: Container(
-          padding: EdgeInsets.fromLTRB(
-            40,
-            0,
-            40,
-            MediaQuery.of(context).viewInsets.bottom == 0 ? 30 : 0,
-          ),
-          width: double.infinity,
-          child: Column(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Text(
-                    "Personal information",
-                    style: TextStyle(fontSize: 27, fontWeight: FontWeight.bold),
-                  ),
-                ),
+        body: Stack(
+          children: [
+            Container(
+              padding: EdgeInsets.fromLTRB(
+                40,
+                0,
+                40,
+                MediaQuery.of(context).viewInsets.bottom == 0 ? 30 : 0,
               ),
-              Expanded(
-                flex: 5,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListView(
-                    children: [
-                      _generateTextFormField(
-                          hintText: "Phone number",
-                          onTextChanged: (value) {
-                            phone = value;
-                            first = false;
-                          },
-                          type: 0),
-                      _generateTextFormField(
-                          hintText: "Birthday",
-                          onTextChanged: (value) {
-                            address = value;
-                          },
-                          type: 1),
-                      _generateTextFormField(
-                          hintText: "Home address (optional)",
-                          onTextChanged: (value) {
-                            address = value;
-                          },
-                          type: 2),
-                    ],
+              width: double.infinity,
+              child: Column(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Text(
+                        "Personal information",
+                        style: TextStyle(
+                            fontSize: 27, fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              MediaQuery.of(context).viewInsets.bottom == 0
-                  ? Expanded(
-                      flex: 1,
-                      child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: _allInformationFilled()
-                              ? ElevatedButton(
-                                  onPressed: () {
-                                    final bdStr = birthday.toIso8601String();
+                  Expanded(
+                    flex: 5,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListView(
+                        children: [
+                          _generateTextFormField(
+                              hintText: "Phone number",
+                              onTextChanged: (value) {
+                                phone = value;
+                                first = false;
+                              },
+                              type: 0),
+                          _generateTextFormField(
+                              hintText: "Birthday",
+                              onTextChanged: (value) {
+                                address = value;
+                              },
+                              type: 1),
+                          _generateTextFormField(
+                              hintText: "Home address (optional)",
+                              onTextChanged: (value) {
+                                address = value;
+                              },
+                              type: 2),
+                        ],
+                      ),
+                    ),
+                  ),
+                  MediaQuery.of(context).viewInsets.bottom == 0
+                      ? Expanded(
+                          flex: 1,
+                          child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: _allInformationFilled()
+                                  ? ElevatedButton(
+                                      onPressed: () async {
+                                        final bdStr =
+                                            birthday.toIso8601String();
 
-                                    Map user = {
-                                      "firstName": widget.user["firstName"],
-                                      "lastName": widget.user["lastName"],
-                                      "username": widget.user["username"],
-                                      "email": widget.user["email"],
-                                      "password": widget.user["password"],
-                                      "phone": phone,
-                                      "dob":
-                                          bdStr.substring(0, bdStr.length - 4) +
+                                        Map user = {
+                                          "firstName": widget.user["firstName"],
+                                          "lastName": widget.user["lastName"],
+                                          "username": widget.user["username"],
+                                          "email": widget.user["email"],
+                                          "password": widget.user["password"],
+                                          "phone": phone,
+                                          "dob": bdStr.substring(
+                                                  0, bdStr.length - 4) +
                                               "Z",
-                                    };
+                                        };
 
-                                    if (address != null && address.isNotEmpty)
-                                      user["address"] = address;
-                                    print(user);
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            builder: (context) => ProcessScreen(
-                                                  user: user,
-                                                )));
-                                  },
-                                  child: Text(
-                                    "Next",
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  style: ButtonStyle(
-                                      backgroundColor:
-                                          MaterialStateProperty.all(
-                                              primaryColor),
-                                      minimumSize: MaterialStateProperty.all(
-                                          Size(300, 55)),
-                                      shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(18)))),
-                                )
-                              : SizedBox.shrink()))
-                  : SizedBox.shrink(),
-            ],
-          ),
+                                        if (address != null &&
+                                            address.isNotEmpty)
+                                          user["address"] = address;
+                                        print(user);
+                                        final result =
+                                            await Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ProcessScreen(
+                                                          user: user,
+                                                          isSignIn: false,
+                                                        )));
+                                        if (result != null)
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                    content:
+                                                        Text("Sign up failed"),
+                                                  ));
+                                      },
+                                      child: Text(
+                                        "Next",
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  primaryColor),
+                                          minimumSize:
+                                              MaterialStateProperty.all(
+                                                  Size(double.infinity, 55)),
+                                          shape: MaterialStateProperty.all(
+                                              RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          18)))),
+                                    )
+                                  : SizedBox.shrink()))
+                      : SizedBox.shrink(),
+                ],
+              ),
+            ),
+            Padding(
+                padding: EdgeInsets.only(top: 35),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.arrow_back),
+                  iconSize: 40,
+                ))
+          ],
         ),
       ),
     );
