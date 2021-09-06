@@ -9,9 +9,9 @@ class Test {
   String testID;
   String name;
   int time;
-  String description;
   Color color;
   String subject;
+  int level;
   List<Topic> topics;
   List<Question> questions;
   Test(
@@ -20,7 +20,6 @@ class Test {
       @required this.time,
       @required this.subject,
       @required this.topics,
-      @required this.description,
       @required this.questions}) {
     color = mapColors[subject];
   }
@@ -34,7 +33,7 @@ class Test {
       Topic tmp = await API.getTopicByID(id);
       topics.add(tmp);
     }
-    print("return");
+
     questions = List.of(q.map((e) => Question.fromJson(e)).toList());
 
     return Test(
@@ -43,7 +42,6 @@ class Test {
         time: 30,
         subject: json["subject"].toString(),
         topics: topics,
-        description: "description",
         questions: questions);
   }
 }

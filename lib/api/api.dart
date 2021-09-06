@@ -29,8 +29,9 @@ class API {
   }
 
   static Future<String> signIn(Map user) async {
-    final response =
-        await http.post(Uri.https(URL, "login"), body: json.encode(user));
+    final response = await http
+        .post(Uri.https(URL, "login"), body: json.encode(user))
+        .timeout(Duration(seconds: 10));
     if (response.statusCode == 200) {
       Map body = json.decode(response.body);
       if (body["data"].toString() != "false") {

@@ -44,7 +44,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       );
     return Scaffold(
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
         child: Stack(
           children: [
             Column(children: [
