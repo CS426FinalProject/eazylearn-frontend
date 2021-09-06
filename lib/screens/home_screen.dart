@@ -1,5 +1,6 @@
 import 'package:final_cs426/api/api.dart';
 import 'package:final_cs426/constants/color.dart';
+import 'package:final_cs426/constants/colors.dart';
 import 'package:final_cs426/models/subject.dart';
 import 'package:final_cs426/models/test.dart';
 import 'package:final_cs426/models/topic.dart';
@@ -58,8 +59,9 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Expanded(flex: 7, child: _buildAppbar()),
                 Expanded(
-                    flex: 29,
+                    flex: 25,
                     child: ListView(
+                      physics: BouncingScrollPhysics(),
                       children: [
                         SizedBox(
                           height: 35,
@@ -87,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     )),
                 Expanded(
-                  flex: 17,
+                  flex: 14,
                   child: SizedBox.shrink(),
                 )
               ],
@@ -106,23 +108,26 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Material(
           borderRadius: BorderRadius.all(Radius.circular(18)),
           elevation: 5,
+          shadowColor: kEzLearnShadowButton,
           child: TextFormField(
             focusNode: inputFocusNode,
-            style: TextStyle(fontSize: 18),
+            style: Theme.of(context).textTheme.headline6,
             decoration: new InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                fillColor: Colors.white,
-                filled: true,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(18)),
-                  borderSide: BorderSide(color: Colors.transparent),
-                ),
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(18)),
-                    borderSide: BorderSide(color: Colors.transparent)),
-                contentPadding:
-                    EdgeInsets.only(left: 18, bottom: 20, top: 20, right: 15),
-                hintText: "Search for tests, topics,..."),
+              prefixIcon: Icon(Icons.search),
+              fillColor: Colors.white,
+              focusColor: Theme.of(context).colorScheme.primary,
+              filled: true,
+              contentPadding:
+                  EdgeInsets.only(left: 18, bottom: 20, top: 20, right: 15),
+              labelText: "Search",
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                borderSide: BorderSide(color: Colors.transparent),
+              ),
+              border: InputBorder.none,
+              focusedBorder:
+                  Theme.of(context).inputDecorationTheme.focusedBorder,
+            ),
           ),
         ),
       ),
@@ -141,10 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               Text(
                 "EAZYLEARN",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 32),
+                style: Theme.of(context).textTheme.headline4,
               ),
               Expanded(
                   child: Align(
@@ -153,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         iconSize: 40,
                         icon: Icon(
                           Icons.account_circle,
-                          color: Colors.white,
+                          color: kEzLearnWhite,
                         ),
                         onPressed: () {
                           Navigator.of(context).push(PageRouteBuilder(
@@ -193,13 +195,14 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.only(left: 35),
           child: Text(
             category,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+            style: Theme.of(context).textTheme.headline5,
           ),
         ),
         Container(
-            height: isPreview ? 150 : 300,
-            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+            height: isPreview ? 170 : 320,
+            padding: EdgeInsets.fromLTRB(0, 10, 0, 40),
             child: ListView.builder(
+                physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) => isPreview
                     ? TestPreviewCard(
@@ -214,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-// @override
+  // @override
   // Widget build(BuildContext context) {
   //   return Scaffold(
   //     body: NestedScrollView(

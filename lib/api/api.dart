@@ -106,7 +106,9 @@ class API {
     String param = json.encode({"TopicId": topicIDs});
     final response = await http.get(Uri.http(localURL, "/test/", {"q": param}));
 
+    print(param);
     if (response.statusCode == 200) {
+      print(json.decode(response.body));
       Iterable mapIterable = json.decode(response.body)["data"];
       List<Test> tests = [];
       for (int i = 0; i < mapIterable.length; i++) {

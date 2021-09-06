@@ -1,4 +1,5 @@
 import 'package:final_cs426/constants/color.dart';
+import 'package:final_cs426/constants/colors.dart';
 import 'package:flutter/material.dart';
 
 class QuestionWheel extends StatefulWidget {
@@ -67,7 +68,13 @@ class _QuestionWheelState extends State<QuestionWheel> {
                       shape: BoxShape.circle,
                       color: Colors.white.withOpacity(
                           positive(1 - abs(index - selected) * 2 / 10))),
-                  child: Center(child: Text("${index + 1}")),
+                  child: Center(
+                      child: Text(
+                    "${index + 1}",
+                    style: Theme.of(context).accentTextTheme.headline5.copyWith(
+                          fontSize: 20,
+                        ),
+                  )),
                 ),
               )),
     );
@@ -83,13 +90,20 @@ class _QuestionWheelState extends State<QuestionWheel> {
 
   Widget _buildQuestionPicker() {
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      backgroundColor: Colors.transparent,
       insetPadding: EdgeInsets.all(10),
       child: Container(
-        padding: EdgeInsets.only(left: 8, right: 8),
-        height: 500,
-        width: double.infinity,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Theme.of(context).colorScheme.background,
+        ),
+        height: 350,
+        width: 325,
         child: GridView.builder(
+            padding: EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+            physics: BouncingScrollPhysics(),
             itemCount: widget.questionNumber,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 5,
@@ -101,36 +115,123 @@ class _QuestionWheelState extends State<QuestionWheel> {
                   Navigator.pop(context, index);
                 },
                 child: Center(
-                    child: Container(
-                  margin: EdgeInsets.all(5),
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
+                  child: Container(
+                    margin: EdgeInsets.all(5),
+                    height: 48,
+                    width: 48,
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: !((selected == index) ||
-                              (widget.userChoices[index] != -1))
-                          ? Border.all(color: Colors.black, width: 2)
-                          : null,
+                      boxShadow: [
+                        BoxShadow(
+                          color: kEzLearnShadowButton,
+                          offset: Offset(0, 10),
+                          blurRadius: 20,
+                        )
+                      ],
                       color: selected == index
-                          ? secondaryColor
+                          ? Theme.of(context).colorScheme.secondary
                           : (widget.userChoices[index] != -1
-                              ? primaryColor
-                              : Colors.white)),
-                  child: Center(
-                    child: Text(
-                      "${index + 1}",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: (widget.userChoices[index] != -1)
-                              ? Colors.white
-                              : Colors.black),
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).colorScheme.surface),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "${index + 1}",
+                        style: Theme.of(context)
+                            .accentTextTheme
+                            .headline5
+                            .copyWith(
+                              color: selected == index
+                                  ? Theme.of(context).colorScheme.onSecondary
+                                  : (widget.userChoices[index] != -1
+                                      ? Theme.of(context).colorScheme.onPrimary
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .onSurface),
+                            ),
+                      ),
                     ),
                   ),
-                )),
+                ),
               );
             }),
       ),
+      // child: SizedBox(
+      //   width: 325,
+      //   child: DraggableScrollableSheet(
+      //     expand: false,
+      //     builder: (context, scrollController) {
+      //       return Container(
+      //         alignment: Alignment.center,
+      //         decoration: BoxDecoration(
+      //           borderRadius: BorderRadius.circular(20),
+      //           color: Theme.of(context).colorScheme.background,
+      //         ),
+      //         height: 350,
+      //         width: 325,
+      //         child: GridView.builder(
+      //             padding: EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+      //             controller: scrollController,
+      //             physics: BouncingScrollPhysics(),
+      //             itemCount: widget.questionNumber,
+      //             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      //               crossAxisCount: 5,
+      //             ),
+      //             itemBuilder: (context, index) {
+      //               return GestureDetector(
+      //                 onTap: () {
+      //                   print("before setting state");
+      //                   Navigator.pop(context, index);
+      //                 },
+      //                 child: Center(
+      //                   child: Container(
+      //                     margin: EdgeInsets.all(5),
+      //                     height: 48,
+      //                     width: 48,
+      //                     decoration: BoxDecoration(
+      //                       shape: BoxShape.circle,
+      //                       boxShadow: [
+      //                         BoxShadow(
+      //                           color: kEzLearnShadowButton,
+      //                           offset: Offset(0, 10),
+      //                           blurRadius: 20,
+      //                         )
+      //                       ],
+      //                       color: selected == index
+      //                           ? Theme.of(context).colorScheme.secondary
+      //                           : (widget.userChoices[index] != -1
+      //                               ? Theme.of(context).colorScheme.primary
+      //                               : Theme.of(context).colorScheme.surface),
+      //                     ),
+      //                     child: Center(
+      //                       child: Text(
+      //                         "${index + 1}",
+      //                         style: Theme.of(context)
+      //                             .accentTextTheme
+      //                             .headline5
+      //                             .copyWith(
+      //                               color: selected == index
+      //                                   ? Theme.of(context)
+      //                                       .colorScheme
+      //                                       .onSecondary
+      //                                   : (widget.userChoices[index] != -1
+      //                                       ? Theme.of(context)
+      //                                           .colorScheme
+      //                                           .onPrimary
+      //                                       : Theme.of(context)
+      //                                           .colorScheme
+      //                                           .onSurface),
+      //                             ),
+      //                       ),
+      //                     ),
+      //                   ),
+      //                 ),
+      //               );
+      //             }),
+      //       );
+      //     },
+      //   ),
+      // ),
     );
   }
 }

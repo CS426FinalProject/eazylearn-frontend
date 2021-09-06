@@ -20,10 +20,11 @@ class TestPreviewCard extends StatelessWidget {
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         margin: EdgeInsets.fromLTRB(
-            isInTestChoosingScreen ? 0 : (isFirst ? 35 : 15),
-            isInTestChoosingScreen && isFirst ? 20 : 0,
-            0,
-            0),
+          isInTestChoosingScreen ? 0 : (isFirst ? 35 : 15),
+          isInTestChoosingScreen && isFirst ? 20 : 0,
+          0,
+          0,
+        ),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
@@ -48,23 +49,22 @@ class TestPreviewCard extends StatelessWidget {
                             topLeft: Radius.circular(20),
                             bottomLeft: Radius.circular(20))),
                     padding: EdgeInsets.all(15),
-                    height: !isInTestChoosingScreen ? 120 : 60,
+                    height: !isInTestChoosingScreen ? 200 : 60,
                     width: 50,
                   ),
                   SizedBox(
                     width: 30,
                   ),
                   SizedBox(
-                    width: 220,
+                    width: 180,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(preview.name,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            )),
+                        Text(
+                          preview.name,
+                          style: Theme.of(context).textTheme.headline6,
+                        ),
                         !isInTestChoosingScreen
                             ? SizedBox(
                                 height: 10,
@@ -73,7 +73,7 @@ class TestPreviewCard extends StatelessWidget {
                         !isInTestChoosingScreen
                             ? Text(
                                 preview.subject,
-                                style: TextStyle(fontStyle: FontStyle.italic),
+                                style: Theme.of(context).textTheme.subtitle1,
                               )
                             : SizedBox.shrink(),
                       ],
@@ -95,148 +95,166 @@ class TestPreviewCard extends StatelessWidget {
       displayedTopics += topic.name + ", ";
     }
     displayedTopics = displayedTopics.substring(0, displayedTopics.length - 2);
-    return Theme(
-      data: ThemeData(fontFamily: "Open Sans"),
-      child: Container(
-        padding: EdgeInsets.only(bottom: 15),
-        height: 600,
-        child: Column(
-          children: [
-            Container(
-              alignment: Alignment.center,
-              width: double.infinity,
-              padding: EdgeInsets.fromLTRB(15, 5, 15, 15),
-              decoration: BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20))),
-              child: Column(children: [
-                SizedBox(
-                    width: 60,
-                    child: Divider(
-                        thickness: 3, color: Colors.white.withOpacity(0.63))),
-                SizedBox(height: 5),
-                Text(
-                  preview.name,
-                  style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                )
-              ]),
-            ),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  margin: EdgeInsets.only(bottom: 20),
-                  padding: EdgeInsets.fromLTRB(30, 20, 30, 0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Subject",
-                                  style: TextStyle(fontSize: 26),
-                                ),
-                                SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    Text(preview.subject,
-                                        style: TextStyle(fontSize: 18)),
-                                    SizedBox(width: 5),
-                                    DecoratedBox(
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: preview.color),
-                                      child: SizedBox(width: 20, height: 20),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                            flex: 3,
+    return Container(
+      padding: EdgeInsets.only(bottom: 15),
+      height: 600,
+      child: Column(
+        children: [
+          Container(
+            alignment: Alignment.center,
+            width: double.infinity,
+            padding: EdgeInsets.fromLTRB(15, 5, 15, 15),
+            decoration: BoxDecoration(
+                color: primaryColor,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20))),
+            child: Column(children: [
+              SizedBox(
+                width: 60,
+                child: Divider(
+                  thickness: 3,
+                  color: Colors.white.withOpacity(0.6),
+                ),
+              ),
+              SizedBox(height: 5),
+              Text(
+                preview.name,
+                style: Theme.of(context).textTheme.headline5.copyWith(
+                  fontSize: 36,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+              )
+            ]),
+          ),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Container(
+                margin: EdgeInsets.only(bottom: 20),
+                padding: EdgeInsets.fromLTRB(30, 20, 30, 0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Subject",
+                                style: Theme.of(context).textTheme.headline5,
+                              ),
+                              SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  Text(
+                                    preview.subject,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                  ),
+                                  SizedBox(width: 5),
+                                  DecoratedBox(
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: preview.color),
+                                    child: SizedBox(width: 20, height: 20),
+                                  )
+                                ],
+                              ),
+                            ],
                           ),
-                          Expanded(
-                            flex: 2,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Time",
-                                  style: TextStyle(fontSize: 26),
-                                ),
-                                SizedBox(height: 5),
-                                Text(preview.time.toString() + " min",
-                                    style: TextStyle(fontSize: 18))
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 20),
-                      Text("Topic", style: TextStyle(fontSize: 26)),
-                      Text(displayedTopics, style: TextStyle(fontSize: 18)),
-                      SizedBox(height: 20),
-                      Text(
-                        "Description",
-                        style: TextStyle(fontSize: 26),
-                      ),
-                      Text(
-                        "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla " +
-                            "bla bla bla bla bla bla bla bla bla",
-                        style: TextStyle(fontSize: 17),
-                      ),
-                    ],
+                          flex: 3,
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Time",
+                                style: Theme.of(context).textTheme.headline5,
+                              ),
+                              SizedBox(height: 5),
+                              Text(preview.time.toString() + " min",
+                                  style: Theme.of(context)
+                                      .accentTextTheme
+                                      .bodyText1)
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      "Topic",
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    Text(
+                      displayedTopics,
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      "Description",
+                      style: Theme.of(context).textTheme.headline5,
+                    ),
+                    Text(
+                      "bla bla bla bla bla bla bla bla bla " +
+                          "bla bla bla bla bla bla bla bla bla " +
+                          "bla bla bla bla bla bla bla bla bla " +
+                          "bla bla bla bla bla bla bla bla bla " +
+                          "bla bla bla bla bla bla bla bla bla " +
+                          "bla bla bla bla bla bla bla bla bla " +
+                          "bla bla bla bla bla bla bla bla bla " +
+                          "bla bla bla bla bla bla bla bla bla " +
+                          "bla bla bla bla bla bla bla bla bla " +
+                          "bla bla bla bla bla bla bla bla bla " +
+                          "bla bla bla bla bla bla bla bla bla " +
+                          "bla bla bla bla bla bla bla bla bla " +
+                          "bla bla bla bla bla bla bla bla bla " +
+                          "bla bla bla bla bla bla bla bla bla " +
+                          "bla bla bla bla bla bla bla bla bla " +
+                          "bla bla bla bla bla bla bla bla bla " +
+                          "bla bla bla bla bla bla bla bla bla " +
+                          "bla bla bla bla bla bla bla bla bla " +
+                          "bla bla bla bla bla bla bla bla bla " +
+                          "bla bla bla bla bla bla bla bla bla\n\nbla\nbla\nbla\nbla\nbla ",
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 0, left: 15, right: 15),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => TestScreen(test: preview,)));
+              },
+              child: Text(
+                "START",
+                style: Theme.of(context).textTheme.headline4.copyWith(
+                      color: Theme.of(context).colorScheme.onSecondary,
+                    ),
+              ),
+              style: ButtonStyle(
+                elevation: MaterialStateProperty.all(5),
+                backgroundColor: MaterialStateProperty.all(
+                    Theme.of(context).colorScheme.secondary),
+                minimumSize:
+                    MaterialStateProperty.all(Size(double.infinity, 70)),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18),
                   ),
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 15),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => TestScreen(
-                            test: preview,
-                          )));
-                },
-                child: Text(
-                  "START",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(secondaryColor),
-                    minimumSize: MaterialStateProperty.all(Size(270, 50)),
-                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18)))),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

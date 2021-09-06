@@ -1,4 +1,5 @@
 import 'package:final_cs426/constants/color.dart';
+import 'package:final_cs426/constants/colors.dart';
 import 'package:final_cs426/models/question.dart';
 import 'package:flutter/material.dart';
 import 'package:expandable/expandable.dart';
@@ -33,31 +34,39 @@ class _ResultCardState extends State<ResultCard> {
       explanation += "test\n";
     }
     return Theme(
-      data: ThemeData(fontFamily: "Open Sans"),
+      data: Theme.of(context),
       child: Card(
         shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-            side: BorderSide(
-                color: isMissing ? missed : (isCorrect ? correct : incorrect))),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: Text(
-                  widget.index.toString(),
-                  style: TextStyle(
-                      color: isMissing
-                          ? missed
-                          : (isCorrect ? correct : incorrect),
-                      fontSize: 25),
+          borderRadius: BorderRadius.circular(20),
+          side: BorderSide(
+            width: 2.0,
+            color: isMissing ? missed : (isCorrect ? correct : incorrect),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 4.0, right: 8.0),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 15),
+                  child: Text(
+                    widget.index.toString(),
+                    style: Theme.of(context).accentTextTheme.headline6.copyWith(
+                          color: isMissing
+                              ? kEzLearnYellow400
+                              : (isCorrect
+                                  ? kEzLearnCorrectGreen
+                                  : kEzLearnWrongRed),
+                          fontSize: 24,
+                        ),
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              flex: 9,
-              child: ExpandablePanel(
+              Expanded(
+                flex: 9,
+                child: ExpandablePanel(
                   theme: ExpandableThemeData(
                       useInkWell: false,
                       headerAlignment: ExpandablePanelHeaderAlignment.center),
@@ -67,15 +76,24 @@ class _ResultCardState extends State<ResultCard> {
                       widget.answer == -1
                           ? "(You missed this one)"
                           : widget.question.options[widget.answer],
-                      style: TextStyle(
-                          fontSize: 20, color: isCorrect ? correct : incorrect),
+                      style: Theme.of(context)
+                          .accentTextTheme
+                          .headline6
+                          .copyWith(
+                              color: isCorrect
+                                  ? kEzLearnCorrectGreen
+                                  : kEzLearnWrongRed),
                     ),
                   ),
                   collapsed: SizedBox.shrink(),
-                  expanded:
-                      Text(explanation, style: TextStyle(color: Colors.black))),
-            ),
-          ],
+                  expanded: Text(
+                    'Explanation:\n' + explanation,
+                    style: Theme.of(context).accentTextTheme.headline6,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

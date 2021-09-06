@@ -1,5 +1,6 @@
 import 'package:final_cs426/api/api.dart';
 import 'package:final_cs426/constants/color.dart';
+import 'package:final_cs426/constants/colors.dart';
 import 'package:final_cs426/models/user.dart';
 import 'package:final_cs426/screens/profile_screens/profile_editting_screen.dart';
 import 'package:flutter/material.dart';
@@ -46,21 +47,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
               _buildAppBar(context),
               SizedBox(height: 50),
               Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
+                padding: EdgeInsets.only(left: 20, right: 20, top: 20),
                 child: Column(children: [
                   Row(
                     children: [
                       _buildUpperBox(
-                          heading: "Finished test",
-                          num: "100",
-                          color: primaryColor),
+                        heading: "Finished test",
+                        num: "100",
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                       Expanded(
                         child: Align(
-                            alignment: Alignment.centerRight,
-                            child: _buildUpperBox(
-                                heading: "Average score",
-                                num: "7.5",
-                                color: secondaryColor)),
+                          alignment: Alignment.centerRight,
+                          child: _buildUpperBox(
+                            heading: "Average score",
+                            num: "7.5",
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -90,8 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Text(
                       "Personal info",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
+                      style: Theme.of(context).textTheme.headline5,
                     ),
                     Expanded(
                         child: Align(
@@ -113,10 +116,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Date of birth",
-                              style: TextStyle(color: grey, fontSize: 18)),
-                          Text(DateFormat("dd/MM/yyyy").format(user.dob),
-                              style: TextStyle(fontSize: 18))
+                          Text(
+                            "Date of birth",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline6
+                                .copyWith(color: kEzLearnGrey),
+                          ),
+                          Text(
+                            DateFormat("dd/MM/yyyy").format(user.dob),
+                            style: Theme.of(context).accentTextTheme.headline6,
+                          )
                         ],
                       ),
                     ),
@@ -125,18 +135,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("Dial num",
-                              style: TextStyle(color: grey, fontSize: 18)),
-                          Text(user.phone, style: TextStyle(fontSize: 18))
+                          Text(
+                            "Dial num",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline6
+                                .copyWith(color: kEzLearnGrey),
+                          ),
+                          Text(
+                            user.phone,
+                            style: Theme.of(context).accentTextTheme.headline6,
+                          )
                         ],
                       ),
                     ),
                   ],
                 ),
                 SizedBox(height: 10),
-                Text("Email address:",
-                    style: TextStyle(color: grey, fontSize: 18)),
-                Text(user.email, style: TextStyle(fontSize: 18))
+                Text(
+                  "Email address:",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      .copyWith(color: kEzLearnGrey),
+                ),
+                Text(
+                  user.email,
+                  style: Theme.of(context).accentTextTheme.headline6,
+                )
               ],
             ),
           )),
@@ -165,21 +191,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
           height: 150,
           child: Column(
             children: [
-              Text(heading,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 23,
-                      fontWeight: FontWeight.bold)),
+              Text(
+                heading,
+                style: Theme.of(context).textTheme.headline5.copyWith(
+                      color: color == Theme.of(context).colorScheme.secondary
+                          ? Theme.of(context).colorScheme.onSecondary
+                          : Theme.of(context).colorScheme.onPrimary,
+                    ),
+              ),
               Expanded(
                   child: Align(
                 alignment: Alignment.bottomRight,
                 child: Text(
                   num,
-                  style: TextStyle(
-                      fontFamily: "Open Sans",
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 45),
+                  style: Theme.of(context).accentTextTheme.headline6.copyWith(
+                        fontSize: 56,
+                        color: color == Theme.of(context).colorScheme.secondary
+                            ? Theme.of(context).colorScheme.onSecondary
+                            : Theme.of(context).colorScheme.onPrimary,
+                      ),
                 ),
               ))
             ],
@@ -236,13 +266,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(user.firstname + " " + user.lastname,
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  Text(
+                    user.firstname + " " + user.lastname,
+                    style: Theme.of(context).textTheme.headline5,
+                  ),
                   SizedBox(height: 5),
                   // Text(
                   //   user.username,
-                  //   style: TextStyle(color: grey),
+                  //   style: Theme.of(context)
+                  //       .textTheme
+                  //       .headline6
+                  //       .copyWith(color: kEzLearnGrey),
                   // ),
                 ],
               ),
